@@ -1,0 +1,34 @@
+                              PROGRAMMERS
+
+You will need BASIC PDS 7.1, QuickBASIC 4.5, BASM 6.5 and MASM 5.1 or newer
+to compile all of WinDOS parts. aPACK is also used in the "make" scripts
+mk*.bat to compress the executables.
+
+Sorry that the code is rather messy and a bit difficult to read (with magic
+numbers everywhere and poor modularity). This is due to the fact that I began
+working on WinDOS way back at high school, when I didn't know much about
+programming.
+
+Please note that the file SEARCH.BAS contains a relatively fast and optimised
+graphic object library, which enables the creation of automated buttons,
+text boxes, etc. The module also contains the initial code for the file
+searching utility with a fully working interface.
+
+
+                                 IDEAS
+
+1. Search program.
+2. Configurable internal archivers. Option for changing them.
+3. Configurable compression tools with the ability to add new archivers.
+3. Bottom bar click displays number of selected files.
+4. Attachable "notes" to archives.
+5. Other language support.
+6. Store fonts in files.
+7. Rename option if copying and file already exists.
+8. Merge dirs.
+9. "CopyTo" customisable menu.
+10. Internal RAR.
+11. OPEN/ApplyPal for Disktop.
+12. Pie graph for directory sizes.
+13. Reg. programs could be called with 1,2,3,4,5,6... keys.
+

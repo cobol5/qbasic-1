@@ -1,0 +1,281 @@
+-----------------------------------------------------------------------------
+                             Stick Fighters Brawl
+ Programed by Kevin Reems under Yummy Creations...Home of The Really Big Guy
+-----------------------------------------------------------------------------
+
+When I started this game, I wanted to put all other fighting games ever
+written in any version of BASIC to shame.......I did it.
+
+-Updates from the last version
+
+ Memory problems with the Tile Screens should be fixed(I didn't have problems
+in the first place so I can't test it). If you had this problem before 
+please e-mail me and tell me if this worked.
+
+ Bug in Stage 5 fixed (If you got so high that you were over the spikes, they
+could still harm you).
+
+New Stages.
+
+New Moves.
+
+The AI is a wee bit better.
+
+You can now do a RoundHouse in the air.
+
+ A few added keys, pressing 2 on the Number Pad also ducks now, you can use
+Enter to select stuff in menus etc. 
+
+Fixed some more problems that caused fighters to stretch.
+
+I did another clean-up job on this text file.
+
+-Version Number
+
+You can find the version number in the Options Menu or within the .zip name
+
+-System Requirements
+
+Using the KeyBoard Only:
+MS-DOS or Windows 95
+486
+QBASIC (Quick BASIC is HIGHLY recommended)
+VGA Display
+
+Stick Fighters Brawl is untested with OS/2
+but should work with Power BASIC.
+
+-A Note to AOL Users
+
+The following statement was here in version 6.5, and is FALSE:
+
+You probably will not be able to find Stick Fighters Brawl and many
+other programs from Yummy Creations on AOL, this is because they no longer
+release most programs that have multiple files. So if ya want something
+from Yummy Creations you should contact us at lbt1st@cent.com
+or get on The List (the form's at the end of this file).
+
+Here are the facts from AOL:
+
+The problem AOL has had are programs that require certain files to be placed
+on certain drives or in certain directories.  However, this is only a
+problem if the program does not contain a setup program to fully automate
+the process for the user.
+ Most BASIC uploaders do not realize that the majority of those who download
+these files are not programmers -- in fact, many are novice computer users
+altogether.  As a result, they are not comfortable (and sometimes not
+capable of) manually installing programs into specific places in order for
+the program to work.
+ 
+So does this mean you can download Stick Fighters Brawl from AOL? 
+Probably (I uploaded it) but even so, it can take over 2 weeks for it to be
+released.  
+
+-The Options Menu:
+
+Player Energy is the starting Hit-Points of each fighter, use these to
+handicap. 
+
+Difficulty sets the starting Difficulty of the computer player.
+Note: The computer doesn't get stronger or faster, but Smarter.
+
+Stage This selects the Stage that you fight on.
+                                                            (Speed)
+1:  Your bobbing on a platform in an ocean.                  Slow
+2:  An evil structure over a pit.                            Average
+3:  A plat in the middle of nothing.                         Fast           
+4:  An open chamber with tall pillars                        Slow
+5:  Two spiked walls surround this arena.                    Average
+6:  Evil is just under your feet here.                       Fast  
+7:  Cruse space on top of a star fighter.                    Average/Fast  
+8:  Deadly fans turn on at random times.                     Average
+9:  A unit above bombs fighters with lightning.              Average/Fast
+10: Fight on a sand bar, as Stage 1 floats by.               Average
+11: This fan will render you nearly immobile.                Average
+12: Fighters on Ice.                       	             Average/Fast
+13: Fun with conveyer belts.                                 Average/Fast
+14 & 15 Nothing                                              Very Fast
+
+
+FX Mode- This controls some effects that can be used with Stage 3, if your not
+fighting on Stage 3 then this is ignored.
+
+Edit Fighter Options- Opens the Fighter Options Screen where you can change
+the Colors and Detail levels of each fighter.
+
+Joystick/Pad- These settings are for Joysticks and Game Pads, but most people
+don't have a pad with 5 buttons, and BASIC only supports 4 anyway.
+However you can move around with one, and attack with the keyboard at the
+cost of game speed (why would you want to do this though?).
+
+Sensitivity- Sets the Joystick sensitivity.
+
+Joystick Correction- If you have problems with your joystick, try turning this
+ON, and run in DOS (mode) if your in Windows.  
+
+Special Moves- can be turned on and off.
+
+Sound Wait- This sets how many times the program must loop until a sound can
+be produced after another, if you find the game slowing down due to many
+sounds or sounds are often cutting each other off then set this higher.
+
+Gravity- You can make this higher or lower.
+
+Detail- can be High or Low, if it's High you'll see nicer graphics.
+
+Blood/Evil- set this to ON to get "bad" graphics (Blood, inverted crosses etc)
+Blood can be set to 10 or 20 Gallons, only the second 10 Gallons will make
+sound when hitting the ground.
+
+Delay- sets the game's speed (the smaller the number the faster) but if you 
+set it too low you may get screen flicker,
+You'll have to experiment to see how fast you can get without flicker probs.
+When changing this go up or down by 50s or 100s.
+These Figures are for Quick BASIC, your video hardware will probably differ.
+486 DX/2 50 set around 250
+Pentium  60 set around 300
+Pentium 133 set around 1000
+
+Animation- Think of this as The Master Speed Dial! The larger the present
+the more frames of animation will be rendered. So 100% renders everything
+(slow) 10% renders very little (fast but chunky) so 40 and 60 present
+are quite fast, yet not too chunky. Install defaults this at 60%
+
+Done- Exits The Option Menu and saves changes.
+
+Note: If you have Blood/Evil set to ON you'll see a useful drop of blood on
+the right side of the screen, it shows you if Blood/Evil is ON, if Detail is
+High or Low, and it's movement is effected by gravity.  
+
+-Controls
+
+KeyBoard
+   --- --- ---                  --- --- ---  (Number Pad)
+  | Q | W | E |                | 7 | 8 | 9 |
+   --- --- ---                  --- --- ---
+   | A | S |                   | 4 | 5 | 6 |
+    --- ---                     --- --- ---
+
+4 and 6 walks Left and Right.
+8 jumps up, 7 and 9 Jump Forward and Away.
+5 Duck (2 also Ducks).
+You can also use the cursor keys but the 7 and 9 keys on the pad are nice,
+also, you MUST have NUMlock ON for the number pad to work!
+
+Q Jab.
+W Strong Punch.
+W While Ducking is an Upper-Cut 
+A Short Kick.
+S Roundhouse (If you have good footing otherwise it's a Short Kick).
+E Charges for a Special Move.
+If you hold down A for two seconds you'll do a Lighting Kick.
+Pressing E (Don't hold it down) will Charge a meter at the top of the screen,
+the longer you wait the more powerful. After you charge-up press Q, W or S
+to throw a Fire Ball, Rising Dragon or charge your Jump Bar.
+
+Capcom Pad (PC Fighter 6)
+        _                   --- --- ---
+       |^|                 | X | Y | Z |
+    ___| |___               --- --- ---
+   | <  O  > |             | A | B | C |
+    ---| |---               --- --- ---      
+       |v|                 
+        -
+Same as above,
+X=Q
+Y=W
+Z=E
+A=A
+B=S
+C=(not used)
+
+-Charging your Jump
+
+ To charge your jump, just charge using E as normal, then press
+S to charge your Jump Bar, the next time you jump (both feet must be on the 
+ground) you'll go much higher, only half of the bar will be used.
+The main use of this is to use with your Rising Dragon, it will use all
+of both charge-bars but causes more damage.
+
+-The Warning Light
+
+ This little light comes in handy on stages where something turns on and off
+and such. Because the camera tends to go all over the place to keep the
+fighters on-screen, you can't always see if that Fan just behind you is ready
+to cut you to little bits, so on Stages with stuff like Fans, the light will
+turn red when there is danger.
+
+-How to Pop The Cork    
+
+ Everyone keeps asking me how you decapitate your opponent, so here's the
+how'to. First of all Blood/Evil must be on or decaps are disabled. 
+Win one round, then drain their Energy to almost nothing, then you you must
+hit 'em with ether a Strong Punch (to the head) or a Rising Dragon.
+If all was done right that bugger will pop right off (making a big mess),
+and if your really lucky (added in V4.5) they won't fall down, if this
+happends, the fighter will remain active for a random amount of time, running
+around like a chicken with it's head cut off (making a bigger mess)!
+In the event that a headless fighter kills you, you will still be credited
+for the win.
+
+-Stuff to Remember
+
+When doing a Lighting Kick you can slide (walk forward a LITTLE then hold A).
+
+Try Jumping, then immediately Press W for a Rising RoundHouse. 
+
+A Fire Ball can be weakened by another Fire Ball.
+
+If you only have one foot on the ground you can still move, but your
+limmited, like if you try to jump you will only hop.
+
+You can jump vary far, and again two feet are better then one. 
+
+Upper-Cuts don't hurt as much as Rising Dragons.
+
+If you beat the computer the difficulty increases by one.
+
+Avoid sharp objects.
+
+Don't forget about your fists, they're very powerful once in range.
+
+If the game's too easy handicap the computer player.
+
+If you think throwing fire at somebody is cheap, turn Off Special Moves.
+
+Have Fun, that's what it's all about!
+
+-What All This Stuff Is
+
+              +---------------------------------------+ 1 Player 1's Energy
+              | =======1========= 3 ======2========   | 2 Player 2's Energy
+              |             --4--   --5---------      | 3 Warning Light       
+              |               9|     |10              | 4 Player 1's Jump Bar      
+              |                                       | 5 Player 2's Jump Bar    
+              |                                       | 6 Player 1     
+              |                             O 7       | 7 Player 2      
+              |                             |\        | 8 Fire Ball      
+              |    6  O                   /\| |       | 9 Player 1's WinIcon     
+              |      /\_    ---/-\        | |         |10 Player 2's WinIcon      
+              |     |\       _8\_/          |         |       
+              |    / |                                |       
+              +---------------------------------------+
+
+
+*---------------------------------Warning-----------------------------------*
+Due to the graphic nature of the FX Modes that can be used in Stage 3
+I will not be responsible for any physical or mental problems caused
+by any use of Stick Fighters Brawl, nor will I be responsible of any damages
+of any kind due to the proper or improper use of Stick Fighters Brawl.
+If you have epilepsy but are capable of playing video games,
+DO NOT use any of the FX Modes in Stage 3! The graphics in these Modes
+are very flashy and may cause trauma.
+Use Stick Fighters Brawl and/or it's files at Your Own Risk.
+
+-----------------------------------------------------------------------------
+The List is no more, Yummy Creations now has a web site at
+http://cent.com/~lbt1st
+
+Yummy Creations does NOT support Mac.
+
+                                         Kevin Reems - Yummy Creations

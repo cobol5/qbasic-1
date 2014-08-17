@@ -1,0 +1,36 @@
+    
+*************************** Computer Alarm Clock ****************************
+                                   V 1.0
+                       
+                     
+                                 FUNCTIONS
+                          1: CLOCK
+                          2: ALARM
+                          3: GRAPHIC
+                          4: RADIO (HA HA)
+
+    1: The clock shows continious time excelpt when the Graphic is running
+  and in Radio mode the clock stops while the tunes are playing but updates
+  between tunes. 
+
+    2: To set the Alarm click on "TO SET". Enter Hour, then mimute, then
+  AM or PM. The "OFF" light turnes red, the "ON" light turns green and the
+  alarm is set. The set time is displayed. Click on "Options" to change
+  the alarm sound. There are nine sounds to choose from. From the "Options"
+  menu you can also change the skin. Skin 2 draws a background behind the
+  clock.
+
+    3: To run the Graphic click on "Graphic". Enter the time you want it
+  to run for in seconds. When the time expires the Alarm Clock will be 
+  displayed. Running the Graphic will not effect the Alarm setting as
+  long as it finishes before the set time. To stop the graphic early, press
+  any key however it may take a few seconds before the graphic stops.
+
+    4: Click on "Radio" to go to Radio mode. Click anywhere on the radio
+  dial to start the tunes. Press any key to stop them however the tune must 
+  finish before the radio cuts off. Click on "Radio" again to return to the
+  Alarm Clock.
+
+
+    Well thats about it.   Oh, I think I saw Elvis!
+    

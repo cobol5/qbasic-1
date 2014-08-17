@@ -1,0 +1,27 @@
+TYPE RegTypeX
+  AX    AS INTEGER
+  BX    AS INTEGER
+  cx    AS INTEGER
+  dx    AS INTEGER
+  bp    AS INTEGER
+  si    AS INTEGER
+  di    AS INTEGER
+  flags AS INTEGER
+  ds    AS INTEGER
+  es    AS INTEGER
+END TYPE
+
+DIM Regs AS RegTypeX
+
+Regs.AX = &HFFFE
+Regs.BX = &HFFFF
+CALL INTERRUPTX(&H10, Regs, Regs)
+
+SCREEN 12
+
+LINE (100, 100)-(300, 300), 2, BF
+
+Regs.AX = &HFFFF
+Regs.BX = &HFFFF
+CALL INTERRUPTX(&H10, Regs, Regs)
+

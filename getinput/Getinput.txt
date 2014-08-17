@@ -1,0 +1,29 @@
+ Name:        GetInput$ Function
+ Author:      Kunal Arya (arya@apc.net)
+ Usage:
+              Row - The Row for the textbox to be printed
+              Col - The Column for the textbox to be printed
+              PasswordChar$ - Character to be printed instead of
+                              text. It'll print the text if it's
+                              left blank.
+              MaxWidth - The Maximum width that the user can type
+                         NOTE: This will not be affected if there
+                               is a mask.
+              Fore - Foreground color of the text
+              Back - Background color of the text
+              Empty$ - The character to be printed in the empty areas
+              Insert - Determines state of insert (on/off)
+              Default$ - Text that is already in the textbox
+              Mask$ - Determines the mask string
+                      Usage of mask:
+                      You may put any character or number in this string.
+                      To set where numbers are to be put, insert a "#".
+                      To set where all others are to be put, insert a "$".
+                      If you want to put in a "$" to be printed, insert a "~"
+                           example: "~###.##" would turn to "$###.##"
+              Flags - Defines the following flags:
+                      qbSetUp - Used to put the textbox before it is
+                                accessed.
+                      qbShowMask - For showing entire mask
+                      qbForceComplete - Force the user to finish the mask.
+              Req$ - These character(s) are required in the string.

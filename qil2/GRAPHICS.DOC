@@ -1,0 +1,117 @@
+                            Qbasic Image Library
+
+        You have just seen some of the abilities of the Qbasic Image Library.
+The Qbasic Image Library is a very powerful tool that can do many things. Here
+is a more extensive list of it's abilities.
+
+BMP Image Format: There are several things you can do with bitmaps.
+The BMP loader can load any size of BMP file though only the first 320x200
+pixels will appear on screen.  The BMP loader currently loads only 8 bit, 256
+color BMPs with possible support for 16 color BMPs in the future.  The BMP
+writes at any size but anything after 320x200 pixels will be black.  The BMP
+writer works off already created BMPs and only rewrites pixel and palette 
+information.  The writer does not write any size information.  You must have
+BMP of the desired size to write to.
+
+BMP Palettes:  You can load and write the palette information of any 256 color
+BMP file.  The file can be made the active screen palette or can be saved to
+a PAL format or a BPL format.  Each format has different uses.  The PAL format
+can be written into a QSI file and the BPL format can be written into a BMP
+file.  The PAL file can be loaded directly into Qbasic.
+
+Palettes:  The PAL file format can be loaded as the active palette in several
+different ways.  You can load the palette as is with no changes, change the
+RGB values while loading, or use different loading filters such as gray 
+scaling, red scaling, etc.  There is also a palette editor that can load, 
+save, edit, and create new palettes with an easy to use mouse interface. Run
+PALETTE.BAS to see the demo.  The demo does not allow you to save or load
+palette files.
+
+QSI Files:  The QSI file format is an image format currently supported only
+by the Qbasic Image Library.  The QSI format is very simple, fast, and 
+versatile.  QSI files can be written with on screen images or converted 
+directly from BMP format.  The palettes of the QSI image format come from
+PAL files.  QSI image files can be loaded using several different loaders. 
+Each loader has it's own specific abilities, command lines, and speeds.  The
+simpler the loader the faster.  Here is a list from fastest to slowest.  The
+speed is how long it takes to load one 320x200 image on a Pentuim computer.
+The speed may vary.
+
+        Name: LOADQSI
+        Abilities: Basic QSI loader.  Loads a QSI image to any place on screen.
+        Speed: 11.36719
+
+        Name: LOADQSIAA
+        Abilities: Loads a QSI image to any place on screen.  Allows you to
+                   move the RGB intensities up or down.  Give the option of
+                   not changing color 0.
+        Speed: 11.48047
+
+        Name: LOADQSIAAMP
+        Abilities: Loads a QSI image to any place on screen.  Allows you to
+                   move the RGB intensities up or down.  Gives the option of
+                   not changing color 0.  Allows the use of a load map.
+        Speed: 11.48047
+
+        Name: LOADQSIMP
+        Abilities:  Loads a QSI image to any place on screen.  Allows the use
+                    of a load map.
+        Speed: 15.38281
+
+        Name: LOADQSIA
+        Abilities: Loads a QSI image to any place on screen.  Allows loading
+                   in different sizes(E.G. 1/2 or 2x)
+        Speed: 17.02734
+
+        Name: LOADQSIAB
+        Abilities: Loads a QSI image to any place on screen.  Loads only the
+                   specified part of the image.  Allows loading in different
+                   sizes.  Allows for changing RGB intensities.  Gives the
+                   option of not changing color 0.
+        Speed: 38.22656
+
+ILI image format:  The ILI image format is an incredibly simple image format.
+                   The ILI image format uses Qbasic GET and PUT commands to
+                   save information to disk.  ILI images do not load pixel by
+                   pixel like most image formats, but all at once and very 
+                   quickly.  On a Pentium computer an ILI image will load in
+                   less than a second.  A 300 frame animation at a size of
+                   200x150 can run at about 30 frames per second while a 100
+                   frame 50x50 animation will run at over 70fps(on a Pentium)
+                   making the ILI format great for animation.  The only
+                   restriction of an ILI image is that the image must be held
+                   in an array which cannot hold full screen images.  The ILI
+                   format does not contain palette information.  Programs have
+                   been designed to load 320x200 and 640x480 ILI images,
+                   however.
+
+How to order:  The full version of the Qbasic Image Library is $10.00 + $3.00
+               Shipping.  I chose to keep the program as inexpensive as
+               possible.  Here is what the registered version includes.
+                
+               _ All subs for loading, saving, and editing all QIL supported
+                 formats.
+
+               _ Any new programs added to newer versions.
+
+               _ Explanations of loading and saving QIL supported formats.
+
+               _ The complete palette program.
+
+               _ A file explaining the usage of all the programs and abilities
+                 of the QIL.
+
+               _ A file explaining how to use the popular and widely supported
+                 BMP image format.
+
+Please excuse any typos.
+
+Upcoming:
+        In the near future new formats, such as PCX and GIF formats, may be
+supported.  Horizon Software may soon be releasing a game kit, a collection of
+QBasic game engines and tools.  On AOL search under keyword Horizon Software
+in the software search to find other Horizon Software programs.  Also look
+for animations uploaded in ILI format, also under the Horizon Software
+keyword.
+
+

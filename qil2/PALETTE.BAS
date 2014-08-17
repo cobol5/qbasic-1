@@ -1,0 +1,297 @@
+DECLARE SUB SAVEPAL (PAL$)
+DECLARE SUB MOUSESTATUS (LB, RB, xMouse%, yMouse%)
+DECLARE SUB MouseHide ()
+DECLARE SUB MouseDriver (ax%, bx%, cx%, dx%)
+DECLARE SUB MOUSESHOW ()
+DECLARE FUNCTION mouseInit% ()
+DECLARE SUB DRAWSCREEN ()
+DECLARE SUB LOADPAL (PAL$)
+DIM SHARED RI(255)
+DIM SHARED GI(255)
+DIM SHARED BI(255)
+DIM SHARED Mouse$
+RS$ = "START"
+Mouse$ = SPACE$(57)
+FOR I% = 1 TO 57
+  READ A$
+  H$ = CHR$(VAL("&H" + A$))
+  MID$(Mouse$, I%, 1) = H$
+NEXT I%
+DATA 55,89,E5,8B,5E,0C,8B,07,50,8B,5E,0A,8B,07,50,8B
+DATA 5E,08,8B,0F,8B,5E,06,8B,17,5B,58,1E,07,CD,33,53
+DATA 8B,5E,0C,89,07,58,8B,5E,0A,89,07,8B,5E,08,89,0F
+DATA 8B,5E,06,89,17,5D,CA,08,00
+CLS : SCREEN 13
+PAINT (0, 0), 27
+COLOR 20
+DIM SHARED TXT1(1 TO 1000)
+PRINT "START FADE"
+GET (0, 0)-(79, 7), TXT1
+DIM SHARED TXT2(1 TO 1000)
+DIM SHARED TXT3(1 TO 1000)
+DIM SHARED TXT4(1 TO 1000)
+DIM SHARED TXT5(1 TO 1000)
+CLS
+PAINT (0, 0), 27
+COLOR 20
+PRINT "END FADE"
+GET (0, 0)-(63, 7), TXT2
+CLS
+PAINT (0, 0), 27
+COLOR 20
+PRINT "DO FADE"
+GET (0, 0)-(55, 7), TXT3
+CLS
+PAINT (0, 0), 27
+COLOR 20
+PRINT "LOAD"
+GET (0, 0)-(31, 7), TXT4
+CLS
+PAINT (0, 0), 27
+COLOR 20
+PRINT "SAVE"
+GET (0, 0)-(31, 7), TXT5
+CLS
+COLOR 15
+DEFAULT$ = "STANDARD"
+LOADPAL DEFAULT$
+DRAWSCREEN
+MOUSESHOW
+CHECK:
+DO
+FOR I = 1 TO 2000: NEXT I
+MOUSESTATUS L, R, X%, Y%
+IF L = -1 THEN GOTO BUTTONPRESS
+LOOP UNTIL INKEY$ = CHR$(27)
+SYSTEM
+BUTTONPRESS:
+IF X% > 215 AND Y% > 55 AND X% < 225 AND Y% < 65 THEN
+        RI(CC) = RI(CC) - 1
+        IF RI(CC) < 0 THEN RI(CC) = 0
+        PALETTE CC, 65536 * BI(CC) + 256 * GI(CC) + RI(CC)
+        GOTO 20
+END IF
+IF X% > 239 AND Y% > 55 AND X% < 249 AND Y% < 65 THEN
+        RI(CC) = RI(CC) + 1
+        IF RI(CC) > 63 THEN RI(CC) = 63
+        PALETTE CC, 65536 * BI(CC) + 256 * GI(CC) + RI(CC)
+        GOTO 20
+END IF
+IF X% > 215 AND Y% > 79 AND X% < 225 AND Y% < 87 THEN
+        GI(CC) = GI(CC) - 1
+        IF GI(CC) < 0 THEN GI(CC) = 0
+        PALETTE CC, 65536 * BI(CC) + 256 * GI(CC) + RI(CC)
+        GOTO 20
+END IF
+IF X% > 239 AND Y% > 79 AND X% < 249 AND Y% < 87 THEN
+        GI(CC) = GI(CC) + 1
+        IF GI(CC) > 63 THEN GI(CC) = 63
+        PALETTE CC, 65536 * BI(CC) + 256 * GI(CC) + RI(CC)
+        GOTO 20
+END IF
+IF X% > 215 AND Y% > 103 AND X% < 225 AND Y% < 111 THEN
+        BI(CC) = BI(CC) - 1
+        IF BI(CC) < 0 THEN BI(CC) = 0
+        PALETTE CC, 65536 * BI(CC) + 256 * GI(CC) + RI(CC)
+        GOTO 20
+END IF
+IF X% > 215 AND Y% > 103 AND X% < 249 AND Y% < 111 THEN
+        BI(CC) = BI(CC) + 1
+        IF BI(CC) > 63 THEN BI(CC) = 63
+        PALETTE CC, 65536 * BI(CC) + 256 * GI(CC) + RI(CC)
+        GOTO 20
+END IF
+X1 = 191: X2 = 275: Y1 = 116: Y2 = 128
+IF X% > X1 AND Y% > Y1 AND X% < X2 AND Y% < Y2 THEN
+        SF = CC
+        GOTO 20
+END IF
+X1 = 191: X2 = 275: Y1 = 133: Y2 = 145
+IF X% > X1 AND Y% > Y1 AND X% < X2 AND Y% < Y2 THEN
+        EF = CC
+        GOTO 20
+END IF
+X1 = 191: X2 = 275: Y1 = 150: Y2 = 162
+IF X% > X1 AND Y% > Y1 AND X% < X2 AND Y% < Y2 THEN
+        GOTO FADE
+        GOTO 20
+END IF
+X1 = 191: X2 = 275: Y1 = 167: Y2 = 179
+IF X% > X1 AND Y% > Y1 AND X% < X2 AND Y% < Y2 THEN
+        LOCATE 22, 1: PRINT "SORRY DISABLED": SLEEP 2
+        LINE (0, 161)-(160, 200), 0, BF
+        FOR I = 1 TO 10000: NEXT I
+        LINE (0, 161)-(160, 200), 0, BF
+        GOTO 20
+END IF
+X1 = 191: X2 = 275: Y1 = 184: Y2 = 196
+IF X% > X1 AND Y% > Y1 AND X% < X2 AND Y% < Y2 THEN
+        LOCATE 22, 1: PRINT "SORRY DISABLED": SLEEP 2
+        LINE (0, 161)-(160, 200), 0, BF
+        GOTO 20
+END IF
+IF X% <= 160 AND Y% <= 160 THEN
+C = POINT(X% - 1, Y% - 1)
+IF C = -1 THEN C = 0
+CC = C
+END IF
+20
+LOCATE 2, 36: PRINT C
+LOCATE 3, 26: PRINT RI(C)
+LOCATE 4, 28: PRINT GI(C)
+LOCATE 5, 27: PRINT BI(C)
+GOTO CHECK
+FADE:
+DF = EF - SF
+RD = RI(EF) - RI(SF)
+GD = GI(EF) - GI(SF)
+BD = BI(EF) - BI(SF)
+RP = RD / DF
+GP = GD / DF
+BP = BD / DF
+CR = RI(SF)
+CG = GI(SF)
+CB = BI(SF)
+IF DF < 0 THEN STP = -1 ELSE STP = 1
+FOR I = SF TO EF STEP STP
+CRS% = CR
+CGS% = CG
+CBS% = CB
+RI(I) = CRS%
+GI(I) = CGS%
+BI(I) = CBS%
+PALETTE I, 65536 * CBS% + 256 * CGS% + CRS%
+CR = CR + RP
+CG = CG + GP
+CB = CB + BP
+IF CR > 63 THEN CR = 63
+IF CG > 63 THEN CG = 63
+IF CB > 63 THEN CB = 63
+IF CR < 0 THEN CR = 0
+IF CG < 0 THEN CG = 0
+IF CB < 0 THEN CB = 0
+NEXT I
+FOR I = 1 TO 1000
+L = 0
+NEXT I
+GOTO CHECK
+
+SUB DRAWSCREEN
+CLS : SCREEN 13
+C = -1
+FOR Y = 0 TO 200 STEP 10
+FOR X = 0 TO 150 STEP 10
+C = C + 1
+LINE (X, Y)-(X + 9, Y + 9), C, BF
+LINE (X, Y)-(X + 10, Y + 10), 89, B
+IF C = 255 GOTO 10
+NEXT X
+NEXT Y
+10
+LOCATE 2, 22: PRINT "Current Color:"
+LOCATE 3, 22: PRINT "Red:"
+LOCATE 4, 22: PRINT "Green:"
+LOCATE 5, 22: PRINT "Blue:"
+LOCATE 7, 24: PRINT "Red Intensity"
+LOCATE 8, 28: PRINT "<  >"
+LOCATE 10, 23: PRINT "Green Intensity"
+LOCATE 11, 28: PRINT "<  >"
+LOCATE 13, 24: PRINT "Blue Intensity"
+LOCATE 14, 28: PRINT "<  >"
+X1 = 191: X2 = 275: Y1 = 116: Y2 = 128
+LINE (X1, Y1)-(X2, Y2), 27, BF
+LINE (X1, Y1)-(X2, Y1), 29
+LINE (X2, Y1)-(X2, Y2), 29
+LINE (X1, Y2)-(X2, Y2), 25
+LINE (X1, Y1 + 1)-(X1, Y2), 25
+PUT (X1 + 3, Y1 + 3), TXT1
+X1 = 191: X2 = 275: Y1 = 133: Y2 = 145
+LINE (X1, Y1)-(X2, Y2), 27, BF
+LINE (X1, Y1)-(X2, Y1), 29
+LINE (X2, Y1)-(X2, Y2), 29
+LINE (X1, Y2)-(X2, Y2), 25
+LINE (X1, Y1 + 1)-(X1, Y2), 25
+PUT (X1 + 10, Y1 + 3), TXT2
+X1 = 191: X2 = 275: Y1 = 150: Y2 = 162
+LINE (X1, Y1)-(X2, Y2), 27, BF
+LINE (X1, Y1)-(X2, Y1), 29
+LINE (X2, Y1)-(X2, Y2), 29
+LINE (X1, Y2)-(X2, Y2), 25
+LINE (X1, Y1 + 1)-(X1, Y2), 25
+PUT (X1 + 14, Y1 + 3), TXT3
+X1 = 191: X2 = 275: Y1 = 167: Y2 = 179
+LINE (X1, Y1)-(X2, Y2), 27, BF
+LINE (X1, Y1)-(X2, Y1), 29
+LINE (X2, Y1)-(X2, Y2), 29
+LINE (X1, Y2)-(X2, Y2), 25
+LINE (X1, Y1 + 1)-(X1, Y2), 25
+PUT (X1 + 25, Y1 + 3), TXT4
+X1 = 191: X2 = 275: Y1 = 184: Y2 = 196
+LINE (X1, Y1)-(X2, Y2), 27, BF
+LINE (X1, Y1)-(X2, Y1), 29
+LINE (X2, Y1)-(X2, Y2), 29
+LINE (X1, Y2)-(X2, Y2), 25
+LINE (X1, Y1 + 1)-(X1, Y2), 25
+PUT (X1 + 25, Y1 + 3), TXT5
+END SUB
+
+SUB LOADPAL (PAL$)
+IF INSTR(PAL$, ".") = 0 THEN PAL$ = PAL$ + ".PAL"
+DIM RED AS STRING * 1
+DIM GREEN AS STRING * 1
+DIM BLUE AS STRING * 1
+DIM PARRAY&(255)
+OPEN PAL$ FOR BINARY AS #1
+FOR I = 0 TO 255
+  IF LOF(1) = 0 THEN PRINT "FILE NOT FOUND": CLOSE : KILL PAL$: GOTO ENDA
+  GET #1, , RED
+  GET #1, , GREEN
+  GET #1, , BLUE
+  R% = ASC(RED)
+  G% = ASC(GREEN)
+  B% = ASC(BLUE)
+  RI(I) = R%
+  GI(I) = G%
+  BI(I) = B%
+  PARRAY&(I) = 65536 * B% + 256 * G% + R%
+NEXT I
+PALETTE USING PARRAY&(0)
+CLOSE
+ENDA:
+END SUB
+
+SUB MouseDriver (ax%, bx%, cx%, dx%)
+  DEF SEG = VARSEG(Mouse$)
+  Mouse% = SADD(Mouse$)
+  CALL Absolute(ax%, bx%, cx%, dx%, Mouse%)
+END SUB
+
+SUB MouseHide
+ ax% = 2
+ MouseDriver ax%, 0, 0, 0
+
+END SUB
+
+FUNCTION mouseInit%
+  ax% = 0
+  MouseDriver ax%, 0, 0, 0
+  mouseInit% = ax%
+
+END FUNCTION
+
+SUB MOUSESHOW
+  ax% = 1
+  MouseDriver ax%, 0, 0, 0
+
+END SUB
+
+SUB MOUSESTATUS (LB, RB, xMouse%, yMouse%)
+  ax% = 3
+  MouseDriver ax%, bx%, cx%, dx%
+  LB = ((bx% AND 1) <> 0)
+  RB = ((bx% AND 2) <> 0)
+  xMouse% = cx% / 2
+  yMouse% = dx%
+
+END SUB
+

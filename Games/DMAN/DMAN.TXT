@@ -1,0 +1,90 @@
+                          D I M E N S I O N  M A N 
+                           1995 THE S.H. SOFTWORX
+
+TO RUN:
+  Type  DMAN   or    QBASIC /RUN DMAN.BAS
+
+NOTE:
+  The file HSRESET.BAS resets the high score list. 
+  To execute this program type:
+        HSRESET  or  QBASIC /RUN HSRESET.BAS 
+
+INTRODUCTION:
+  A few monthes a go ago you discoverd how to open gates into other 
+  dimensions. It was through using a device modified from your television
+  remote control. One day you built up enough nerve to test the device,
+  hoping it would take you to a place filled with riches beyond your wildest
+  dreams. It took you to a world of riches alright, but you did'nt count
+  on ending up in a dark world consisting of strange walls and traps either!
+  So far you have no idea how long you've been trapped in this dark world,
+  but you know it's been a long time. You are tired for you can never stop
+  running, the place has a strange curse. Every time you push that little
+  button thats supposed to take you home the device explodes, teleporting
+  to yet another twisted realm of the same dimension. You cannot stop
+  to rest ever, for the curse drives you mad, compelling you to continue on.
+  You realize now you must spend your eternity running tiredly collecting
+  the pieces to that rediculous device, hoping one day you'll push the 
+  button and be back in your own dimension thinking this was all just a bad
+  dream....
+
+OBJECT OF THE GAME:
+  At the start of each level the teleport device will explode, and the 
+  level will be displayed. You must collect the pieces of the teleport
+  device while avoiding walls and traps in order to get to the next level.
+  You can collect treasures for extra points, these are pretty obvious
+  you'll know them when you see them. There are several helpful items
+  that can be picked up to help you on your way. The helpful items are
+  described later.
+
+  CONTROLING THE DMAN:
+   Tap the cursor LEFT, RIGHT, UP, and DOWN keys (respectively) to change
+   DMANS running direction. (do not hold the keys down)
+
+   Press ENTER to use bombs which can blow up walls that block you path.
+
+   Press the SPACE BAR to pause the game
+  
+   Press ESC to exit game play & return to the title screen.
+
+  COLLECT THE FOLLOWING TREASURES FOR POINTS:
+    (These items are quite obvious when you see them)
+    
+    Silver coins
+    Gold coins
+    Jewelry(necklaces)
+    Gems
+    Money Bags   
+  
+  LIST OF HELPFUL ITEMS:  
+    You will know these items when you see them.
+
+    Beer can   - Collect as much beer as you can, each one that you pick up
+                 intoxifies you, allowing you to crash through two walls
+                 unharmed.
+
+    Magnet     - If you get the magnet the teleport pieces will be drawn to
+                 you, instantly teleporting you to the next level.
+    
+    Smart Bomb - Running over a smart bomb will destroy all of the traps on
+                 the screen. It appears as a spinning crome cylinder with a 
+                 handle.
+    
+    Dynamite   - Running over this will destroy all the walls on the screen. 
+                 It appears as red dynamite with a pumping box.
+
+    1up        - Gives you an extra life. 
+
+
+If you like the graphics in this game they were drawn with QBPAINT v4.0
+which can be found on AOL.
+
+Problems, Questions, or Comments?   
+
+    Write to:  
+    
+    The S.H. Softworx
+    9549 Hill rd. 
+    Klamath Falls, Oregon
+    97603
+
+

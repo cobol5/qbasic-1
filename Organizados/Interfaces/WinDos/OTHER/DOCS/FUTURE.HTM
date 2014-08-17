@@ -1,0 +1,856 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win95; U) [Netscape]">
+   <title>Future.Library help file - by Future Software</title>
+</head>
+<body text="#FFFFFF" bgcolor="#000040" link="#409FFF" vlink="#409FFF" topmargin="0" leftmargin="0">
+<a NAME="top"></a><b><font face="Arial"><font color="#004080"><font size=+3>Future.Library
+3 BUILDER</font></font></font></b>
+<br><font face="Arial"><font color="#409FFF"><font size=-1>Copyright &copy;
+1999-2000, Future Software. Visit our homepage at <b><a href="http://www.qb45.com" style="text-decoration: none">http://www.qb45.com</a></b>.</font></font></font>
+<br><font face="Arial"><font color="#409FFF"><font size=-1>Created by <b><a href="mailto:ms@Qb45.com" style="text-decoration: none">Michael
+Rye Sorensen</a></b> and <b><a href="mailto:Webmaster@Qb45.com" style="text-decoration: none">Jorden
+Chamid</a></b>.</font></font></font>
+<p><b><font face="Arial"><font color="#FFBF00"><font size=+0>SVGA Related</font></font></font></b>
+<ul><b><font face="Arial"><font size=-1><a href="#screenmodes" style="text-decoration: none">Setting
+the screen mode</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#paging" style="text-decoration: none">Paging</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#printtext" style="text-decoration: none">Printing
+text to the screen</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#graphical" style="text-decoration: none">Graphical
+(draw) functions</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#pictures" style="text-decoration: none">Storing/drawing
+pictures</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#loadpictures" style="text-decoration: none">Loading
+pictures</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#scrolling" style="text-decoration: none">Scrolling</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#3d" style="text-decoration: none">3D
+graphics</a></font></font></b></ul>
+<b><font face="Arial"><font color="#FFBF00"><font size=+0>NON-SVGA</font></font></font></b>
+<ul><b><font face="Arial"><font size=-1><a href="#pictures2" style="text-decoration: none">Saving/loading
+pictures</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#font" style="text-decoration: none">A
+font that doesn't erase the background</a></font></font></b></ul>
+<b><font face="Arial"><font color="#FFBF00"><font size=+0>WAVE</font></font></font></b>
+<ul><b><font face="Arial"><font size=-1><a href="#wave" style="text-decoration: none">Loading
+a WAVE file</a></font></font></b></ul>
+<b><font face="Arial"><font color="#FFBF00"><font size=+0>Mouse</font></font></font></b>
+<ul><b><font face="Arial"><font size=-1><a href="#mousesvga" style="text-decoration: none">Mouse
+support in SVGA</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#mouse" style="text-decoration: none">Mouse
+support in normal QB screens</a></font></font></b></ul>
+<b><font face="Arial"><font color="#FFBF00"><font size=+0>Other</font></font></font></b>
+<ul><b><font face="Arial"><font size=-1><a href="#ems" style="text-decoration: none">EMS
+support</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#xms" style="text-decoration: none">XMS
+support</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#palette" style="text-decoration: none">Changing
+Palette</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#keyboard" style="text-decoration: none">Keyboard
+functions</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#joystick" style="text-decoration: none">Joystick
+functions</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#effects" style="text-decoration: none">Two
+graphical effects</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#timer2" style="text-decoration: none">Timer</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#how2use" style="text-decoration: none">How
+to use Future.Library in your program</a></font></font></b>
+<br><b><font face="Arial"><font size=-1><a href="#updates" style="text-decoration: none">Latest
+updates</a></font></font></b></ul>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="screenmodes"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Setting
+the screen mode</font></font></b><font size=-1> You set a mode by calling
+Set####x#### (BitNumber) where ####x#### is the resolution you want and
+'Bitnumber' is the amount of bits the mode should use to represent a color.
+(i.e. to set a 320x200 resolution with 8 bit colors, you write 'Set320x200
+8') The bit number the library supports are 8, 15, 16 and 32 bits. Before
+exiting you program it is a good idea to call 'ResetScreen', if you don't
+you will stay in the selected mode after the program stops. This happens
+because the library don't know when you want to exit the program, so it
+can't change back to text mode automatically. By calling 'ResetScreen'
+the screen is set into text mode also known as SCREEN 0. You must call
+'ResetScreen' for this to work, do not call SCREEN 0 directly. The function
+Future.ModeList is used to see which screen modes the video card supports
+(i.e. Modeinfo$ = Future.ModeList(IndexNumber%). The Indexnumber% indicates
+where in the mode list to look for a mode. The position of a specific mode
+in the list can differ from card to card, so you should always search through
+the hole list until you find the mode you are looking for. If the function
+returns a null string you have reached the end of the mode list. Also,
+before any screen mode is set, your should check to see if your video card
+supports VESA at all, the function IsVESA will return -1 if VESA is supported
+by the video card.</font></font>
+<p><font face="Arial"><font size=-1>Some screen modes may not be directly
+supported by your video card. For these modes to work you will need the
+UniVBE driver developed by Scitech. The newest version of the driver can
+be found at <a href="http://www.scitechsoft.com">www.scitechsoft.com</a>.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB Set320x200 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set320x240 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set320x400 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set320x480 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set400x300 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set512x384 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set640x350 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set640x400 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set640x480 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set800x600 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set1024x768 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set1152x864 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set1280x1024 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Set1600x1200 (B)</font></font>
+<br><font face="Arial"><font size=-1>SUB ReSetScreen</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION Future.ModeList (I)</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION IsVESA</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="paging"></a><font face="Arial,Helvetica"><b><font color="#FFCC00">Paging
+</font></b><font size=-1>If
+enough video memory is available and paging is supported by video hardware,
+it is possible to have more than one screen page to work in. Paging is
+the solution to flicker free animation and by flipping between two pages,
+while drawing on the page not being displayed, you will remove the flicker.
+The number of available pages is returned by calling 'Pages' (i.e. NumberOfPages%
+= Pages%) if 'Pages' return zero paging is not supported in that mode.
+Viewing a page is done by calling 'ViewPage' (i.e. ViewPage pagenumber).
+Setting the active page for drawing is done by calling 'SetPage' (i.e.
+SetPage pagenumber). When setting a screen mode the active page is set
+to the first page, page zero.</font></font>
+<p><font face="Arial,Helvetica"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>FUNCTION Pages</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB SetPage (P)</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB ViewPage (P</font>)</font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="printtext"></a><b><font face="Arial"><font color="#FFBF00"><font size=+0>Printing
+text to the screen </font></font></font></b><font face="Arial,Helvetica"><font size=-1>You
+can use 'Future.PRINT' to print text in any of the supported screen modes
+(i.e. Future.PRINT X, Y, "Hello World", F, B) The last two parameters is
+the foreground and background color to use. If the color is set to -1 it
+will be transparent (no color will be used). The first two parameters are
+a X,Y offset in pixels, from the upper left corner, from where the text
+is to be printed on the screen. In 320x200 the font size will be 8x8 by
+default, in any other mode the size will be 8x16 in size. After setting
+a mode you can change the font size by calling 'Setfont' (i.e. Setfont
+x) where x is 0 for 8x8 font size, 1 for 8x16 font size and 2 for 8x14
+font size.</font></font>
+<p><font face="Arial,Helvetica"><font size=-1>You can also install your
+own font type by using Future.LoadFONT. It will load a font file previously
+saved by the Font Editor. When the file is loaded the font is saved in&nbsp;
+memory and it immediately overrides the SetFont function, only by calling
+SetFont can the fonts be reset to the default system font type.</font></font>
+<p><font face="Arial,Helvetica"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB Future.PRINT (X, Y,
+t$, F, B)</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB SetFont (Mode)</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB Future.LoadFONT (Filename$)</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="graphical"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Graphical
+(draw) functions</font></font></b><font size=-1> A set of basic drawing
+routines was added to the library for easy generating of graphic. The color
+format for the drawing routines depends on the color mode that is used.
+An 8 bit mode uses color values from 0-FF hex (0 to 255 decimal), the color
+that is displayed in 8 bit modes depend on how the pallete is set up. 15,
+16 and 32 bit modes does not use a pallete, they use the actual value C
+contain when a drawing routine is called. The 15 bit modes use values 0-1fh
+for the RGB values. In hex that will be 1F1F1Fh for white, blue is 00001Fh,
+green is 001F00h and red is 1F0000h. In 16 bit modes the red and blue shades
+also have a max of 1Fh, but green shades goes to 3Fh, so in 16 bit modes
+white would be 1F3F1Fh. In 32 bit modes the Red, Green and Blue shades
+go from 0 to FFh, so FFFFFFh is white.</font></font>
+<p><font face="Arial"><font size=-1>When your using TrueColor modes it
+can be useful to use RGB2Color to incode the RGB color for you. RGB2Color
+will incode 24 bit RGB colors into the Color format the library uses. So
+the color will always look the same no matter what TrueColor mode you are
+in. Color2RGB will take a color returned by Future.POINT and convert it
+back into a thet RGB components.</font></font>
+<br>&nbsp;
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.PSET (X, Y, C)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.LINE (X, Y, X1, Y1, C,
+BitScan)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.FILLCIRCLE (CX, CY, R,
+C)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.CIRCLE (CX, CY, R, C)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.CLS (C)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.FILLBOX (X, Y, X1, Y1,
+C)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.BOX (X, Y, X1, Y1, C)</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION Future.POINT (X, Y)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.HLINE (Y, X1, X2, C)</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION RGB2Color (R, G, B)</font></font>
+<br><font face="Arial"><font size=-1>SUB Color2RGB (Color, R, G, B)</font></font>
+<br>&nbsp;
+<p><font face="Arial"><font size=-1>NOTE:</font></font>
+<br><font face="Arial"><font size=-1>When using the Future.LINE routine,
+note that to draw a normal line the 'BitScan' parameter must be set to
+-1.</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="pictures"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Storing/drawing
+pictures</font></font></b><font size=-1> By using Future.PUT you can easily
+draw a picture on screen, you just need to define an array to hold the
+picture information. The array can be of any type as no type checking is
+done when it is passed to the routine. The first four bytes in the array
+will hold the width and height of the picture. Future.GET gets a picture
+from the screen and stores it in the array passed to the routine. A color
+filter is added to the PUT routine, so it is possible to filter out a color
+that you do not want to be drawn. To set the color being filtered out call
+SetMaskColor C where C is the color you want to filter out. If C is negative
+the filter is disabled. SetMaskColor also effects Future.ROTATE and Future.TRIFILL.</font></font>
+<p><font face="Arial"><font size=-1>It is also possible to save a screen
+page to a file. By calling Future.Snapshot the active screen page will
+be saved as a bmp file on disk.</font></font>
+<p><font face="Arial"><font size=-1>The Future.GET/PUT functions can only
+accept one dimensioned arrays, so to get around the problem of using two
+(or more) dimensioned arrays you have to redefine the two routines. This
+is simply done by adding these two lines to the top your main module (.bas
+file):</font></font>
+<p><font face="Arial"><font size=-1>DECLARE SUB Future.DirectPUT ALIAS
+"SVGAput" (BYVAL x1%, BYVAL y1%, BYVAL offset%, BYVAL segment%)</font></font>
+<br><font face="Arial"><font size=-1>DECLARE SUB Future.DirectGET ALIAS
+"SVGAget" (BYVAL x1%, BYVAL y1%, BYVAL x2%, BYVAL y2%, BYVAL offset%, BYVAL
+segment%)</font></font>
+<p><font face="Arial"><font size=-1>After adding the two lines to your
+program you can call Future.DirectGET/Future.DirectPUT to draw the sprites,
+but be aware that you now have to give the segment and offset of the picture
+data you want to draw/or store to.</font></font>
+<p><font face="Arial"><font size=-1>NOTE:</font></font>
+<br><font face="Arial"><font size=-1>The GET routine does not check for
+upper and lower boundary of the array, so make sure you allocate enough
+memory to hold all the picture information plus four extra bytes.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.GET (X, Y, X1, Y1, Array())</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.PUT (X, Y, Array())</font></font>
+<br><font face="Arial"><font size=-1>SUB SetMaskColor (C)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.Snapshot (filename)</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="loadpictures"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Loading
+pictures</font></font></b><font size=-1> You can now load the default image-formats
+into your SVGA screen, with just one line of code!</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.LoadGIF (Filename, XRes,
+YRes)&nbsp;&nbsp;&nbsp;&nbsp; (Loads 8 bit, in 8 bit modes only)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.LoadBMP (Filename, Xpos,
+Ypos)&nbsp;&nbsp;&nbsp; (Loads 4, 8 and 24 bit, in 8, 15, 16 and 32 bit
+modes )</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.LoadPCX (Filename, Xpos,
+Ypos)&nbsp;&nbsp;&nbsp;&nbsp; (Loads 8 bit in 8 bit modes only)</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="wave"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Loading
+a WAVE file</font></font></b><font size=-1> We have even added some great
+functions for adding sound to your program(s)! In our tests, we have loaded
+a 9 MB WAVE file and it played great! If the routines do not play correctly,
+it may be that the library has not been set up proberly. Use SBSetup to
+setup the SoundBlaster manualy, if nothing else works.</font></font>
+<p><font face="Arial"><font size=-1>The SBSetup routine parameters has
+the following configuations:</font></font>
+<br>&nbsp;
+<table BORDER >
+<tr ALIGN=CENTER>
+<td>-</td>
+
+<td>SBtype</td>
+
+<td>IRQ</td>
+
+<td>Hdma</td>
+
+<td>Ldma</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td><font face="Arial"><font size=-1>SB 1.xx</font></font></td>
+
+<td>1</td>
+
+<td>5 or 7</td>
+
+<td>***</td>
+
+<td>0, 1 or 3</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td><font face="Arial"><font size=-1>SB 2.xx</font></font></td>
+
+<td>2</td>
+
+<td>5 or 7</td>
+
+<td>***</td>
+
+<td>0, 1 or 3</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td><font face="Arial"><font size=-1>SB pro</font></font></td>
+
+<td>3</td>
+
+<td>5 or 7</td>
+
+<td>***</td>
+
+<td>0, 1 or 3</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td><font face="Arial"><font size=-1>SB16</font></font></td>
+
+<td>4</td>
+
+<td>2, 5, 7 or 10</td>
+
+<td>5, 6 or 7</td>
+
+<td>0, 1 or 3</td>
+</tr>
+</table>
+
+<p><font face="Arial"><font size=-1>BasePort is normaly 220h(544) but can
+have values from 220h to 260h, it depends on the jumper setting on the
+sound card and card type.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB SBSetup (BasePort, Ldma, Hdma,
+Irq, SBtype)</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION WavDone ()</font></font>
+<br><font face="Arial"><font size=-1>SUB LoadWAV (Filename)</font></font>
+<br><font face="Arial"><font size=-1>SUB StopAndReset ()</font></font>
+<br><font face="Arial"><font size=-1>SUB SetSurround (OnOff)</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION Lwavedata ()</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION Rwavedata ()</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION GetMasterVolL ()</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION GetMasterVolR ()</font></font>
+<br><font face="Arial"><font size=-1>SUB SetMasterVolL (Volume)</font></font>
+<br><font face="Arial"><font size=-1>SUB SetMasterVolR (Volume)</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION GetWaveVolL ()</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION GetWaveVolR ()</font></font>
+<br><font face="Arial"><font size=-1>SUB SetWaveVolL (Volume)</font></font>
+<br><font face="Arial"><font size=-1>SUB SetWaveVolR (Volume)</font></font>
+<br>&nbsp;
+<br>&nbsp;
+<br>
+<br>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="mousesvga"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Mouse
+support</font></font></b><font size=-1> Using a mouse in a svga mode is
+supported, but it is a polling mouse. That means for the mouse to move
+on screen you have to call 'Future.UpdateMouse' continuously. The mouse
+pointer size is 16x16x256 and can be changed to any shape by calling 'Future.Mouseshape
+Shape$' Shape$ is a 256 pixel string passed to the sub. To set a transparent
+color for the mouse pointer call 'SetMouseMaskColor C' where C is the color
+to filter out. If C is negative no filtering is done.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.UpdateMouse</font></font>
+<br><font face="Arial"><font size=-1>SUB SetLocation (X, Y)</font></font>
+<br><font face="Arial"><font size=-1>SUB SetMouseMaskColor (C)</font></font>
+<br><font face="Arial"><font size=-1>SUB SetMouseRange (X, Y, X1, Y1)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.Mouseshape (Shape$)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.MouseOff</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.MouseOn</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION Future.MouseY</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION Future.MouseX</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION Future.MouseB</font></font>
+<br><font face="Arial"><font size=-1>SUB SetMouseSensitivity (H, V)</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="mouse"></a><b><font face="Arial"><font color="#FFBF00"><font size=+0>Mouse
+support in normal QB screens</font></font></font></b>
+<br><font face="Arial"><font size=-1>MouseInit</font></font>
+<ul><font face="Arial"><font size=-1>&nbsp;Initialize the mouse, you need
+to call this function before using other mouse functions. If it returns
+0, the mouse has been initialized. If not, it isn't (DUH!).</font></font></ul>
+<font face="Arial"><font size=-1>MouseHide</font></font>
+<ul><font face="Arial"><font size=-1>&nbsp;Hide the mouse cursor, use this
+when you want to put another image, different than the default cursor.</font></font></ul>
+<font face="Arial"><font size=-1>MousePut</font></font>
+<ul><font face="Arial"><font size=-1>&nbsp;Put the mouse cursor somewhere
+on the screen.</font></font></ul>
+<font face="Arial"><font size=-1>MouseRange</font></font>
+<ul><font face="Arial"><font size=-1>&nbsp;Set mouse range. The mouse can't
+move outside this range.</font></font></ul>
+<font face="Arial"><font size=-1>MouseShow</font></font>
+<ul><font face="Arial"><font size=-1>&nbsp;Show the mouse cursor</font></font>
+<br><font face="Arial"><font size=-1>You need to call this if you want
+it to be visible.</font></font></ul>
+<font face="Arial"><font size=-1>MouseStatus</font></font>
+<ul><font face="Arial"><font size=-1>&nbsp;Checks mouse status.</font></font></ul>
+
+<center><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="scrolling"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Scrolling</font></font></b><font size=-1>
+By calling 'SetFrameBuffer X,Y' you can set a page frame that is larger
+than the screen. You can then use 'Future.ScrollLR S' or 'Future.ScrollUD
+S' to scroll the screen. If S is positive the screen is scrolled right
+or down, and if S is negative the screen is scrolled left or up. When changing
+the page frame size the number of available pages will change and you should
+call 'Pages%' to see how many pages you have after the change. Calling
+SetScroll will set an immediate scroll position on the screen, from where
+to start scrolling. All pages will be effected by the scrolling but you
+can lock a page from being scrolled by calling lockpage. Unlockpage will
+make scrolling possible on the specific page again, all pages are unlocked
+at startup.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB SetFrameBuffer X,Y</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.ScrollLR S</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.ScrollUD S</font></font>
+<br><font face="Arial"><font size=-1>SUB LockPage (Page)</font></font>
+<br><font face="Arial"><font size=-1>SUB UnLockPage (Page)</font></font>
+<br><font face="Arial"><font size=-1>SUB SetScroll (Xpos, Ypos)</font></font>
+<br>&nbsp;
+<br>&nbsp;
+<br>
+<br>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="3d"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>3D
+graphics </font></font></b><font size=-1>Three routines have been made
+to ease the pain of 3D programming. Future.TRIFILL will draw a filled triangle
+with a given color. Future.TRIGOUR will draw a gourauded triangle with
+three given colors. Future.TRITEXT will draw a textured triangle. The U,V
+parameters in Future.TRITEXT are the coordinates inside the texture map
+given by Array(). The first four bytes in the array should hold the X,Y
+dimension of the texture map, that means you can safely use an array stored
+by Future.GET.</font></font>
+<p><font face="Arial"><font size=-1>Future.ROTATE/Future.ROTATEB can be
+used to rotate and/or to scale a picture that have been stored by Future.GET.
+The Angle parameter is the degrees (0 to 360) the picture should be rotated
+counterclockwise. A Scale parameter of zero to one will draw a pictures
+less the size of the original picture, if Scale is exactly 0.5 the picture
+length / height will be half the original size, and a Scale of 2 will double
+it. Future.ROTATEB was made give a more pixel perfect result when rotating,
+but it cannot draw outside the dimensions of the original picture, pixel
+that end up outside the picture resolution is clipped.</font></font>
+<p><font face="Arial"><font size=-1>The Future.TRITEXT function can only
+accept one dimensioned arrays, so to get around the problem of using two
+(or more) dimensioned arrays you have to redefine the routine. This is
+done by adding this line to the top your main module (.bas file):</font></font>
+<p><font face="Arial"><font size=-1>DECLARE SUB Future.DirectTRITEXT ALIAS
+"SVGAtritext" (BYVAL X1%, BYVAL Y1%, BYVAL X2%, BYVAL Y2%, BYVAL X3%, BYVAL
+Y3%, BYVAL U1%, BYVAL V1%, BYVAL U2%, BYVAL V2%, BYVAL U3%, BYVAL V3%,
+BYVAL Offset%, BYVAL Segment%)</font></font>
+<p><font face="Arial"><font size=-1>After adding the line to your program
+you can call Future.DirectTRITEXT to draw the textured triangle, but be
+aware that you now have to give the segment and offset of the picture data
+you want to draw.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.TRIFILL (X1, Y1, X2, Y2,
+X3, Y3, Color)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.TRIGOUR (X1, Y1, X2, Y2,
+X3, Y3, Color1, Color2, Color3)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.TRITEXT (X1, Y1, X2, Y2,
+X3, Y3, U1, V1, U2, V2, U3, V3, Array())</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.ROTATE (X, Y, Angle, Scale,
+Array())</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.ROTATEB (X, Y, Angle, Scale,
+Array())</font></font>
+<br>&nbsp;
+<br>&nbsp;
+<br>
+<br>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="pictures2"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Saving/loading
+NON-SVGA pictures</font></font></b><font size=-1> We have got some functions
+so you can load some of the most used (Windows) by typing a single command.
+Just use one of the functions below. You can also save the current screen
+to a 64 KB file, and load it again...you should also save/load the palette.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB LoadScreen (Filename)</font></font>
+<br><font face="Arial"><font size=-1>SUB SaveScreen (Filename)</font></font>
+<br><font face="Arial"><font size=-1>SUB LoadGIF (a)</font></font>
+<br><font face="Arial"><font size=-1>SUB LoadPCX (a)</font></font>
+<br><font face="Arial"><font size=-1>SUB LoadBMP (a)</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="font"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>A
+font that doesn't erase the background </font></font></b><font size=-1>Unlike
+the normal QB-print function, this font doesn't erase the background, it
+only draws the letters.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB Font (X%, Y%, Text$, Col%)</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="ems"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>EMS
+Support</font></font></b><font size=-1> It is possible to save large screen
+data into memory. Calling 'AllExpMem' (i.e. handle% = AllExpMem%(&amp;h100000)'get
+1 megabyte of memory) will give you access to all the memory you need.
+'AllExpMem' returns the handle you need to access the memory. Future.EMSPut/Future.EMSGet
+works the same way the normal Future.GET/Future.PUT work, the only difference
+is that you use a handle instead of an array. Remember to deallocate the
+memory before you exit your program, calling 'DeallExpMem handle' will
+deallocate the memory.</font></font>
+<p><font face="Arial"><font size=-1>Before you use the ems routines it
+is a good idea to check if a ems driver is installed. You do this by checking
+if IsEMMInstalled returns -1, if IsEMMInstalled returns zero no ems driver
+is installed and you should not use the routines. If a driver is found
+you can safely use the routines. PageFrameAddr will return the address
+where the ems segment window is located (e000h or d000h on most computers).
+And MapLogicalPages will map the allocated expanded memory into the segment
+window. The segment window is divided into four 16kb chunks so a maximum
+of 64kb can be mapped at one time. The physicalpage and logicalpage parameter
+in MapLogicalPages is a number that indicate which part of the allocated
+memory should be mapped into the segment windows. Below is a table that
+shows how the mapping can be done.</font></font>
+<br>&nbsp;
+<br>&nbsp;
+<table BORDER >
+<tr ALIGN=CENTER>
+<td><font face="Arial"><font size=-1>Physical page</font></font>(0k-64k)</td>
+
+<td><font face="Arial"><font size=-1>Logical page</font></font>(0k-64k)</td>
+
+<td><font face="Arial"><font size=-1>Logical page(64k-128k)</font></font></td>
+
+<td><font face="Arial"><font size=-1>Logical page</font></font>(128k-192k)</td>
+
+<td><font face="Arial"><font size=-1>Logical page(</font></font>192k<font face="Arial"><font size=-1>-256</font></font>k)</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td>0</td>
+
+<td>0</td>
+
+<td>4</td>
+
+<td>8</td>
+
+<td>12</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td>1</td>
+
+<td>1</td>
+
+<td>5</td>
+
+<td>9</td>
+
+<td>13</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td>2</td>
+
+<td>2</td>
+
+<td>6</td>
+
+<td>10</td>
+
+<td>14</td>
+</tr>
+
+<tr ALIGN=CENTER>
+<td>3</td>
+
+<td>3</td>
+
+<td>7</td>
+
+<td>11</td>
+
+<td>15</td>
+</tr>
+</table>
+
+<p><font face="Arial"><font size=-1>DefineEMSbufferSize and SetEMSpage
+is part of a new system that allows you to create screen buffers stored
+in expanded memory. The screen buffers can be defined as any size from
+1x1 to 16384x16384 and will be working just like drawing to a normal screen
+buffer.</font></font>
+<br>&nbsp;
+<p><font face="Arial"><font size=-1>Sample program showing the use of an
+ems offscreen buffer:</font></font>
+<p><font face="Arial"><font size=-1>handle% = AllExpMem(256000)' get enough
+memory for a 640x400 buffer</font></font>
+<br><font face="Arial"><font size=-1>DefineEMSbufferSize handle%, 640,
+400, 0 'define the buffer and assign a page number to it</font></font>
+<p><font face="Arial"><font size=-1>Set640x400 'set a mode</font></font>
+<p><font face="Arial"><font size=-1>SetEMSpage 0 'turn on the ems buffer</font></font>
+<br><font face="Arial"><font size=-1>FOR i% = 0 to 100</font></font>
+<br><font face="Arial"><font size=-1>Future.LINE RND*640, RND*400, RND*400,
+RND*640, RND*255, -1 'just draw some lines on the ems page</font></font>
+<br><font face="Arial"><font size=-1>NEXT</font></font>
+<p><font face="Arial"><font size=-1>SetPage 0 ' turn the ems buffer off
+and enable drawing to the first screen page</font></font>
+<br><font face="Arial"><font size=-1>Future.EMSPut 0, 0, handle% 'draw
+the buffer on the screen</font></font>
+<p><font face="Arial"><font size=-1>SLEEP 'wait for a key press</font></font>
+<br><font face="Arial"><font size=-1>ResetScreen 'reset screen to text
+mode</font></font>
+<br><font face="Arial"><font size=-1>END ' exit program</font></font>
+<p><font face="Arial"><font size=-1>Future.EMSGetx is used to fill an area
+in ems, defined by Sx, Sy, Sx1, Sy1, with data from the screen. The location
+on the screen from which to start taking the data is defined by Tx,Ty.
+The ems map must be previously defined by DefineEMSbufferSize or EMSGet.
+Future.EMSPutx works the same way, but Sx, Sy, Sx1, Sy1 defines the area
+on the screen to be filled with data from an previously defined ems map,
+Tx,Ty is the location in the ems map. That way you can easily use an ems
+map to store/draw smaller sprites.</font></font>
+<p><font size=-1><font face="Arial">Future.EMSROTATE/Future.EMSROTATEB
+can be used to rotate and/or to scale a picture that have been stored in
+EMS. The Angle parameter is the degrees (0 to 360) the picture should be
+rotated counterclockwise. A Scale parameter of zero to one will draw a
+pictures less the size of the original picture, if Scale is exactly 0.5
+the picture length / height will be half the original size, and a Scale
+of 2 will double it. Future.ROTATEB was made give a more pixel perfect
+result when rotating, but it cannot draw outside the dimensions of the
+original picture, pixel that end up outside the picture resolution is clipped.
+These two routines together with </font><font face="Arial,Helvetica">Future.EMSTRITEXT
+was made more as an experiment, to see how far it was possible to go with
+this library. These routines sort of marks the limit because using large
+EMS maps with Future.EMSTRITEXT is a very slow process and is probably
+not useful for anything.</font></font>
+<br>&nbsp;
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION IsEMMInstalled</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION AllExpMem (Bytes)</font></font>
+<br><font face="Arial"><font size=-1>SUB DeallExpMem (handle)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.EMSPut (X, Y, handle)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.EMSGet (X, Y, X1, Y1, handle)</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION GetEMMVersion! ()</font></font>
+<br><font face="Arial"><font size=-1>SUB MapLogicalPages (handle, physicalpage,
+logicalpage)</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION PageFrameAddr</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION TotalPages</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION UnallocatedPages</font></font>
+<br><font face="Arial"><font size=-1>SUB DefineEMSbufferSize (handle, Xsize,
+Ysize, EMSPageNumber)</font></font>
+<br><font face="Arial"><font size=-1>SUB SetEMSpage (EMSPageNumber)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.EMSPutx Tx, Ty, handle,
+Sx, Sy, Sx1, Sy1)</font></font>
+<br><font face="Arial"><font size=-1>SUB Future.EMSGetx Tx, Ty, handle,
+Sx, Sy, Sx1, Sy1)</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB Future.EMSTRITEXT (X1,
+Y1, X2, Y2, X3, Y3, U1, V1, U2, V2, U3, V3, handle)</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB Future.EMSROTATE (X,
+Y, Angle, Scale, handle)</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB Future.EMSROTATEB (X,
+Y, Angle, Scale!, handle)</font></font>
+<br>&nbsp;
+<br>&nbsp;
+<br>
+<br>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="xms"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>XMS
+Support</font></font></b><font size=-1> The XMS driver gives access to
+memory above the first megabyte. It it recommended that you use XMS to
+store data instead of EMS and since EMS memory is handled much slower than
+XMS memory, it would be preferable to do so. Before you use the XMS routines
+you should always call IsXMSInstalled, because the library needs to find
+and hook to the XMS driver. If you use the routines without calling IsXMSInstalled
+your computer is likely to crash. IsXMSInstalled returns -1 if the driver
+is installed and zero if not. AllocateXMS will allocate the memory you
+need, and DeallocateXMS will return the memory to the free memory pool.
+FreeXMSmemory will give you the amount of memory available in the memory
+pool. MoveToXMS/MoveFromXMS does the memory transfer, either from lower
+memory to extended memory or from extended memory to lower memory. Segment:Offset
+is the position in lower memory and XMSOffset is the start position in
+extended memory, e.i. If you have allocated 1Mb of extended memory, XMSOffset
+range is 0 to 1048575 bytes.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION IsXMSInstalled ()</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION AllocateXMS (Bytes)</font></font>
+<br><font face="Arial"><font size=-1>SUB DeallocateXMS (handle)</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION FreeXMSmemory ()</font></font>
+<br><font face="Arial"><font size=-1>SUB MoveXMS (SourceHandle, SourceOffset,
+DestHandle, DestOffset, Bytes)</font></font>
+<br><font face="Arial"><font size=-1>SUB MoveToXMS (handle, Segment, Offset,
+Bytes, XMSOffset)</font></font>
+<br><font face="Arial"><font size=-1>SUB MoveFromXMS (handle, Segment,
+Offset, Bytes, XMSOffset)</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB Future.XMSget (X, Y,
+X1, Y1, XMShandle)</font></font>
+<br><font face="Arial,Helvetica"><font size=-1>SUB Future.XMSput (X, Y,
+XMShandle)</font></font>
+<br>&nbsp;
+<br>&nbsp;
+<br>
+<br>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="palette"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Changing
+Palette</font></font></b><font size=-1> Changing the palette works in both
+the normal QB screen modes, and in SVGA.</font></font>
+<br><font face="Arial"><font size=-1>We have some functions to let you
+save the current palette, load it again, fade it out, or fade it in (after
+fading it out).</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB SavePal (Filename)</font></font>
+<br><font face="Arial"><font size=-1>SUB LoadPal (Filename)</font></font>
+<br><font face="Arial"><font size=-1>SUB Palette.FadeOut</font></font>
+<br><font face="Arial"><font size=-1>SUB Palette.FadeIn</font></font>
+<br><font face="Arial"><font size=-1>SUB ChangePal (Color2Change, R, G,
+B)</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="keyboard"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Keyboard
+functions</font></font></b><font size=-1>LockKeys</font></font>
+<ul><font face="Arial"><font size=-1>&nbsp;Changes Caps/Num/Scroll lock-state
+(ON, OFF). Example:</font></font>
+<br><font face="Arial"><font size=-1><b>LockKeys 1, 1 </b>Turns CapsLock
+on</font></font>
+<br><font face="Arial"><font size=-1><b>LockKeys 1, 0 </b>Turns CapsLock
+OFF</font></font>
+<br><font face="Arial"><font size=-1><b>LockKeys 2, 1 </b>Turns NumLock
+ON</font></font>
+<br><font face="Arial"><font size=-1><b>LockKeys 3, 1 </b>Turns ScrollLock
+ON</font></font>
+<br><font face="Arial"><font size=-1>(etc.)</font></font></ul>
+<font face="Arial"><font size=-1>Keyboardhandler:</font></font>
+<br><font face="Arial"><font size=-1>This keyboardhandler is excellent
+for using in games! It is very fast, detects multiple keys pressed at once,
+and more!</font></font>
+<br><font face="Arial"><font size=-1>To use it in your program, first you
+need to turn it on: <b>KBHon</b>.</font></font>
+<br><font face="Arial"><font size=-1>Now you can detect keys like this:
+<b>Keyp
+= GetKey (KeyCode)</b>. The different keycodes are 1-127, read keyhandler.txt
+for more info!</font></font>
+<br><font face="Arial"><font size=-1><b>Important</b>: Turn off the keyboardhandler
+by using <b>KBHoff</b> before you end the program, or else you won't be
+able to return to the QB IDE...</font></font>
+<center><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="joystick"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Joystick
+functions</font></font></b><font size=-1> Get the joystick-status.</font></font>
+<br><b><font face="Arial"><font size=-1>StickStatus JoyX, JoyY, Button1,
+Button2, Button3</font></font></b>
+<br><font face="Arial"><font size=-1>(JoyX = JoyStick X, JoyY = JoyStick
+Y)</font></font>
+<br>
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="effects"></a><b><font face="Arial"><font color="#FFBF00"><font size=+0>Two
+graphical effects:</font></font></font></b>
+<br><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>SUB Melt ()</font></font>
+<br><font face="Arial"><font size=-1>SUB Shake (Duration)</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="timer2"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Timer</font></font></b><font size=-1>
+We have an (experimental) Timer function, that works faster than the normal
+QB-timer.</font></font>
+<p><font face="Arial"><font size=-1>SUBs/FUNCTIONs:</font></font>
+<br><font face="Arial"><font size=-1>FUNCTION Timer2&amp;</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="how2use"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>How
+to use Future.Library in your program</font></font></b><font size=-1> Load
+QB with <b>QB /l Future</b> or run <b>QBFUTURE.BAT</b></font></font>
+<br><font face="Arial"><font size=-1>In your program use <b>REM $INCLUDE:
+'FUTURE.BI'</b> or <b>'$INCLUDE: 'FUTURE.BI'</b></font></font>
+<br><font face="Arial"><font size=-1>From now on, you can use the functions
+of the Future.Library!</font></font>
+<center>
+<p><a href="#top"><img SRC="top.jpg" BORDER=0 ></a></center>
+
+<hr align=left width=90% noshade size=1 color=#FFBF00><a NAME="updates"></a><font face="Arial"><b><font color="#FFBF00"><font size=+0>Latest
+updates</font></font></b><font size=-1> What's new with the Future.Library:</font></font>
+<br><b><font face="Arial"><font size=-1>February 9, 2000:</font></font></b>
+<br><font face="Arial"><font size=-1><b>- </b>Added an EXCELLENT <a href="#keyboard">Keyboard
+handler</a></font></font>
+<br><font face="Arial"><font size=-1>- Reduced the use of string space
+(should now be above 40k)</font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#graphical">RGB2Color/Color2RGB</a></font></font>
+<br><font face="Arial"><font size=-1>- Future.TRITEXT/EMSTRITEXT will only
+work with power of 2 sized maps</font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#ems">Future.EMSTRITEXT</a></font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#ems">Future.EMSROTATE</a></font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#ems">Future.EMSROTATEB</a></font></font>
+<br><font face="Arial"><font size=-1>- New Future.Library Builder v1.0</font></font>
+<br><font face="Arial"><font size=-1>- added more <a href="#wave">sound</a>
+options</font></font>
+<br><b><font face="Arial"><font size=-1>December 27, 1999:</font></font></b>
+<br><font face="Arial"><font size=-1><b>- </b>Added <a href="#screenmodes">TrueColor
+Modes</a></font></font>
+<br><font face="Arial"><font size=-1>- Used more string memory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(you may run into memory problems)</font></font>
+<br><font face="Arial"><font size=-1>- Updated all subs and functions for
+truecolor (excluding Future.TRIGOUR)</font></font>
+<br><font face="Arial"><font size=-1>- Speeded up Future.EMSput/Future.EMSputx</font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#xms">Future.XMSget/Future.XMSput</a></font></font>
+<br><font face="Arial"><font size=-1>- Fixed bug in AllocateXMS</font></font>
+<br><font face="Arial"><font size=-1>- Added MoveXMS</font></font>
+<br><font face="Arial"><font size=-1>- Added support for loading 24 bit
+BMPs in 15, 16 and 32 bit modes</font></font>
+<br><font face="Arial"><font size=-1>- Added support for loading 4 and
+8 bit BMPs in all modes</font></font>
+<br><font face="Arial"><font size=-1>- Changed the <a href="#graphical">color
+format</a> from 16 bit integer to a 32 bit integer</font></font>
+<br><font face="Arial"><font size=-1>&nbsp; (this affects all drawing functions)</font></font>
+<br><b><font face="Arial"><font size=-1>November 05, 1999:</font></font></b>
+<br><font face="Arial"><font size=-1><b>- </b>Added full access to <a href="#xms">XMS</a></font></font>
+<br><font size=-1><font face="Arial">- </font><font face="Arial,Helvetica">Userfonts</font><font face="Arial">
+are now stored in xms</font></font>
+<br><font face="Arial"><font size=-1>- Reduced memory use.</font></font>
+<br><font face="Arial"><font size=-1>- Fixed bug in Future.FONTLOAD</font></font>
+<br><font face="Arial"><font size=-1>- Fixed bug in Future.EMSget</font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#ems">Future.EMSputx/Future.EMSgetx</a></font></font>
+<br><font face="Arial"><font size=-1>- Fixed bug in scrolling routines</font></font>
+<br><font face="Arial"><font size=-1>&nbsp;(scrolling only worked on the
+first page)</font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#scrolling">SetScroll</a></font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#scrolling">LockPage/UnlockPage</a></font></font>
+<br><font face="Arial,Helvetica"><font size=-1>- New <a href="#3d">Future.RotateB</a></font></font>
+<br><font face="Arial,Helvetica"><font size=-1>- New <a href="#wave">SBsetup</a></font></font>
+<br><font face="Arial,Helvetica"><font size=-1>- New <a href="#mousesvga">SetMouseSensitivity</a></font></font>
+<br><b><font face="Arial"><font size=-1>September 27, 1999:</font></font></b>
+<br><font face="Arial"><font size=-1><b>- </b>Added full access to <a href="#ems">EMS</a></font></font>
+<br><font face="Arial"><font size=-1>&nbsp;(new routines are added)</font></font>
+<br><font face="Arial"><font size=-1>- Reduced the use of string space</font></font>
+<br><font face="Arial"><font size=-1>- Added user defined fonts (+beta
+version font editor)</font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#3d">Future.ROTATE</a></font></font>
+<br><font face="Arial"><font size=-1>- Fixed Future.MouseX</font></font>
+<br><font face="Arial"><font size=-1>&nbsp;(it only returned even numbers)</font></font>
+<br><font face="Arial"><font size=-1>- Fixed the screen setting routine</font></font>
+<br><font face="Arial"><font size=-1>&nbsp;(a screen allready set will
+not be cleared if set again)</font></font>
+<br><font face="Arial"><font size=-1>- New <a href="#printtext">Future.LOADFONT</a></font></font>
+<br><font face="Arial,Helvetica"><font size=-1>- New <a href="#screenmodes">Future.Modelist</a></font></font>
+<br><font face="Arial,Helvetica"><font size=-1>- Fixed bugs in Future.LOADPCX
+and Future.LOADBMP</font></font>
+<br><font face="Arial"><font size=-1>- Fixed bug in Future.EMSget/put</font></font>
+<br><font face="Arial"><font size=-1>- Added <a href="#screenmodes">VBE
+2.0/3.0 low res modes</a></font></font>
+<br><font face="Arial"><font size=-1>- Added support for loading 16 color
+BMPs</font></font>
+<br><font face="Arial"><font size=-1>- Added ems <a href="#ems">screen
+buffers</a></font></font>
+<br><b><font face="Arial"><font size=-1>August 8, 1999:</font></font></b>
+<br><font face="Arial"><font size=-1>- Future.POINT is now working</font></font>
+<br><font face="Arial"><font size=-1>- fixed Future.MouseOff Bug</font></font>
+<br><font face="Arial"><font size=-1>- Speeded up Futere.TRIFILL</font></font>
+<br><font face="Arial"><font size=-1>- Speeded up Futere.TRIGOUR</font></font>
+<br><font face="Arial"><font size=-1>- New Futere.TRITEXT</font></font>
+<br><font face="Arial"><font size=-1>- Added one demo program (rotate.bas)</font></font>
+<p>
+<hr align=left width=90% noshade size=1 color=#FFBF00>
+</body>
+</html>

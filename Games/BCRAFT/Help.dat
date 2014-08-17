@@ -1,0 +1,155 @@
+€ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ€
+€                            Battlecraft*Manual                              €
+€                            ==================                              €
+€   Notice : Caps Lock must be off                                           €
+€            Windows user should hit Alt-Enter to enlarge screen             €
+€   Quick Keys                                                               €
+€   ==========                                                               €
+€                                                                            €
+€   Mouse                                                                    €
+€   Left-click   - select-attack-move                                        €
+€   Right-click  - end turn                                                  €
+€                                                                            €
+€   Keyboard                                                                 €
+€   m            - brings up tactical map                                    €
+€   n            - switch to another unit which have'nt move                 €
+€   a            - switch to another unit which have'nt attacked             €
+€   r            - refresh display                                           €
+€   F10          - pauses game(huh?)                                         €
+€   ESC          - end game                                                  €
+€                                                                            €
+€                                                                            €
+€   Menu System                                                              €
+€   ===========                                                              €
+€                                                                            €
+€   Single Player Game-Starts a new game                                     €
+€                                                                            €
+€   Continue Game     -Resumes a game by typing in level password            €
+€                                                                            €
+€   Load Custom Game  -Loads a custom game made using Map Editor.            €
+€                                                                            €
+€   Enter Map Editor  -Enters the Map Editor                                 €
+€                                                                            €
+€   Exit              -Exit                                                  €
+€                                                                            €
+€  Playing the game                                                          €
+€  ================                                                          €
+€                                                                            €
+€    A level is completed by eliminating all enemy units(Red "shirt")        €
+€                                                                            €
+€  Selecting units - Click on target unit.If target is already selected      €
+€                    a info box will appear.                                 €
+€                                                                            €
+€  Moving units    - To move selected unit click on where you want to        €
+€                    move(only on grass).All units have limited range        €
+€                    of movement(from 2 boxes to 5 boxes depending on unit   €
+€                    types).An unit may move only once per turn.If unit      €
+€                    has already move or out of range the word "Move" in     €
+€                    lower-left of the screen will be darkened(dark green)   €
+€                    Use the key "n" to scroll through units that havent     €
+€                    move.                                                   €
+€                                                                            €
+€  Attacking       - You may attack if selected unit is beside an enemy      €
+€                    unit.All units except catapult have to be 1 box(beside) €
+€                    enemy to be able to attack.Damage varies depending      €
+€                    on the type of units used.Like the move function        €
+€                    an unit may only attack once per turn.The word "Attack" €
+€                    is also darkened if selected unit has attacked or is out€
+€                    of range.                                               €
+€                                                                            €
+€  End Turn        - Once you have moved all units(press "n" to check) or    €
+€                    that you dont want to move anymore press Right-Click    €
+€                    to end your turn.Once you end your turn the computer    €
+€                    (ie enemy) will make its move.When the computer has     €
+€                    done making its move you will take control of units     €
+€                    again.(All units may be able to move and attack again)  €
+€                                                                            €
+€   This turn control will change hands(between you & the comp) until either €
+€   side has no units.If you happen to lose you will have to replay the      €
+€   mission(And win) to continue to the next level.If you win you will be    €
+€   able to go to the next mission.A password for the next mission will be   €
+€   given at the end of the mission(when you win).Type the password at the   €
+€   "Continue Game" section.                                                 €
+€                                                                            €
+€  Units Information                                                         €
+€  =================                                                         €
+€                                                                            €
+€    Ogre                                                                    €
+€    ----                                                                    €
+€      Lives      :25                                                        €
+€      Speed/Range:3                                                         €
+€      Attack     :Does lots of damage to Calvary and catapult.              €
+€                  Ok againts Skirmisher and Archer.                         €
+€      Average Dmg:5-11 live points                                          €
+€      Advantage  :Tough & has lots of life                                  €
+€                                                                            €
+€                                                                            €
+€    Footman/Swordsman                                                       €
+€    -----------------                                                       €
+€      Lives      :20                                                        €
+€      Speed/Range:5                                                         €
+€      Attack     :Good against Acher and skirmisher                         €
+€                  Vulnerable to Ogre                                        €
+€      Average Dmg:3-8 live points                                           €
+€      Advantage  :Ability to move fast                                      €
+€                                                                            €
+€    Archer/Quivery(huh?)                                                    €
+€    --------------------                                                    €
+€      Lives      :20                                                        €
+€      Speed/Range:4                                                         €
+€      Attack     :Good against Ogre and Catapult                            €
+€      Average Dmg:3-8 live points                                           €
+€      Advantage  :Good against Ogre                                         €
+€                                                                            €
+€    Skirmisher                                                              €
+€    ----------                                                              €
+€      Lives      :20                                                        €
+€      Speed/Range:4                                                         €
+€      Attack     :Good against Ogre and Swordsman.Slightly weak vs Archer   €
+€      Average Dmg:4-8 live points                                           €
+€      Advantage  :Good against Ogre                                         €
+€                                                                            €
+€    Catapult/Ballista                                                       €
+€    -----------------                                                       €
+€      Lives      :20                                                        €
+€      Speed/Range:2                                                         €
+€      Attack     :Good against all units                                    €
+€      Average Dmg:4-11 live points                                          €
+€      Advantage  :More attack range(2)                                      €
+€                                                                            €
+€  Damage                                                                    €
+€  ======                                                                    €
+€    How much damage an unit is able to do depends on the unit you are using €
+€    and the enemy you are facing.An units health is also a factor on damage €
+€    done.                                                                   €
+€                                                                            €
+€    Damage = Unit type - enemy type + (life points/2)                       €
+€                                                                            €
+€  Terrain                                                                   €
+€  =======                                                                   €
+€    An unit can only move into "plains".However it is possible for an unit  €
+€    to walk past other terrains & units.                                    €
+€                                                                            €
+€  Hmm thats all I guess.Good luck :)                                        €
+€                                                                            €
+€                                                                            €
+€                       --General Seah--                                     €
+€                       <<Password Cheat>>                                   €
+ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+Cheats hehehehehhe
+==================
+Typed during the game:
+CTRL-L    -selected player gets 10 extra life
+CTRL-A    -selected player gets 3+ speed
+CTRL-K    -wins level instantly
+CTRL-J    -selected players gains 100 life
+
+Typed during menu screen(custom game cheats):
+"1"       -Set custom terrain to grass
+"2"       -Set custom terrain to badlands
+"3"       -Set custom terrain to snow
+"4"       -Set custom terrain to night
+
+'Seah made this!:)
+

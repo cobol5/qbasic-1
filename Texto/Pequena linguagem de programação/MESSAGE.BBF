@@ -1,0 +1,5 @@
+CLS
+PRINT Guten Tag !
+WAIT=2
+CLS
+END

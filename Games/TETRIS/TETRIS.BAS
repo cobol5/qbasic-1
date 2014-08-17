@@ -1,0 +1,744 @@
+'                                 TETRIS
+'                       BY KEDJIKEEN   (Eric Davidson)
+'       GAME 2 OF THE ARCADE PACKAGE
+'
+'  Requirements:
+'       1. This game can be run on any speed computer, but it isn't worth
+'       playing on anything slower than a Pentium 66
+'       2. Screen 13 ability
+'       3. About 3k of free memory.
+'
+'  I have documented major portions of code with rems so you can understand
+'  what I did.
+DECLARE SUB CLR (H, V)                            'clears a tetris piece
+DECLARE SUB TETRI (H, V)                          'draws piece in NEXT box
+DECLARE SUB SPRINT (SMT$, HORIZA, VERTICA, COLO)  'small text
+DECLARE SUB TETRIS (H, V)                         'draws a tetris piece
+DIM SHARED SMALLTEXT(39, 21)
+OPEN "SMALL.TXT" FOR INPUT AS #1
+FOR SMT1 = 1 TO 39
+FOR SMT2 = 1 TO 21
+INPUT #1, SMALLTEXT(SMT1, SMT2)
+NEXT SMT2
+NEXT SMT1
+CLOSE
+DIM HISCORE(5, 2)
+DIM HISCORE$(5)                               'IF NO HIGH SCORES, MAKES THEM
+OPEN "STETS" FOR APPEND AS #3
+WRITE #3, 10000, 1, "KEDJIKEEN", 5000, 1, "ERIC DAVIDSON", 1000, 1, "TETRIS", 500, 1, "BREAK'N OUT", 100, 1, "RUNWAY 3D"
+CLOSE
+OPEN "STETS" FOR INPUT AS #3                  'INPUTING HIGH SCORES
+FOR A = 1 TO 5
+INPUT #3, HISCORE(A, 1), HISCORE(A, 2), HISCORE$(A)
+NEXT A
+CLOSE
+OPEN "STETS" FOR OUTPUT AS #4                 'LOCKING HIGH SCORES
+FOR A = 1 TO 5
+WRITE #4, HISCORE(A, 1), HISCORE(A, 2), HISCORE$(A)
+NEXT A
+CLOSE
+DIM FALL(200, 14)
+DIM FLASH(200, 14)
+DIM BRD(21)
+DIM SBACK(14, 14)
+DIM SHARED S1(14, 14)                         'seven colors of blocks
+DIM SHARED S2(14, 14)
+DIM SHARED S3(14, 14)
+DIM SHARED S4(14, 14)
+DIM SHARED S5(14, 14)
+DIM SHARED S6(14, 14)
+DIM SHARED S7(14, 14)
+DIM SHARED HOME(8)
+DIM SHARED NOW(8)
+DIM SHARED SOON(8)
+DIM SHARED PIE(7, 4, 8)
+DIM SHARED BOARD(20, 22)
+FOR A = 1 TO 22
+FOR B = 1 TO 20
+BOARD(B, A) = 1
+NEXT B
+NEXT A
+SCREEN 13
+FOR V = 1 TO 7
+SV = V * 20 + 30
+FOR G = 10 TO 1 STEP -1
+H = G
+LINE (SV + H - 1, H)-(SV + 11 - H, 11 - H), SV + H, B
+NEXT G
+IF V = 1 THEN GET (SV + 1, 1)-(SV + 10, 10), S1
+IF V = 2 THEN GET (SV + 1, 1)-(SV + 10, 10), S2
+IF V = 3 THEN GET (SV + 1, 1)-(SV + 10, 10), S3
+IF V = 4 THEN GET (SV + 1, 1)-(SV + 10, 10), S4
+IF V = 5 THEN GET (SV + 1, 1)-(SV + 10, 10), S5
+IF V = 6 THEN GET (SV + 1, 1)-(SV + 10, 10), S6
+IF V = 7 THEN GET (SV + 1, 1)-(SV + 10, 10), S7
+NEXT V
+HOMER:
+SCREEN 9
+SCREEN 13
+LINE (10, 10)-(308, 170), 4, B    'DRAWS BORDER
+LINE (13, 13)-(305, 167), 4, B
+PSET (13, 13), 0
+PSET (305, 13), 0
+PSET (13, 167), 0
+PSET (305, 167), 0
+PSET (14, 14), 4
+PSET (304, 14), 4
+PSET (14, 166), 4
+PSET (304, 166), 4
+COLOR 121
+LOCATE 3, 18
+PRINT "TETRIS"
+COLOR 133
+LOCATE 4, 21
+PRINT "by Eric Davidson"
+COLOR 26
+LOCATE 8, 24
+PRINT " (rotate)"
+LOCATE 10, 15
+PRINT "(left)    " + CHR$(26) + " (right)"
+LOCATE 12, 24
+PRINT " (speed up)"
+COLOR 200
+PALETTE 200, 256 * 50 + 60
+LOCATE 12, 4
+PRINT "<SPACE> drop"
+LOCATE 13, 4
+PRINT "F2 new game"
+LOCATE 14, 4
+PRINT "F3 pause"
+COLOR 244
+PALETTE 244, 256 * 55
+LOCATE 18, 10
+PRINT "H                 Q"
+COLOR 243
+PALETTE 243, 65536 * 55 + 45
+LOCATE 18, 11
+PRINT "igh scores"
+LOCATE 18, 29
+PRINT "uit"
+LOCATE 20, 15
+COLOR 202
+PALETTE 202, (65536 * 50) + (256 * 30)
+PRINT "Press any key"
+PALETTE 5, 0
+COLOR 5                                        'KEDJIKEEN LOGO
+C = 63 * .4
+FOR B = 20 TO 1 STEP -1
+PALETTE B + 120, 65536 * (64 - (B * 3))
+PALETTE B + 50, 64 - (B * 3)
+C = C - .5
+CIRCLE (20 + C, 20 + C), B, B + 50
+PAINT (20 + C, 20 + C), B + 50
+CIRCLE (70 + C, 20 + C), B, B + 120
+PAINT (70 + C, 20 + C), B + 120
+NEXT B
+SPRINT "K E D J I K E E N", 41, 43, 5
+FOR A = 0 TO 90
+FOR B = 0 TO 5
+IF POINT(A + 41, B + 43) = 5 THEN
+PSET (A + 41, B + 43), 18 + (B * 2)
+END IF
+NEXT B
+NEXT A
+FOR A = 1 TO 80
+DO UNTIL INKEY$ = ""
+LOOP
+NEXT A
+GOSUB 2
+LIFE = 0
+IF K$ = "H" THEN LIFE = 6
+IF K$ = "Q" THEN SCREEN 9: END
+SCREEN 7
+SCREEN 13
+FOR V = 1 TO 10
+SV = 50 + V
+ST = 8 + (5 * V)
+PALETTE SV, 65536 * ST                         'BLUE
+SV = 70 + V
+PALETTE SV, 65536 * ST + ST                    'PURPLE
+SV = 90 + V
+PALETTE SV, 256 * ST                           'GREEN
+SV = 110 + V
+PALETTE SV, 256 * ST + ST                      'YELLOW
+SV = 130 + V
+PALETTE SV, ST                                 'RED
+SV = 150 + V
+PALETTE SV, (65536 * ST) + (256 * ST)          'LIGHT BLUE (AGUA)
+SV = 170 + V
+PALETTE SV, (65536 * ST) + (256 * ST) + ST     'WHITE
+NEXT V
+DATA 2,1,2,2,2,3,2,4,1,2,2,2,3,2,4,2,2,1,2,2,2,3,2,4,1,2,2,2,3,2,4,2
+DATA 1,1,1,2,2,1,2,2,1,1,1,2,2,1,2,2,1,1,1,2,2,1,2,2,1,1,1,2,2,1,2,2
+DATA 1,1,2,1,2,2,3,2,2,1,2,2,1,2,1,3,1,1,2,1,2,2,3,2,2,1,2,2,1,2,1,3
+DATA 1,2,2,2,2,1,3,1,1,1,1,2,2,2,2,3,1,2,2,2,2,1,3,1,1,1,1,2,2,2,2,3
+DATA 2,1,1,2,2,2,3,2,1,1,1,2,2,2,1,3,1,1,2,1,3,1,2,2,2,1,2,2,2,3,1,2
+DATA 1,1,1,2,2,2,3,2,1,1,2,1,1,2,1,3,1,1,2,1,3,1,3,2,2,1,2,2,2,3,1,3
+DATA 3,1,1,2,2,2,3,2,1,1,1,2,1,3,2,3,1,1,1,2,2,1,3,1,1,1,2,1,2,2,2,3
+RESTORE
+FOR A = 1 TO 7                  ' tetris pieces:  each line = one piece
+FOR B = 1 TO 4                  '                  one piece = 4 rotations
+FOR C = 1 TO 8                  '              each rotation = 8 cordinates
+READ PIE(A, B, C)
+NEXT C
+NEXT B
+NEXT A
+FOR G = 14 TO 1 STEP -1
+LINE (G, G)-(15 - G, 15 - G), 200 + G, B
+NEXT G
+GET (1, 1)-(14, 14), SBACK
+FOR V = 1 TO 14
+SV = 200 + V
+ST = 6 + (4 * V)
+PALETTE SV, 65536 * ST
+NEXT V
+FOR B = 0 TO 22
+FOR D = 0 TO 13
+L = B * 14
+N = D * 14
+IF B = 22 THEN L = L - 3
+PUT (L, N), SBACK, PSET
+NEXT D
+NEXT B
+LINE (6, 5)-(64, 150), 0, BF
+LINE (6, 5)-(64, 150), 26, B
+LINE (5, 4)-(65, 151), 24, B
+LINE (4, 3)-(66, 152), 22, B
+LINE (80, 5)-(223, 178), 0, BF
+LINE (80, 5)-(223, 178), 26, B                   'main box
+LINE (78, 3)-(225, 180), 22, B
+LINE (79, 4)-(224, 179), 24, B
+LINE (232, 4)-(314, 160), 0, BF                 'NEXT box
+LINE (233, 5)-(313, 159), 26, B
+LINE (232, 4)-(314, 160), 24, B                 'NEXT box
+LINE (231, 3)-(315, 161), 22, B
+LINE (82, 7)-(223, 173), 0, BF
+COLOR 200
+LOCATE 2, 2
+PRINT "TETRIS"                               '<--- the title
+FOR A = 55 TO 7 STEP -1
+FOR B = 8 TO 17
+IF POINT(A, B) = 200 THEN PSET (A + 3, B + 2), 17 + (2 * (B - 8)): PSET (A, B), 0
+NEXT B
+NEXT A
+COLOR 100
+LOCATE 5, 2
+PRINT "SCORE:"
+LOCATE 9, 2
+PRINT "LEVEL:"
+LOCATE 13, 2
+PRINT "LINES:"
+LOCATE 17, 2
+PRINT "SOUND:"                                   '<-- on or off
+FOR A = 1 TO 8
+NOW(A) = PIE(2, 2, A)
+NEXT A
+NOW(0) = 7
+COLOR 160
+LOCATE 11, 31
+PRINT "NEXT:"
+IF LIFE = 6 THEN GOTO LIVE
+SPRINT "F2", 238, 10, 140                         'controls
+SPRINT "S", 238, 17, 140
+SPRINT "N", 238, 24, 140
+SPRINT "SPACE", 238, 31, 140
+SPRINT "UP", 238, 38, 140
+SPRINT "ENTER", 238, 45, 140
+SPRINT "Q", 238, 52, 140
+SPRINT "DOWN", 238, 59, 140
+SPRINT "F3", 238, 66, 140
+SPRINT "NEW", 279, 10, 60
+SPRINT "PAUSE", 274, 66, 60
+SPRINT "SOUND", 272, 17, 60
+SPRINT "NEXT", 276, 24, 60
+SPRINT "DROP", 279, 31, 60
+SPRINT "ROTATE", 270, 38, 60
+SPRINT "LEVEL", 276, 45, 60
+SPRINT "QUIT", 278, 52, 60
+SPRINT "SPEED", 276, 59, 60
+COLOR 60
+LOCATE 9, 14
+PRINT "Press a key"
+LOCATE 10, 15
+PRINT "to start:"
+GOSUB 2
+NXT = 1
+SOUNDS = 1
+BEGIN:
+LEVEL = 1
+GOSUB 4
+SCORE = 0
+RT = 0
+LINE (235, 95)-(310, 159), 0, BF
+LINE (82, 7)-(222, 176), 0, BF
+LINES = 0
+EXT = 0                                 'loops until "EXT" = 1
+TIME = 0
+RANDOMIZE TIMER
+P = INT(RND(1) * 7) + 1
+FOR A = 1 TO 8
+SOON(A) = PIE(P, 2, A)
+NEXT A
+SOON(0) = P
+LOCATE 6, 3
+COLOR 80
+PRINT "0    "
+LOCATE 10, 3
+PRINT "1    "
+LOCATE 14, 3
+PRINT "0    "
+LOCATE 18, 3
+IF SOUNDS = 1 THEN PRINT "ON  "                'pretty easy
+IF SOUNDS <> 1 THEN PRINT "OFF "
+LAND = 0
+TMS = TIMER + 1.2
+COL = 4
+ROW = 0
+ROT = 2
+FOR A = 5 TO 18
+FOR B = 5 TO 21
+BOARD(A, B) = 0
+NEXT B
+NEXT A
+DO UNTIL EXT = 1
+IF LAND = 0 THEN
+RT = 0
+IF NXT = 0 THEN RT = 5
+LAND = 1
+FOR A = 0 TO 8
+HOME(A) = SOON(A)
+NOW(A) = SOON(A)
+NEXT A
+CLR 17, 10
+P = INT(RND(1) * 7) + 1
+FOR A = 1 TO 8
+SOON(A) = PIE(P, 2, A)
+NEXT A
+SOON(0) = P
+IF NXT = 1 THEN TETRI 17, 10
+ROW = 0
+COL = 4
+TETRIS COL, ROW                                'draws the tetris shape
+C = COL + 4
+R = ROW + 4
+T = 0
+FOR A = 0 TO 3
+CC = C + NOW((A * 2) + 1)
+RR = R + NOW((A * 2) + 2)
+IF BOARD(CC, RR) = 0 THEN T = T + 1
+NEXT A
+IF T <> 4 THEN GOTO ENDER                      'your dead
+END IF
+GOSUB 3
+IF K$ = "<" THEN GOTO BEGIN
+IF K$ = "=" THEN
+LINE (233, 95)-(313, 159), 0, BF
+CLR COL, ROW
+GOSUB 2
+K$ = ""
+TETRIS COL, ROW
+IF NXT = 1 THEN TETRI 17, 10
+END IF
+FOR A = 1 TO 8
+HOME(A) = NOW(A)
+NEXT A
+CS = COL
+RS = ROW
+AGAIN:                                       'if you press <SPACE>
+TM = 0
+IF TIMER > TMS OR K$ = "P" OR K$ = " " THEN
+IF K$ = "P" THEN RT = RT + (LEVEL / 10)
+IF K$ = " " THEN RT = RT + .25 + (LEVEL / 10)
+TMS = 1.6
+FOR U = 1 TO LEVEL
+TMS = TMS - (TMS * .2)
+NEXT U
+TMS = TIMER + TMS
+ROW = ROW + 1
+C = COL + 4
+R = ROW + 4
+T = 0
+FOR A = 0 TO 3
+CC = C + NOW((A * 2) + 1)
+RR = R + NOW((A * 2) + 2)
+IF BOARD(CC, RR) = 0 THEN T = T + 1
+NEXT A
+IF T = 4 THEN
+TM = 1
+IF K$ = " " THEN CLR CS, RS: GOTO AGAIN
+ELSE                                        'piece landed
+IF K$ = " " THEN TETRIS COL, ROW - 1
+C = COL + 4
+R = ROW + 3
+T = 0
+FOR A = 0 TO 3
+CC = C + NOW((A * 2) + 1)
+RR = R + NOW((A * 2) + 2)
+BOARD(CC, RR) = 1
+NEXT A
+RT = INT(RT)
+SCORE = SCORE + RT
+COLOR 80
+LOCATE 6, 2
+PRINT SCORE
+IF SOUNDS = 1 THEN PLAY "O0L37E"         'sound when piece lands
+LAND = 0
+TT = 0
+TS = 0
+FOR A = 0 TO 21
+BRD(A) = 0
+NEXT A
+FOR A = 7 TO 21
+T = 0
+FOR B = 5 TO 18
+T = T + BOARD(B, A)
+NEXT B
+IF T = 14 THEN
+BRD(A) = 1
+FOR R = A - 1 TO 5 STEP -1
+FOR J = 5 TO 18
+BOARD(J, R + 1) = BOARD(J, R)
+NEXT J
+NEXT R
+FOR J = 5 TO 18
+BOARD(J, 5) = 0
+NEXT J
+TT = 1 + TT
+TS = TT
+END IF
+NEXT A
+IF TT > 0 THEN
+FOR A = 8 TO 21
+HH = 0
+IF A = 21 THEN
+IF BRD(A) = 1 AND BRD(A - 1) = 0 THEN HH = 1
+ELSE
+IF BRD(A) = 1 AND BRD(A - 1) = 0 AND BRD(A + 1) = 0 THEN HH = 1
+END IF
+IF HH = 1 THEN
+TT = TT - 1
+LINES = LINES + 1
+BRD(A) = 0
+N = (A - 4) * 10 - 4
+GET (82, N + 1)-(221, N + 10), FLASH
+IF SOUNDS = 1 THEN PLAY "MBT255L16O3DEG"               'one line tune
+FOR O = 1 TO 3
+PUT (82, N + 1), FLASH, PRESET
+TY = TIMER + .02
+DO UNTIL TIMER > TY: LOOP
+PUT (82, N + 1), FLASH, PSET
+TY = TIMER + .01
+DO UNTIL TIMER > TY: LOOP
+NEXT O
+FOR C = A - 1 TO 5 STEP -1
+N = (C - 4) * 10 - 4
+GET (82, N)-(221, N + 10), FALL                        'slide pieces down
+PUT (82, N + 10), FALL, PSET
+NEXT C
+LINE (82, 6)-(221, (TS * 10) + 6), 0, BF
+PLAY "MBT160L28N20L24N5"                               'crashing sound
+END IF
+NEXT A
+END IF
+IF TS > 0 THEN RT = RT + 50 + ((LEVEL - 1) * 3)
+IF TS > 1 THEN RT = RT * 3
+IF TS > 2 THEN RT = RT * 3
+IF TS > 3 THEN RT = RT * 3
+IF TT = 4 AND SOUNDS = 1 THEN PLAY "T255L16O6CO4GEDCCDEFGO6CEG"
+IF TT = 3 AND SOUNDS = 1 THEN PLAY "MBT255L16O4CDEGO6C"
+IF TT = 2 AND SOUNDS = 1 THEN PLAY "MBT255L16O6CO4GEDC"
+HH = 0
+FOR A = 7 TO 21
+IF BRD(A) = 1 THEN HH = HH + 1
+NEXT A
+IF HH > 1 THEN
+HH = 6
+DO UNTIL BRD(HH) = 1
+HH = HH + 1
+LOOP
+N = (HH - 4) * 10 - 4
+GET (82, N + 1)-(221, N + (TT * 10)), FLASH
+FOR O = 1 TO 3
+PUT (82, N + 1), FLASH, PRESET
+TY = TIMER + .02
+DO UNTIL TIMER > TY: LOOP
+PUT (82, N + 1), FLASH, PSET
+TY = TIMER + .01
+DO UNTIL TIMER > TY: LOOP
+NEXT O
+FOR C = HH - 1 TO 5 STEP -1
+N = (C - 4) * 10 - 4
+GET (82, N)-(221, N + 10), FALL                        'slide pieces down
+PUT (82, N + (TT * 10)), FALL, PSET
+NEXT C
+LINE (82, 6)-(221, (TS * 10) + 6), 0, BF
+PLAY "MBT160L28N20L24N5"                               'crashing sound
+END IF
+SCORE = SCORE + RT
+COLOR 80
+LOCATE 6, 2
+PRINT SCORE
+LINES = LINES + TT
+LOCATE 14, 2
+PRINT STR$(LINES) + "  "
+FOR Y = 1 TO 50
+IF LINES > (Y * 10) - 1 AND LEVEL < Y + 1 THEN LEVEL = Y + 1: LOCATE 10, 2: PRINT STR$(LEVEL) + "  ": GOSUB 4
+NEXT Y
+END IF
+END IF
+IF K$ = "H" THEN
+ROT = ROT + 1
+IF ROT = 5 THEN ROT = 1
+FOR A = 1 TO 8
+NOW(A) = PIE(NOW(0), ROT, A)
+NEXT A
+C = COL + 4
+R = ROW + 4
+T = 0
+FOR A = 0 TO 3
+CC = C + NOW((A * 2) + 1)
+RR = R + NOW((A * 2) + 2)
+IF BOARD(CC, RR) = 0 THEN T = T + 1
+NEXT A
+IF T <> 4 THEN
+ROT = ROT - 1
+IF ROT = 0 THEN ROT = 4
+FOR A = 1 TO 8
+NOW(A) = PIE(NOW(0), ROT, A)
+NEXT A
+END IF
+END IF
+IF K$ = "M" THEN
+COL = COL + 1
+C = COL + 4
+R = ROW + 4
+T = 0
+FOR A = 0 TO 3
+CC = C + NOW((A * 2) + 1)
+RR = R + NOW((A * 2) + 2)
+IF BOARD(CC, RR) = 0 THEN T = T + 1
+NEXT A
+IF T <> 4 THEN COL = COL - 1
+END IF
+IF K$ = "N" THEN NXT = (NXT - 1) * (NXT - 1)
+IF K$ = CHR$(13) THEN LEVEL = LEVEL + 1: COLOR 80: LOCATE 10, 2: PRINT STR$(LEVEL) + "  ": GOSUB 4
+IF K$ = "S" THEN
+SOUNDS = (SOUNDS - 1) * (SOUNDS - 1)
+COLOR 80
+LOCATE 18, 3
+IF SOUNDS = 1 THEN PRINT "ON  "
+IF SOUNDS = 0 THEN PRINT "OFF "
+END IF
+IF K$ = "K" THEN
+COL = COL - 1
+C = COL + 4
+R = ROW + 4
+T = 0
+FOR A = 0 TO 3
+CC = C + NOW((A * 2) + 1)
+RR = R + NOW((A * 2) + 2)
+IF BOARD(CC, RR) = 0 THEN T = T + 1
+NEXT A
+IF T <> 4 THEN COL = COL + 1
+END IF
+IF K$ = "M" THEN
+C = COL + 4
+R = ROW + 4
+T = 0
+FOR A = 0 TO 3
+CC = C + NOW((A * 2) + 1)
+RR = R + NOW((A * 2) + 2)
+IF BOARD(CC, RR) = 0 THEN T = T + 1
+NEXT A
+IF T <> 4 THEN COL = COL - 1
+END IF
+IF K$ = "K" OR K$ = "M" OR K$ = "H" OR 1 = TM THEN
+CLR CS, RS
+TETRIS COL, ROW
+END IF
+IF K$ = "Q" THEN EXT = 1
+LOOP
+GOTO ENDER
+2
+K$ = ""
+DO UNTIL K$ <> ""
+K$ = UCASE$(RIGHT$(INKEY$, 1))
+LOOP
+RETURN
+3
+K$ = UCASE$(RIGHT$(INKEY$, 1))
+RETURN
+ENDER:
+IF SOUNDS = 1 THEN PLAY "MBO0L27EFGEFDC"       'your dead
+FOR N = 17 TO 1 STEP -1
+FOR L = 1 TO 14
+LL = L * 10 + 72
+NN = N * 10 - 3
+PUT (LL, NN), S7, PSET
+NEXT L
+FOR A = 1 TO 200
+NEXT A
+NEXT N
+COLOR 120
+LOCATE 9, 15
+PRINT "GAME OVER"
+DO UNTIL INKEY$ = ""
+LOOP
+SLEEP 1
+GOSUB 2
+LINE (82, 7)-(222, 176), 0, BF
+T = 0
+FOR A = 5 TO 1 STEP -1
+IF SCORE > HISCORE(A, 1) THEN T = A
+NEXT A
+IF T <> 0 THEN
+COLOR 100
+LOCATE 7, 15
+PRINT "YOU GOT A"
+LOCATE 8, 14
+PRINT "HIGH SCORE!"
+COLOR 80                        'PLACES HIGH SCORE IN CORRECT PLACE
+LOCATE 10, 12
+INPUT "", N$
+IF T < 5 THEN HISCORE(5, 1) = HISCORE(4, 1): HISCORE(5, 2) = HISCORE(4, 2): HISCORE$(5) = HISCORE$(4)
+IF T < 4 THEN HISCORE(4, 1) = HISCORE(3, 1): HISCORE(4, 2) = HISCORE(3, 2): HISCORE$(4) = HISCORE$(3)
+IF T < 3 THEN HISCORE(3, 1) = HISCORE(2, 1): HISCORE(3, 2) = HISCORE(2, 2): HISCORE$(3) = HISCORE$(2)
+IF T = 1 THEN HISCORE(2, 1) = HISCORE(1, 1): HISCORE(2, 2) = HISCORE(1, 2): HISCORE$(2) = HISCORE$(1)
+HISCORE$(T) = N$
+HISCORE(T, 1) = SCORE
+HISCORE(T, 2) = LINES
+END IF
+LIVE:
+LINE (82, 7)-(223, 173), 0, BF
+LOCATE 2, 15
+PRINT "HIGH SCORES"
+COLOR 100
+LOCATE 4, 13
+PRINT "SCORE     LINES"
+FOR A = 1 TO 5
+B = A * 3 + 3
+COLOR 140
+LOCATE B, 12
+PRINT HISCORE$(A)
+COLOR 60
+LOCATE B + 1, 13
+PRINT STR$(HISCORE(A, 1))
+COLOR 80
+LOCATE B + 1, 26 - LEN(STR$(HISCORE(A, 2)))
+PRINT STR$(HISCORE(A, 2))
+NEXT A
+IF LIFE = 6 THEN
+LIFE = 0
+SLEEP
+GOTO HOMER
+END IF
+OPEN "STETS" FOR OUTPUT AS #1
+FOR A = 1 TO 5
+WRITE #1, HISCORE(A, 1), HISCORE(A, 2), HISCORE$(A)
+NEXT A
+CLOSE
+COLOR 100
+LOCATE 21, 12
+PRINT "PLAY AGAIN (Y/N)"
+GOSUB 2
+IF K$ = "N" THEN SCREEN 9: END
+GOTO BEGIN                         'play again
+4
+C = LEVEL
+C = C + 7
+DO UNTIL C < 8
+C = C - 7
+LOOP
+FOR V = 1 TO 14
+SV = 200 + V
+ST = 6 + (4 * V)
+IF C = 1 THEN PALETTE SV, 65536 * ST                       'BLUE
+IF C = 2 THEN PALETTE SV, 65536 * ST + ST                  'PURPLE
+IF C = 3 THEN PALETTE SV, 256 * ST                           'GREEN
+IF C = 4 THEN PALETTE SV, 256 * ST + ST                      'YELLOW
+IF C = 5 THEN PALETTE SV, ST                                 'RED
+IF C = 6 THEN PALETTE SV, (65536 * ST) + (256 * ST)          'LIGHT BLUE (AGUA)
+IF C = 7 THEN PALETTE SV, (65536 * ST) + (256 * ST) + ST     'WHITE
+NEXT V
+RETURN
+
+SUB CLR (H, V)
+FOR G = 1 TO 8 STEP 2
+L = HOME(G)
+N = HOME(G + 1)
+L = L + H
+N = N + V
+L = L * 10 + 72
+N = N * 10 - 3
+LINE (L, N)-(L + 9, N + 9), 0, BF
+NEXT G
+END SUB
+
+SUB SPRINT (SMT$, HORIZA, VERTICA, COLO)
+'FEEL FREE TO USE THIS SUB IN ANY OF YOUR PROGRAMS, JUST LEAVE THIS SCREEN
+'THE WAY IT IS...THANKS!
+'       ERIC DAVIDSON   1996
+STLEN = LEN(SMT$)
+FOR SMTDRAW = 1 TO STLEN
+SMTNUM = ASC(MID$(SMT$, SMTDRAW, 1))
+SMTEST = 0
+IF SMTNUM > 48 AND SMTNUM < 58 THEN SMTNUM = SMTNUM - 19: SMTEST = 1
+IF SMTNUM = 48 THEN SMTNUM = 39: SMTEST = 1
+IF SMTEST = 0 THEN SMTNUM = SMTNUM - 64
+IF SMTNUM = -19 THEN SMTNUM = 27
+IF SMTNUM = -18 THEN SMTNUM = 28
+IF SMTNUM = -22 THEN SMTNUM = 29
+FOR SMTLINE = 0 TO 4
+IF SMTNUM > 0 AND SMTNUM < 40 THEN
+IF SMALLTEXT(SMTNUM, SMTLINE * 4 + 2) <> -1 THEN
+SMTC1 = HORIZA + SMALLTEXT(SMTNUM, SMTLINE * 4 + 2)
+SMTC2 = VERTICA + SMALLTEXT(SMTNUM, SMTLINE * 4 + 3)
+SMTC3 = HORIZA + SMALLTEXT(SMTNUM, SMTLINE * 4 + 4)
+SMTC4 = VERTICA + SMALLTEXT(SMTNUM, SMTLINE * 4 + 5)
+LINE (SMTC1, SMTC2)-(SMTC3, SMTC4), COLO
+END IF
+END IF
+NEXT SMTLINE
+HORIZA = HORIZA + 2
+IF SMTNUM > 0 AND SMTNUM < 40 THEN HORIZA = HORIZA + SMALLTEXT(SMTNUM, 1)
+NEXT SMTDRAW
+END SUB
+
+SUB TETRI (H, V)
+FOR G = 1 TO 8 STEP 2
+L = SOON(G)
+N = SOON(G + 1)
+L = L + H
+N = N + V
+L = L * 10 + 72
+N = N * 10 - 3
+C = SOON(0)
+IF C = 1 THEN PUT (L, N), S1, PSET
+IF C = 2 THEN PUT (L, N), S2, PSET
+IF C = 3 THEN PUT (L, N), S3, PSET
+IF C = 4 THEN PUT (L, N), S4, PSET
+IF C = 5 THEN PUT (L, N), S5, PSET
+IF C = 6 THEN PUT (L, N), S6, PSET
+IF C = 7 THEN PUT (L, N), S7, PSET
+NEXT G
+END SUB
+
+SUB TETRIS (H, V)
+FOR G = 1 TO 8 STEP 2
+L = NOW(G)
+N = NOW(G + 1)
+L = L + H
+N = N + V
+L = L * 10 + 72
+N = N * 10 - 3
+C = NOW(0)
+IF C = 1 THEN PUT (L, N), S1, PSET
+IF C = 2 THEN PUT (L, N), S2, PSET
+IF C = 3 THEN PUT (L, N), S3, PSET
+IF C = 4 THEN PUT (L, N), S4, PSET
+IF C = 5 THEN PUT (L, N), S5, PSET
+IF C = 6 THEN PUT (L, N), S6, PSET
+IF C = 7 THEN PUT (L, N), S7, PSET
+NEXT G
+END SUB
+

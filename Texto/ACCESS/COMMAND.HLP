@@ -1,0 +1,22 @@
+                           /c4 /uAccess Command Help/u
+
+     Welcome to Access Command help.  This is an internal command prompt. The
+purpose of this is to allow you access to the Dos command prompt and any other
+programs that are not listed in the Access menu or don't have icons.
+     This is the list of available commands:
+    
+/c04Command                                     What it does
+---------------------------------------------------------------------------------
+/c01notebook file$                                  /c00Type this to open the Access
+                                                NoteBook. e.g. notebook c:\dos.txt
+
+/c01shell command$                                  /c00This invokes dos commands.
+                                                e.g. shell del c:\dos.txt
+
+/c01cabinet directory$                              /c00This opens the Access file
+                                                cabinet.  e.g. cabinet c:\dos
+
+With each version of Access, you will notice the commands getting more and
+more flexible until Access is a free environment.  This is just the begining.
+:)
+

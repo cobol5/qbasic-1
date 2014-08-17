@@ -1,0 +1,1 @@
+u:\00_com~1\qbasic\qbasic.int\qbasic.exe /run clockfix.bas

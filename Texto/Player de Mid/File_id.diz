@@ -1,0 +1,8 @@
+-------------- QMIDI v4.1 --------------
+ A free library for QBasic, QuickBasic
+ and VB-DOS that allows programs to
+ play MIDI music in the background.
+ Provides FM synthesis for Sound Blaster
+ compatible sound cards, and wavetable
+ synthesis for MPU-401 compatible cards.
+----------------------------------------

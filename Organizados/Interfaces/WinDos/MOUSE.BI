@@ -1,0 +1,7 @@
+DECLARE FUNCTION MouseInit% ()
+DECLARE SUB MouseStatus (Lb%, Rb%, XMouse%, YMouse%)
+DECLARE SUB MouseRange (BYVAL x1%, BYVAL y1%, BYVAL x2%, BYVAL y2%)
+DECLARE SUB MousePut (BYVAL x%, BYVAL y%)
+DECLARE SUB MouseHide ()
+DECLARE SUB MouseShow ()
+DECLARE SUB MouseSpeed (BYVAL XSpeed%, BYVAL YSpeed%)

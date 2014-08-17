@@ -1,0 +1,27 @@
+/ex/noe/nod:brt71efr.lib disktop+
+mouse+
+graphics+
+fileio+
+reg+
+nocga.obj+
+noega.obj+
+nooga.obj+
+noedit.obj+
+noherc.obj+
+nocom.obj+
+noems.obj+
+nolpt.obj+
+noisam.obj
+di_main.exe
+nul
+bcl71efr.lib+
+windos.lib;
+
+=============================================================================
+Extra options for link:
+/f/packc
+
+Unknown stub files:
+nooga.obj
+noedit.obj
+

@@ -1,0 +1,4 @@
+'Programm: Hello world!
+CLS
+PRINT Hello World !
+END

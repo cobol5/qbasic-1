@@ -1,0 +1,25 @@
+** IMPORTANT NOTICE.......
+
+	Tiled X has only been released a couple days and already support
+for Dimension SOFT is present. As we previously had stated we WILL 
+bring out new releases of TILEDX as soon as new ideas come about on how
+to improve the program. Sir Taylor of Sir Taylor's Heap of Junk asked 
+for a palette change - delivered. Now the current in work additions is 
+multiple size tiles and more keys such as page up and down, home, and 
+end to make manuevering in the keyboard easier. Pull down menu's have
+now become neccessary simply because there are to many things to do and
+not enough icons to accomplish them all. It is quite possible I may 
+just come out with a whole new layout and call it Tiled X2.
+
+** HELP NEEDED......
+
+	I've done quite a bit of programming within the lst year and 
+have done a fairly decent job but I do need help. If anyone out there
+can read this code and help me with a line, box, circle, and other 
+functions it would be appreciated.
+
+	That's all for now, hope all enjoy.
+
+Chris and Jay
+Dimension SOFT 
+ 

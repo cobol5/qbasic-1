@@ -1,0 +1,57 @@
+
+ Volume in drive C has no label
+ Volume Serial Number is 1B3D-0ACF
+ Directory of C:\JONE\SEAH
+
+.              <DIR>        12-28-96  5:40p
+..             <DIR>        12-28-96  5:40p
+SETUP    BAS           563  12-26-96 10:38p
+QBASIC   EXE       194,309  09-30-93  6:20a
+TREE2    IMG           607  12-28-96  3:54p
+TREE     IMG           607  12-26-96  8:49p
+SKIRMISH IMG           607  12-26-96  8:48p
+OGRE2    IMG           607  12-26-96  8:49p
+OGRE     IMG           607  12-26-96  8:48p
+IMAGE2   IMG           607  12-26-96  8:50p
+HOUSE    IMG           607  12-28-96  3:54p
+CATAPULT IMG           607  12-26-96 10:29p
+CAT2     IMG           607  12-26-96 10:30p
+ARCHER2  IMG           607  12-26-96  8:47p
+ARCHER   IMG           607  12-26-96  8:47p
+SKIRM2   IMG           607  12-26-96  8:48p
+ROCK     IMG           607  12-26-96  8:49p
+FOOTMAN  IMG           607  12-26-96  8:46p
+FOOT2    IMG           607  12-26-96  8:47p
+TEST2    BMP         1,678  12-03-96  9:51p
+PAL3     BMP         1,678  12-28-96  4:00p
+PAL2     BMP         1,678  12-28-96  3:45p
+PAL5     BMP         1,678  12-28-96  4:10p
+PAL4     BMP         1,678  12-28-96  4:03p
+PRESENT  BAS         8,656  12-29-96  6:32p
+MAPEDIT  BAS        15,658  12-29-96  7:01p
+WAR2     BAS        45,113  12-29-96  7:15p
+INSTALL  BAT            70  12-21-96  3:24p
+TIMER    DAT             8  12-28-96  6:17p
+GAME     DAT            22  12-29-96  7:13p
+LEVEL7   LEV         6,043  12-29-96 12:15a
+FACE2FAC MAP         5,694  12-29-96 12:20a
+P2       BAS        46,750  12-29-96 12:30a
+HELP     BAS        10,205  12-29-96 12:39a
+INST     BAS           905  12-29-96  6:31p
+HELP     DAT        11,240  12-29-96  6:28p
+QBASIC   INI           139  12-29-96 12:46a
+DAT                      0  12-29-96 12:49a
+EDIT     COM        69,886  07-11-95  9:50a
+LEVEL4   LEV         5,955  12-29-96  7:14p
+TEST     LEV         5,900  12-25-96 10:27p
+LEVEL1   LEV         6,003  12-25-96 12:14p
+BOO      LEV         6,155  12-24-96  9:40p
+LEVEL2   LEV         5,920  12-28-96  3:11p
+BIG      LEV         6,444  12-25-96 10:41p
+LEVEL3   LEV         6,020  12-27-96  7:27p
+LEVEL5   LEV         6,023  12-28-96  3:02p
+LEVEL6   LEV         6,039  12-28-96  3:24p
+WALL     IMG           607  12-29-96  7:12p
+LEV                      0  12-30-96 12:12a
+        48 file(s)        487,822 bytes
+         2 dir(s)      24,707,072 bytes free

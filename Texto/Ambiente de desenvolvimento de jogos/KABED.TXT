@@ -1,0 +1,140 @@
+    **********************************************************************
+*** KABED.EXE: The KABOOM 3D-Engine Level-Editor (C)2000 by Dieter Marfurt ***
+    **********************************************************************
+
+Please read this carefully if you want to edit a Map using KABED.EXE.
+
+______________________________________________________________________________
+
+KABED requires a Mousedriver.  It must be in the same folder like
+all other KABOOM-Files. BOOSTICK.DAT etc. are used.
+______________________________________________________________________________
+
+
+KABED is a very functional Level-Editor for KABOOM. A Mousedriver
+is required. With the left Mousekey you can draw walls, floor
+and roof onto the map, using the current selected Draw-Texture.
+
+The current Draw-Texture is shown in the lower part of the screen
+in original size. The right mouse is used to pick a Draw-Texture
+from the Map. Draw-Textures can also be selected on the right side
+of the screen using the left Mousekey. Texture 0 (Bottom) represents
+nothing (air if you're in walls-mode, black if you're in floor or
+roof-mode).
+Mode can be chanched by hitting "w","f" or "r" to edit Walls,Floor or Roof.
+
+Press "S" to save the edited Map WITH ITS ORIGINAL NAME.
+
+"Esc" will terminate the Program.
+
+"T" will perform a Testrun - be shure to fit the conditions explained below!
+(Only accessible when in Walls-Mode)
+
+If you move the Mousecursor upon the Map, the Map-Index wich is under the
+mouse will be shown in original size on the upper middle Part of the screen.
+
+Everything is very intuitive here. Just note, that "S" will save
+the Map using the Original Name.
+
+If you want to make an alternative version of BOO1.MAP then you have to:
+
+Type in DOS-Prompt:   COPY BOO1.MAP MYMAP.MAP
+                      KABED MYMAP.MAP
+
+Running KABED without a Mapname will end KABED with an Errormessage.
+
+(By the way: KABED is an adoption of KABOOM wich was only slightly
+modified to become a Mapeditor. So there might be some
+unused Subs (eg. Blaster). Sorry, but I dont have the time to save
+these 30 kB on your harddisk.)
+
+
+______________________________________________________________________________
+
+Don't forget to declare the START!-Point (Defined by Texture 9)
+______________________________________________________________________________
+
+
+A Map must always be closed with a NOT-maskable(!) Walltexture
+wich goes all around the Map. Also in Testrun!
+
+Example:
+
+ XXXXXXXXXXXX  legal.
+ X   X      X
+ X xxX      X
+ X          X
+ X          X
+ X          X
+ XXXXXXXXXXXX
+
+
+ XXXXXXXXXXXX  NOT(!) legal.
+ X   X      X
+ X xxX      X
+ X             < this open Wall would probably crash the computer.
+ X          X
+ X          X
+ XXXXXXXXXXXX
+
+------------------------------------------------------------------------------
+
+All Maskable Objects but the Enemy-Texture should be positioned
+between two Non-maskable Objects. If they're not, there might occur some
+strange Mapping-effects.
+
+Example:
+
+Let's say W is a nonmaskable Wall and P is a maskable Plant
+
+                                W           WWWWWWWW              WWW
+correct is:      WPW     or     P     or         P W    or    WPWPWPW
+                                W           WWWWWWWW          WWW
+
+
+while this would look incorrect:
+
+                 W                P   P
+              P  W        or     
+                 W               WWWWWWW
+
+
+------------------------------------------------------------------------------
+
+The Speed of the Rendering is not the same for all Textures.
+For a good Performence you should not use to much of Floor-Mapping
+(Select Floor 0 = Black) and not too much of maskable Wall-Textures.
+
+------------------------------------------------------------------------------
+
+Maybe there have to be a Minimum of 1 Spider and/or 1 Bonus. I hope I wont
+forget to test this.
+
+------------------------------------------------------------------------------
+
+These are the Properties of the Textures:
+
+Number
+of Texture    maskable     shaded      other
+----------    --------     ------      -----
+
+1  -  3       no           yes         fast
+4             yes          no          size 128*128 (normal:64*64) 
+5  - 15       yes          no
+16 - 24       no           no          fast
+
+
+
+Keys Summary:
+-------------
+
+S    Save
+f    Edit Floor
+r    Edit Roof
+w    Edit Walls
+T    Test
+Esc  Exit
+Mouse see above
+
+
+Enjoy!

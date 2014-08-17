@@ -1,0 +1,8 @@
+'Programm: Pause
+CLS
+PRINT Moment...
+PAUSE
+PRINT Jetzt gehts weiter
+WAIT=2
+CLS
+END

@@ -1,0 +1,385 @@
+                 ллллллллл  ллл   ллл  лллл  лллллл    лллл
+                 лл     лл  лл л л лл   лл   лл    л    лл
+                 лл     лл  лл  л  лл   лл   лл     л   лл 
+                 лл  л  лл  лл     лл   лл   лл    л    лл
+                 ллллллллл  лл     лл  лллл  лллллл    лллл
+                     л 
+                 
+                 VERSION 1.0                  DOCUMENTATION
+
+
+===================
+ TABLE OF CONTENTS
+===================
+
+SECTION 1 - About QMIDI
+SECTION 2 - Files Included with QMIDI
+SECTION 3 - The SBMIDI and SBSIM Sound Drivers
+SECTION 4 - Using QMIDI
+SECTION 5 - Changing the Sound Driver Configuration
+SECTION 6 - Questions & Comments
+SECTION 7 - Troubleshooting
+
+
+=============
+ ABOUT QMIDI
+=============   
+
+   QMIDI is a application that plays MIDI (Musical Instrument Digital
+Interface) files in the background.  QMIDI will work with the following
+programs:
+
+        QBasic v1.x (YES! It works with QBasic!)
+        QuickBASIC v4.x
+        Visual BASIC for DOS v1.0
+        MS Professional Development System (PDS)
+
+   To my knowledge, QMIDI is the first and only MIDI player of any type that
+works with QBasic.
+
+   The key feature of QMIDI is that it plays music in the background.  What
+this means is that the music can be playing while your program continues
+to work normally, with almost no loss of speed.  Conversely,  foreground
+music halts program execution until the music is done playing.
+
+   There are two people I'd like to take some time to thank.  First, Rick
+Elbers, who wrote the interrupt routines that are used in QMIDI.  Secondly,
+Mike Huff, who created some SBSIM code for QuickBASIC, which I ported to
+QBasic compatible code.  These guys really deserve most of the credit.  They
+provided the necessary code; I just pieced it together.
+
+   QMIDI is Public Domain, and may be used freely.
+   
+   By the way, I'm looking for the following information for future versions
+of QMIDI:
+        o How to calculate how long a MIDI file runs (in seconds).  My
+          knowledge of the MIDI file format isn't that great, so I haven't
+          figured this out yet.
+        o How to pause MIDI playing with the SBSIM driver.
+        o How to control the mixer (mainly volume control) with the SBSIM
+          driver.
+   If you know anything about these topics, please enlighten me so I can
+incorporate these features into new versions of QMIDI.  See Section 6
+for contact information.
+
+
+===========================
+ FILES INCLUDED WITH QMIDI
+===========================
+
+   The QMIDI10.ZIP file contains the following files:
+
+   QMIDI.BAS            -               The QMIDI source code
+   QMIDI.DOC            -               QMIDI documentation
+   SBMIDI.EXE           -               Creative Labs MIDI driver
+   SBSIM.COM            -               Creative Labs SBSIM (Sound Blaster
+                                        Simplified Interface Module) driver
+   SBSIM.CFG            -               SBSIM driver configuration file
+   SAMPLE.BAS           -               A sample program that uses QMIDI
+   SAMPLE1.MID          -               A MIDI file to try out with QMIDI
+   SAMPLE2.MID          -               Another MIDI file to try with QMIDI
+   SAMPLE3.MID          -               Yet another MIDI file
+   FILE_ID.DIZ		-		Program description for BBSes.
+
+   I've included 3 sample MIDI files that I think sound pretty good when
+used with QMIDI, so you can test it right away.
+
+
+====================================
+ THE SBMIDI AND SBSIM SOUND DRIVERS
+====================================
+
+   The first thing you need to acquaint yourself with are the sound drivers
+included with QMIDI - SBMIDI.EXE and SBSIM.COM.  These are TSR (Terminate
+and Stay Resident) applications that must be loaded prior to use of QMIDI.
+There is also another file called SBSIM.CFG, which you can read about
+in Section 5.
+
+   In order to use QMIDI, you must place all three of these files:
+        SBMIDI.EXE
+        SBSIM.COM
+        SBSIM.CFG
+in one directory.  This will automatically be done when you unzip QMIDI;
+if you don't move any of the files, you should be okay.
+   It is recommended that you extract all of the QMIDI files into the same
+directory as QBasic or QuickBASIC.  Most often, this will be either C:\DOS,
+C:\QB45, C:\QB, or C:\WINDOWS\COMMAND.
+
+   One recipe for disaster is loading the drivers in the wrong order.  You 
+must load SBMIDI first, and SBSIM second.  If you switch the order, QMIDI 
+will not work properly.
+   To load the drivers, type their names at the DOS prompt.  Here's an
+example:
+
+   SBMIDI.EXE <Enter>
+   SBSIM.EXE  <Enter>
+
+!!! IMPORTANT !!! 
+   It is *NOT SAFE* to load the drivers using the BASIC "SHELL" command.
+They do not load properly.  The reason for this is that when you execute a
+SHELL command, a second copy of DOS is launched.  When the program you
+ran is done, that copy of DOS is terminated.  Thus, when you run SBMIDI or
+SBSIM using SHELL, the DOS session that was started in order to run the
+program is terminated, leaving the drivers loaded improperly.
+   In order for the drivers to function properly, they must be loaded from
+the command line or from a batch file.
+   
+   When you load each driver, some information will appear on the screen.
+When you run SBMIDI.EXE, what you see on the screen is not especially
+important.
+   
+   You should, however pay attention the the screen output of SBSIM.COM.
+Once the program has been loaded, the last line that was printed on the
+screen should read:
+
+        Resident ok at interrupt no: 81H
+   
+   If you see a value besides 81H, please refer to the Troubleshooting
+section.  If you don't see anything resembling the above line, also see
+the Troubleshooting section.
+
+   With their default configuration, the sound drivers will occupy 
+approximately 135 kilobytes of conventional memory.  This means that if
+you use QBasic, you'll want to have at least 500k free conventional memory
+before loading the drivers, and with QuickBASIC, PDS, and VB-DOS, having
+about 560k or more free memory is best.
+   You can alter the driver configuration yourself so that it uses less 
+memory.  See Section 5 for details.
+
+   When you are done using QMIDI, you will want to unload these drivers
+to free up conventional memory for other programs.  To do this, use the /U
+switch with each program.
+   It is important to note that when unloading the drivers, you must run
+them in the reverse order that you did when loading them.  That means that
+you unload SBSIM first, and SBMIDI last.  Here's an example of how to 
+properly unload the two drivers:
+
+        SBSIM /U        <Enter>
+        SBMIDI /U       <Enter>
+
+   
+   If all has gone well up to now, you're ready to move on to Section 3.
+
+
+=============
+ USING QMIDI
+=============
+
+   This section covers using the QMIDI program itself.  I'm assuming that
+you have already loaded the necessary sound drivers.  If not, refer to
+Section 3.
+   I'm also assuming that you have a basic understanding of your programming
+environment.  You should have QMIDI.BAS loaded now.  I'll only go so far as
+to say that users of QuickBASIC, PDS, and VB-DOS need to load the default
+libraries, usually done by specifying the /L switch when you start the IDE.
+
+   To use QMIDI in your own programs, you will need ALL of the code that is
+in QMIDI.BAS.  This includes all code that is not in a subroutine.  The
+easiest way to start making an application that uses QMIDI is to open
+QMIDI.BAS, click File, Save As, and save it as a different file name.  This
+will create a copy of QMIDI.BAS.  Use the new file you created as your
+program, and everything should work fine.
+
+   The rest of this section is devoted to the usage of the QMIDI routines.
+
+---------------------------------------
+ FUNCTION LoadAndPlayMIDI% (Filename$)
+---------------------------------------
+Loads a MIDI file into memory and begins playing it.
+
+SYNTAX:
+        A% = LoadAndPlayMIDI%(Filename$)
+WHERE: 
+        LoadAndPlayMIDI% - Returns -1 if file is loaded correctly, 0 if an
+                           error occurred.
+        Filename$ - The name of a MIDI file.
+NOTES:
+   LoadAndPlay is the equivalent of calling the PlayMIDI routine immediately
+   after the LoadMIDI routine.  It loads the specified MIDI file into memory
+   and begins playing it in the background.  If the MIDI file fails to start
+   playing, see the Troubleshooting section.
+
+--------------------------
+ SUB LoadMIDI (Filename$)
+--------------------------
+Loads a MIDI file into memory
+
+SYNTAX:
+        LoadMIDI Filename$
+WHERE:
+        Filename$ - The name of a MIDI file.
+NOTES:
+   LoadMIDI *DOES NOT* play the MIDI file you specify.  It loads it into
+   memory so that it may be played with a call to PlayMIDI.
+
+-----------------------
+ FUNCTION PlayMIDI% ()
+-----------------------
+Plays a MIDI file that has been previously loaded with LoadMIDI
+
+SYNTAX:
+        A% = PlayMIDI%
+WHERE:
+        PlayMIDI% - Returns -1 if MIDI file was started correctly, 0 if an
+                    error occurred.
+NOTES:
+   It *IS* safe to run PlayMIDI when no MIDI file has been loaded, although
+   no music will play.
+
+-----------------
+ SUB StopMIDI ()
+-----------------
+Stops a MIDI file that is currently playing
+
+SYNTAX:
+        StopMIDI
+NOTES:
+   If *IS* safe to run StopMIDI when no MIDI file is playing.  If you have
+   not started playing a file, nothing happens.
+
+-----------------------
+ FUNCTION TimeMIDI! ()
+-----------------------   
+Returns how long the current MIDI file has been playing
+
+SYNTAX:
+        A! = TimeMIDI!
+WHERE:
+        TimeMIDI! - The number of seconds the current MIDI file has been 
+                    playing.
+NOTES:
+   TimeMIDI! returns a 0 if no MIDI file is playing.
+
+
+=========================================
+ CHANGING THE SOUND DRIVER CONFIGURATION
+=========================================
+
+   There are times when you may want to change the configuration of the
+SBSIM driver for one reason or another.  This chapter will tell you how
+to change MIDI settings by modifying the SBSIM.CFG file.
+
+   Note that changes you make to this file do not go into effect immediately.
+They are recognized the next time you load the SBSIM driver.  So, if you
+have the sound drivers loaded when you alter SBSIM.CFG, you will have to 
+unload them and load them again in order for the changes to take effect.
+
+   Only part of the SBSIM.CFG file pertains to QMIDI.  In fact, only the last
+two lines of the file are relevant in this case.
+
+   The next to last line should appear like this, unless you have altered it:
+   
+        BufferSize=64
+   
+   The buffer size is the amount of memory (in kilobytes) that SBSIM will set
+aside for any MIDI files you want to play.  In the above setting, SBSIM.COM
+will allocate 64k extra of conventional memory when you load it, to make sure
+it will always have room to load your MIDI files.
+   The value BufferSize has is the maximum size (in kilobytes) of any MIDI
+files you will play.
+   64 kilobytes is more than enough in most cases, and is often way more than
+you will need.  You can change the size to conserve memory.
+   If you have several MIDI files that are played in your application, and
+the largest file is 30 kilobytes, you're essentially wasting 34 kilobytes of
+memory.  If you change the buffer size to 32, you will still have enough
+memory to load all of your MIDI files.
+   One important thing to remember is that only one MIDI file is ever loaded
+by SBSIM at one time.  That means that, even though you may play 4 MIDI
+files that are 30k in length each, you will not need 120k of memory; only
+32k.  Whenever you call the LoadMIDI or LoadAndPlayMIDI routines, the MIDI
+file you specify overwrites any other file that was previously in memory.
+   Always have a buffer that is at least as large as the biggest MIDI file
+you will be playing.
+
+   The last line in the SBSIM.CFG file should look like this:
+
+        MidiMap=0
+
+   This tells SBSIM to use MIDI map 0.  Files known as Standard MIDI files   
+sound best with this setting.  Most MIDI files you'll find are Standard MIDI 
+files.  Some, however, are General MIDI files.  If the MIDI map is set to 0, 
+and you attempt to play a General MIDI file, one of two things will happen: 
+you won't hear any music, OR it will sound strange.
+   You have to tell the driver to recognize General MIDI files instead.  This
+is done by changing the last line in the file to:
+
+        MidiMap=1
+
+   This will make General MIDI files sound better.  It also, however, does
+the reverse to Standard MIDI files.  They either won't play, or they won't
+sound as good as they normally would.  So, it's best to switch back to
+MIDI map 0 again before playing Standard MIDI files.
+
+   Remember, though, that you must unload and reload the SBSIM.COM driver
+before any changes you make will take effect.
+
+
+======================
+ QUESTIONS & COMMENTS
+======================      
+
+   For the sake of brevity, some of the documentation isn't as complete as
+perhaps some people would like it.
+   If the documentation didn't explain something properly to you, feel free
+to e-mail me and I'll be happy to go into further detail.  My e-mail address
+is
+                jessedorland@hotmail.com
+   Please refer to the Troubleshooting section before e-mailing me, to see
+if your question can be answered there.
+   I'd also like to hear any comments you have on QMIDI, and suggestions for
+enhancements in future versions.
+
+
+=================
+ TROUBLESHOOTING
+=================
+
+   PROBLEM: My computer freezes whenever I use any of the QMIDI routines.
+   CAUSE #1: You have not properly loaded the sound drivers.
+   CAUSE #2: Your sound card does not have sufficient Sound Blaster
+             compatibility.
+   SOLUTION #1: Refer to Section 3 for instructions on loading the 
+                drivers.
+   SOLUTION #2: Get a sound card with better Sound Blaster emulation
+                (sorry, QMIDI requires an SB-compatible sound board).
+
+   
+   PROBLEM: I don't hear any sound when I try to play a MIDI file.
+   CAUSE #1: The MIDI file you are trying to play is corrupt or does not
+             exist.
+   CAUSE #2: You are trying to play a MIDI file that the SBSIM configuration
+             is not set to play at optimum quality.
+   CAUSE #3: The MIDI file you are trying to play is too large for the 
+             SBSIM MIDI buffer.
+   CAUSE #4: Your sound card does not have sufficient Sound Blaster             
+             compatibility
+   SOLUTION #1: Try playing a different MIDI file to see if the one you are
+                using is corrupt.
+   SOLUTION #2: See Chapter 5 for information on changing the MIDI map.
+   SOLUTION #3: See Chapter 5 for information on changing the buffer size.
+   SOLUTION #4: Get a sound card with better Sound Blaster emulation.
+
+   
+   PROBLEM: The SBMIDI driver does not load properly.
+   CAUSE: Your sound card does not have sufficient Sound Blaster
+          compatibility.
+   SOLUTION: Get a sound card with better Sound Blaster emulation.
+
+   
+   PROBLEM: The SBSIM driver does not load properly.
+   CAUSE #1: You don't have enough free conventional memory.
+   CAUSE #2: Your sound card does not have sufficient Sound Blaster
+             compatibility.
+   SOLUTION #1: Free up enough conventional memory to accomodate the
+                SBSIM driver and the MIDI buffer - OR - see Chapter 5 for
+                information on reducing the MIDI buffer size.
+   SOLUTION #2: Get a sound card with better Sound Blaster emulation.
+
+
+   PROBLEM: The SBSIM driver loads properly, but the message displayed shows
+            that it is resident at an interrupt other than 81H.
+   CAUSE: You have another driver loaded that is using interrupt 81H.
+   SOLUTION: Modify the "MIDI.INTERRUPT =" line at the beginning of the
+             source code.  Change the "&H81" to the interrupt number that 
+             SBSIM was actually loaded at - OR - remove the driver that
+             is blocking interrupt 81H.

@@ -1,0 +1,52 @@
+/c4                         /u Control Panel Help
+
+     Welcome to Control Panel help.  The Access Control Panel is really simple to
+use.  The buttons are defined easily.  Just look here for all the options.
+
+/c1 /uDisplay
+     In the display settings, you define what color the desktop will be.  The
+colors are:
+/c4         Red /c9         Light Blue /c1         Dark Blue       /c7 White
+/c8         Gray /c2        Green             /c00 Black
+
+
+     The Skin settings allow you to use a Bitmap(BMP) as the backround of the
+windows.  The Skin file is the BMP of your choice.  Note: This feature slows down the CPU.  It is only recomended for fast Pentium PCs.
+
+
+/c01/uUser information
+     This is where the primary user of the operating system controls the
+information that is automatically passed to programs when they are set up. 
+This eliminates the need to write your information everytime you install a
+new Windoze compatible program.  You must type in your name and address.
+
+
+/c01/uAccess Menu settings
+     This is where you can change the Access Menu settings.  These are the options.
+
+   /uAuto hide
+   When off, the Access tab will allways remain visible.  When on, the access
+   tab will only appear when the mouse pointer is near the top of the screen.
+
+   /uTime display
+   When off, the time won't be displayed.  When on, it will be displayed.
+
+   /uAccess menu position
+   This determines whether the access tab will show up at the top or bottom
+   of the screen.
+
+
+/c01/uScreen saver
+     This is where you can change the screen saver options. 
+
+   /uScreen saver
+   This will determine which screen saver appears when the user fails to move the
+   mouse or press a button on the keyboard.
+     
+      Window change will constantly change the pallete of colors on the desktop.
+
+      Marquee will show the word 'Access' at random positions on screen.
+
+   /uTime-out
+   Specify how many minutes Access should wait before starting the screen saver.
+

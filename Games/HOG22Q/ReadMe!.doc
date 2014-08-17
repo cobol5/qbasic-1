@@ -1,0 +1,74 @@
+ In this File :
+
+1} How to install
+
+2} About Quick RoadHog 2 version 2.Q
+
+3} Updates from the last version
+
+4} How To use the DEFAULTS section
+
+
+
+1}-----------Install.bas for RoadHog 2 Ver 2.Q----------
+
+ If you downloaded RoadHog 2 from America OnLine using
+version 2.5, DO NOT MOVE THE FILES to another directory
+unless using INSTALL did NOT work! 
+
+ This Install Program will NOT work with a 
+previous version of RoadHog 2.
+ Install.bas will run a few tests to insure the game
+will run on your system, then you will be asked if you
+wish to install. You can us this to test your system
+and quit before installing.
+
+Install can also UNinstall!
+And can make  copys of RoadHog 2 to a Disk.
+
+2}----------------About RoadHog 2 ver 2.Q---------------
+
+ RoadHog 2 Programed by Kevin Reems is somewhat a 
+shooter/Driving Game with a verity of enemies and bosses
+ This Game has no end . . .
+RoadHog 2 kinda has about 30 levels but there is no real
+ending. Every ten levels or so you'll fight a new boss,
+so when you stop seeing the bosses it's kinda over.
+ RoadHog 2 also has many weapons and upgrades for your
+car that will help you,some are required to destroy some
+bosses. The higher the level you are on the more things
+will be available.            
+  
+3}----------------------Updates-------------------------  
+
+ Version 2.Q is, for the most part the same as 2.0
+but 2.Q is for Quick-BASIC, NOT Q-BASIC.
+ You may get it to run in Q-BASIC, but it will be slow.
+If you don't have Quick-BASIC, get RoadHog 2 version 2.0
+
+4}-----------------How To use DEFAULTS------------------
+
+ For a while now AOL has been telling users that 
+RoadHog 2 REQUIRES a Joystick, This is NOT true for
+versions 1.1+
+Apparently they didn't read the documentation before the
+program, so I'm telling them and more importantly you to
+read it!
+It also includes TroubleShooting to help you with it!
+ No computer is the same, so with the DEFAULTS section
+you should be able to get RoadHog 2 running without
+being a programmer.
+ It will allow you to change detail settings, weapon
+configurations at startup, and let keyboard users play
+too! 
+ I know this File doesn't directly tell you how to use
+DEFAULTS, but the documentation before the main program
+(Hog2.rh2) will help when using it. 
+
+
+
+             Thank You for taking the time to read this.
+              Please send feed-back to 
+                          Yummy Creations - Kevin Reems
+                          LBt1st
+                          lbt1st@aol.com

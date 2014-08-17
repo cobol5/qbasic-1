@@ -1,0 +1,74 @@
+                     /c4 /uWelcome to Access version 1.1A/u
+
+     This is my first operating system.  I made this in QuickBasic 4.5.  The
+Reason I made it is that my own version of /c9 Windows/c4 95 /c0stopped working after
+it caught some virus from the internet.  I was sick of /c9 Windows/c0, but someone
+said to me "If you think you can do it better, than do it yourself.  I guess
+I took that phrase to heart.  To this day, Windows STILL dosn't work, so I
+either use my own operating system or /c1 MS-DOS/c0. Note: I had another desktop with
+/c9 Microsoft Windows /c4 ME /c0, but the motherboard caught on fire and that was the end
+of that super-computer.
+     I had an early attempt called MultiOs(Multiple-process operating system.)
+As you probably guessed, it didn't work well.  Later on, I found the WIN.BAS
+GUI(Graphic User Interface.)  I kept working on it until it all came together.
+Now, I keep adding to this operating system, trying to make the multi-tasking
+system work smoother and faster on slower systems.
+     Soon, this small text viewer will be able to do the same things that
+you do in /c4 Microsoft Word/c0.  It can load text files or speacially formated
+NoteBook(*.NBK) files.  These files add color, bold and underline formating
+to your normal text.  You can edit them through Edit.Com in DOS or using
+Notepad in Windows.  Note: Opening the NoteBook without opening a file will
+open the default file which is the Access help file.
+     I also have built in short-cut keys.  For example:  ALT+F4 will close
+any active window(except dialog boxes), but if there is no active or selected
+window, the default window is the desktop.  And after closing the desktop, the
+operating system shuts down.
+     Here are some short cuts:
+
+/c04Short cut keys                          Action
+--------------------------------------------------------------
+     /c01Ctrl + M/c00                           Helps you find the
+                                        mouse.
+ 
+     /c01Ctrl + O/c00                           Clears the screen
+                                        instantly until user
+                                        presses a key or moves the
+                                        mouse.
+
+     /c01Alt + F4/c00                           Closes the active
+                                        window.  If no window
+                                        is active, it prompts
+                                        the user to shut down
+                                        the PC.
+    
+     /c01Ctrl + F/c00                           IF your screen is
+                                        garbled by a program
+                                        crash or an internal error
+                                        in Access, press Ctrl + F
+                                        to refresh the screen.
+     
+      /c01"D"/c00                               Hold the "D" button down
+                                        to start Access in
+                                        diagnostic mode. This is
+                                        where you can fix errors
+                                        and change the settings
+                                        of Access if they don't
+                                        work in the Windoze
+                                        environment.
+
+      /c01"S"/c00                               Hold down the "S" button
+                                        to start Access without
+                                        loading the startup script
+                                        (autold.sct). This also
+                                        disables the startup sound.
+
+     One more thing.  You can create your own Windoze compatible script file.
+When Access loads, it loads a startup file: AutoLoad.sct.  To create Windoze
+compatible code, you can add your own script.  For example:  Open AutoLD.sct
+and type:
+CreateWindow 13, 50, 50, 200, 200, "My very first Script!", 4, true
+CreateLabel 13, 5, 50, 50, 200, 10, "This is just the tip of the iceberg!", 0, 16, 0, center, 1
+
+You will find that this is very simple. In my next version, Access will have so
+much more.  Bill Gates, watch your back.
+

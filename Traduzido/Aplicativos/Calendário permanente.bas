@@ -1,0 +1,193 @@
+10 CLS
+15 LOCATE 3, 19: COLOR 15, 1: PRINT "                                             ": PRINT : PRINT
+20 LOCATE 4, 19: COLOR 15, 1: PRINT "  C A L E N D A R I O   P E R M A N E N T E  ": PRINT : PRINT
+25 LOCATE 5, 19: COLOR 15, 1: PRINT "                                             ": PRINT : PRINT : PRINT : COLOR 14, 0
+30 PRINT "          Este programa permite que vocà tenha todos os calend†rios de ": PRINT
+40 PRINT "         qualquer ano, desde o ano 0(zero) atÇ onde o seu computador         ": PRINT
+50 PRINT "         aguentar, sem exagerar, l¢gico!                                  ": PRINT : PRINT : PRINT : PRINT : PRINT
+60 COLOR 10, 0: PRINT "         Ronacin Carvalho Lins"
+70 COLOR 15, 0: PRINT "         rony@opengate.com.br"
+80 PRINT "         ronacin2@zipmail.com.br"
+1000 SAS$ = INKEY$
+1010 IF SAS$ = "" THEN GOTO 1000
+2000 CLS : D = 1
+2010 DIM DAT$(28)
+2020 DAT$(1) = "400351362402"
+2030 DAT$(2) = "511462403513"
+2040 DAT$(3) = "622503514624"
+2050 DAT$(4) = "034025036146"
+2060 DAT$(5) = "255136140250"
+2070 DAT$(6) = "366240251361"
+2080 DAT$(7) = "400351362402"
+2090 DAT$(8) = "512503514624"
+2100 DAT$(9) = "033614625035"
+2110 DAT$(10) = "144025036146"
+2120 DAT$(11) = "255136140250"
+2130 DAT$(12) = "360351362402"
+2140 DAT$(13) = "511462403513"
+2150 DAT$(14) = "622503514624"
+2160 DAT$(15) = "033614625035"
+2170 DAT$(16) = "145136140250"
+2180 DAT$(17) = "366240251361"
+2190 DAT$(18) = "400351362402"
+2200 DAT$(19) = "511462403513"
+2210 DAT$(20) = "623614625035"
+2220 DAT$(21) = "144025036146"
+2230 DAT$(22) = "255136140250"
+2240 DAT$(23) = "366240251361"
+2250 DAT$(24) = "401462403513"
+2260 DAT$(25) = "622503514624"
+2270 DAT$(26) = "033614625035"
+2280 DAT$(27) = "144025036146"
+2290 DAT$(28) = "256240251361"
+2300 M = VAL(MID$(DATE$, 1, 2)): A = VAL(MID$(DATE$, 7, 4)): GOTO 2370
+2310 LOCATE 1, 1: PRINT "                                        "
+2320 PRINT "                                        "
+2330 D = 1
+2340 LOCATE 1, 1: INPUT "MES "; M
+2350 IF M < 1 OR M > 12 THEN CLS : GOTO 2340
+2360 LOCATE 2, 1: INPUT "ANO "; A
+2370 IF M = 1 THEN M$ = "JANEIRO"
+2380 IF M = 2 THEN M$ = "FEVEREIRO"
+2390 IF M = 3 THEN M$ = "MARÄO"
+2400 IF M = 4 THEN M$ = "ABRIL"
+2410 IF M = 5 THEN M$ = "MAIO"
+2420 IF M = 6 THEN M$ = "JUNHO"
+2430 IF M = 7 THEN M$ = "JULHO"
+2440 IF M = 8 THEN M$ = "AGOSTO"
+2450 IF M = 9 THEN M$ = "SETEMBRO"
+2460 IF M = 10 THEN M$ = "OUTUBRO"
+2470 IF M = 11 THEN M$ = "NOVEMBRO"
+2480 IF M = 12 THEN M$ = "DEZEMBRO"
+2490 IF A < -7 THEN : LOCATE 2, 1: PRINT "                                             ": GOTO 2360
+2500 W = A / 4
+2510 IF INT(W) < W THEN B = 0 ELSE B = 1
+2520 IF A = -7 THEN L = 1: GOTO 2610
+2530 IF A = -6 THEN L = 2: GOTO 2610
+2540 X = A - (-7)
+2550 L = 1
+2560 LOCATE 8, 30: PRINT "AGUARDE !!"
+2570 FOR N = 1 TO X
+2580 L = L + 1
+2590 IF L = 29 THEN L = 1
+2600 NEXT
+2610 T = VAL(MID$(DAT$(L), M, 1))
+2620 DD = T + D
+2630 IF DD = 1 THEN LL = 1: GOTO 2710
+2640 IF DD = 2 THEN LL = 2: GOTO 2710
+2650 XX = DD - 1
+2660 LL = 1
+2670 FOR N = 1 TO XX
+2680 LL = LL + 1
+2690 IF LL = 8 THEN LL = 1
+2700 NEXT
+2710 IF M = 1 OR M = 3 OR M = 5 OR M = 7 OR M = 8 OR M = 10 OR M = 12 THEN K = 31
+2720 IF M = 4 OR M = 6 OR M = 9 OR M = 11 THEN K = 30
+2730 IF M = 2 AND B = 0 THEN K = 28
+2740 IF M = 2 AND B = 1 THEN K = 29
+2750 IF LL = 1 THEN COL = 20
+2760 IF LL = 2 THEN COL = 25
+2770 IF LL = 3 THEN COL = 30
+2780 IF LL = 4 THEN COL = 35
+2790 IF LL = 5 THEN COL = 40
+2800 IF LL = 6 THEN COL = 45
+2805 IF LL = 7 THEN COL = 50
+2810 FF = 15
+2815 IF LL = 6 AND K = 31 THEN FF = 16
+2820 IF LL = 7 AND K = 30 THEN FF = 16
+2825 IF LL = 7 AND K = 31 THEN FF = 16
+2828 FOR sw = 17 TO 19: LOCATE sw, 21: PRINT "                                         ": NEXT
+2830 FOR H = 6 TO FF: LOCATE H, 18: COLOR 15, 1: PRINT "                                     ": NEXT: COLOR 15, 0
+2835 FOR O = 10 TO FF - 1: LOCATE O, 20: COLOR 0, 7: PRINT "                                 ": NEXT: COLOR 15, 0
+2840 LOCATE 9, 20: COLOR 15, 4: PRINT "DOM"; : COLOR 10, 4: PRINT "  SEG  TER  QUA  QUI  SEX  SAB"
+2845 LIN = 10: COLOR 0, 7
+2850 LETRA = 4: FUNDO = 7
+2855 FOR J = 1 TO K
+2860 IF COL = 20 THEN LETRA = 4 ELSE LETRA = 0
+2862 IF J = VAL(MID$(DATE$, 4, 2)) AND VAL(MID$(DATE$, 1, 2)) = M AND VAL(MID$(DATE$, 7, 4)) = A THEN LETRA = 16
+2863 IF J = VAL(MID$(DATE$, 4, 2)) AND COL = 20 AND VAL(MID$(DATE$, 1, 2)) = M AND VAL(MID$(DATE$, 7, 4)) = A THEN LETRA = 22
+2864 GOSUB 6000
+2865 IF J < 10 THEN COL = COL + 1
+2868 GOSUB 7000
+2870 LOCATE LIN, COL: COLOR LETRA, FUNDO: PRINT J
+2875 IF J < 10 THEN COL = COL - 1
+2880 COL = COL + 5
+2885 IF COL = 55 THEN COL = 20: LIN = LIN + 1
+2890 NEXT
+2895 COLOR 15, 1: LOCATE 7, 20: PRINT M$; "  / "; : PRINT A
+2900 FOR E = 6 TO 15: LOCATE E, 53: COLOR 0, 1: PRINT " ": NEXT: COLOR 15, 0
+2905 COLOR 7, 0: LOCATE 20, 1: PRINT "--------------  (*) para ano seguinte     (/) para ano anterior  ---------------"
+2910 COLOR 8, 0: LOCATE 21, 1: PRINT "--------------  (+) para màs seguinte     (-) para màs anterior  ---------------"
+2915 COLOR 15, 0: LOCATE 22, 1: PRINT "-----------    <ENTER> p/ escolher mes e ano   ou  <ESC> p/ sair    ------------"
+2920 COLOR 15, 0
+2925 I$ = INKEY$
+2927 LOCATE 7, 44: COLOR 14, 1: PRINT TIME$: COLOR 15, 0
+2930 IF I$ = "" THEN GOTO 2925
+2935 IF I$ = CHR$(13) THEN CLS : GOTO 2310
+2940 IF I$ = CHR$(27) THEN CLS : CLS : END
+2945 IF I$ = "+" THEN M = M + 1: GOTO 2970
+2950 IF I$ = "-" THEN M = M - 1: GOTO 2970
+2955 IF I$ = "*" THEN A = A + 1: GOTO 2970
+2960 IF I$ = "/" THEN A = A - 1: GOTO 2970
+2965 IF I$ <> CHR$(13) OR I$ <> CHR$(27) OR I$ <> "+" OR I$ <> "-" THEN GOTO 2925
+2970 IF M = 13 THEN M = 1: A = A + 1
+2975 IF M = 0 THEN M = 12: A = A - 1
+2980 IF A = -8 THEN A = -7
+2985 LOCATE 16, 18: COLOR 15, 0: PRINT "                                     "
+2990 GOTO 2370
+6000 IF J = 1 AND M = 1 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "1 - Confraternizaá∆o Universal"
+6010 IF J = 21 AND M = 4 THEN LETRA = 4: LOCATE 18, 21: COLOR 4, 0: PRINT "21 - Tiradentes"
+6020 IF J = 1 AND M = 5 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "1 - Dia do Trabalho"
+6030 IF J = 7 AND M = 9 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "7 - Independància"
+6040 IF J = 12 AND M = 10 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "12 - N. S. Aparecida"
+6050 IF J = 2 AND M = 11 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "2 - Finado"
+6060 IF J = 25 AND M = 12 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "25 - Natal"
+6070 IF J = 16 AND M = 2 AND A = 1999 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "16 - Carnaval"
+6080 IF J = 2 AND M = 4 AND A = 1999 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "2 - Sexta-Feira da Paix∆o"
+6090 IF J = 7 AND M = 4 AND A = 2000 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "7 - Sexta-Feira da Paix∆o"
+6100 IF J = 3 AND M = 6 AND A = 1999 THEN LETRA = 4: LOCATE 17, 21: COLOR 4, 0: PRINT "3 - Corpus Christi"
+6900 RETURN
+7000 IF VAL(MID$(DATE$, 4, 2)) = J AND VAL(MID$(DATE$, 1, 2)) = M AND VAL(MID$(DATE$, 7, 4)) = A AND LETRA = 4 THEN LETRA = 20
+7010 IF VAL(MID$(DATE$, 4, 2)) = J AND VAL(MID$(DATE$, 1, 2)) = M AND VAL(MID$(DATE$, 7, 4)) = A AND LETRA = 0 THEN LETRA = 16
+7900 RETURN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+*************** QMIDI 1.0 ***************
+A BASIC MIDI player that supports QBasic,
+QuickBASIC, Visual BASIC for DOS, and 
+MS PDS. Features include background MIDI
+playing, nearly unlimited MIDI file size,
+and compatiblity with most sound cards.
+QMIDI is the only background MIDI player
+available that works in QBasic.  Source 
+code, sound drivers, and full document-
+ation included. Public Domain.
+
+

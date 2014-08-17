@@ -1,0 +1,105 @@
+                             Read Me zu
+======================================================================    
+
+                     J.M.K S.F. BatchBASIC 1.0
+       (c) 2000 by Jan-Max Meyer Krapohl, owner of J.M.K S.F.
+             Programmiersprachen und -tool entwicklung
+        http://home.t-online.de/home/cochisecom/jmksf.htm
+                     jmk.software.factory@web.de
+
+======================================================================
+
+J.M.K S.F. BatchBASIC ist eine Public Domain Miniprogrammiersprache!
+Sie  soll  veranschaulichen,  wie  man Programmiersprachen mit Basic
+erstellen  kann. Mit BatchBASIC kann man, wie der Name schon sagt,
+basic-ähnliche Batchprogramme erstellen.
+================================REFERENZ===============================
+Die Befehlsreferenz ist nicht sehr gross:
+
+PRINT [Text]                   Ausgabe von Text
+CLS                            Löschen d. Bildschirms
+SHELL                          Ausführen eines MS-DOS Befehls
+INPUT [Text]                   Befehl zum eingeben von Strings in die
+                               Variable string$
+WAIT=[laenge]                  Wartet bestimmte Sekundezahl ab
+PAUSE                          Unterpricht das Programm bis Tastendruck
+END                            Beenden des Programms
+
+Mit nur 7 Befehlen kann man jedoch schon eine Menge anfangen !
+
+============================BEISPIELPROGRAMME==========================
+Hier ein paar Beispielprogramme:
+
+'Programm: Hello world!
+CLS
+PRINT Hello World !
+END
+
+'Programm: DOS-Interpreter
+CLS
+INPUT Bitte Befehl eingeben:
+SHELL string$
+PRINT Fertig !
+END
+
+'Programm: Message
+CLS
+PRINT Guten Tag !
+WAIT=2
+CLS
+END
+
+'Programm: Pause
+CLS
+PRINT Moment...
+PAUSE
+PRINT Jetzt gehts weiter
+WAIT=2
+CLS
+END
+
+Solche recht einfachen Programme kann man mit BatchBASIC erstellen. Ich
+würde  mich sehr freuen, wenn Sie versuchen, die Software mit neuen Be-
+fehlen und Funktionen weiterzuentwickeln.
+
+
+=====================WIE STARTET MAN EIN PROGRAMM ?====================
+Sie  starten  ein  Programm, wenn Sie Die Programmdatei, welche im .bbf
+Dateiformat  (dateiname.bbf)  einfach  per  drag&drop  auf das Programm
+bb.exe ziehen.
+========================WAS IST PUBLIC DOMAIN ?========================
+PUBLIC  DOMAIN bedeutet, dass Sie den Quellcode beliebig ändern oder in
+Ihre  eigenen Softwareprogramme kopieren dürfen. Jedoch müssen Sie  mir
+Credits  geben,  wenn  das  Programm  unter  einem  anderen  Namen  als
+J.M.K S.F. BatchBASIC weitergeben. Die Credits sollten bitte so ausseh-
+hen:
+
+J.M.K S.F.
+Jan-Max Meyer Krapohl, owner of J.M.K S.F.
+Programmiersprachen und -tool entwicklung
+http://home.t-online.de/home/cochisecom/jmksf.htm
+
+============================MEHR SOFTWARE !============================
+Besuchen Sie J.M.K S.F. auf dem World Wide Web:
+http://home.t-online.de/home/cochisecom/jmksf.htm
+(Hauptadresse (empfehlung!)) oder
+http://software.freespace.de/jmksf/
+oder
+http://www.jmksf.purespace.de/
+
+Dort finden Sie u.a.
+- Weitere selbsterfundene und -entwickelte, eigene Programmiersprachen,
+  welche als Free-, Share- oder Buyware vorhanden sind
+- Viele selbserfundene und -entwickelte Programmiertools
+- Jaaaa, auch ein paar andere Programme !
+=======================================================================
+
+
+Vielen dank !
+
+Es gruesst
+Jan-Max Meyer Krapohl, owner of J.M.K S.F.
+=======================================================================
+Soweit nicht anders angegeben, liegt das Urhebrrecht bei
+(c) 2000 by Jan-Max Meyer Krapohl, owner of J.M.K S.F.
+

@@ -1,0 +1,1795 @@
+                 ÛÛÛÛÛÛÛÛÛ  ÛÛÛ   ÛÛÛ  ÛÛÛÛ  ÛÛÛÛÛÛ    ÛÛÛÛ
+                 ÛÛ     ÛÛ  ÛÛ Û Û ÛÛ   ÛÛ   ÛÛ   ÛÛ    ÛÛ
+                 ÛÛ     ÛÛ  ÛÛ  Û  ÛÛ   ÛÛ   ÛÛ    ÛÛ   ÛÛ 
+                 ÛÛ  Û  ÛÛ  ÛÛ     ÛÛ   ÛÛ   ÛÛ   ÛÛ    ÛÛ
+                 ÛÛÛÛÛÛÛÛÛ  ÛÛ     ÛÛ  ÛÛÛÛ  ÛÛÛÛÛÛ    ÛÛÛÛ
+                    Û
+                  
+                    VERSION 4.1 - RELEASED DECEMBER 1998
+                                USER'S GUIDE
+
+                   CODE AND DOCUMENTATION BY JESSE DORLAND
+              SEE "ACKNOWLEDGEMENTS" FOR A LIST OF CONTRIBUTORS
+
+                     FIND THE LATEST VERSION OF QMIDI AT:
+             http://members.tripod.com/~jdorland/qmidi/index.html
+
+
+ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+º TABLE OF CONTENTS º
+ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ CHAPTER 1 - INTRODUCTION ³
+ÀÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ÃÄ 1.0 - What is QMIDI?
+ ÃÄ 1.1 - System Requirements
+ ÃÄ 1.2 - What's New in Version 4.1
+ ÃÄ 1.3 - File List
+ ÀÄ 1.4 - Acknowledgements
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ CHAPTER 2 - GETTING STARTED ³
+ÀÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ÃÄ 2.0 - The Sound Drivers
+ ÀÄ 2.1 - The Basics
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ CHAPTER 3 - ADVANCED TOPICS ³
+ÀÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ÃÄ 3.0 - Detecting the Sound Drivers
+ ÃÄ 3.1 - Detecting Sound Card Settings
+ ÃÄ 3.2 - Error Handling
+ ÃÄ 3.3 - QMIDI's Shared Variables
+ ÃÄ 3.4 - Mixer Control
+ ÀÄ 3.5 - Batch Files
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ CHAPTER 4 - QMIDI QUICK REFERENCE ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ CHAPTER 5 - QMIDI Q & A ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ CHAPTER 6 - CONTACT INFORMATION ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+
+ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+º CHAPTER 1 - INTRODUCTION º
+ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 1.0 - WHAT IS QMIDI? ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+QMIDI is a free library for QBasic, QuickBasic and VB-DOS. It provides an
+easy way to add background MIDI music to your programs.
+
+QMIDI supports two file formats: Standard MIDI (.MID) and Microsoft
+RMID (.RMI).  For RMID files, you need to use the included RMI2MID
+utility, which converts RMI files to Standard MIDI format.  Other
+music formats (CMF, ROL, etc.) are not currently supported.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 1.1 - SYSTEM REQUIREMENTS ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+For FM synthesis, QMIDI requires a Sound Blaster compatible sound card.
+The following cards, and their compatibles, are supported:
+        - Sound Blaster 1.5/2.0
+        - Sound Blaster Pro/Pro2
+        - Sound Blaster 16/32/AWE
+    
+For wavetable synthesis, QMIDI requires a sound card that supports the
+MPU-401 interface.
+
+The following BASIC interpreters/compilers are supported:
+
+        - QBasic v1.x
+        - QuickBasic v4.x
+        - Visual Basic for DOS v1.0
+        - Microsoft PDS v6.x/7.x*
+
+* Some users have reported that QMIDI does not work properly with PDS.
+  If you have problems, please download QMIDI version 3.5:
+        http://members.tripod.com/~jdorland/qmidi/qmidi35.zip
+  Then, download the special PDS source code for QMIDI 3.5:
+        http://members.tripod.com/~jdorland/qmidi/qmidipds.zip
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 1.2 - WHAT'S NEW IN VERSION 4.1 ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+Well, after a careful examination of QMIDI 4.0's file loading system,
+I've come to the conclusion that it was nothing but a gawd-awful mess.
+I don't know what I was drinking, smoking, or injecting myself with when
+I programmed it.
+
+The modified file & memory management code in QMIDI 4.1 is much better.
+Here's what's different:
+
+        - Support for multiple files.  You can pretty much load as
+          many files into memory simultaneously as there is room for.
+          Because of this addition, a MIDI "handle" system has been
+          implemented.  It's explained later.
+        - A new routine called UnloadMIDI has been added; it removes
+          a MIDI file from memory once it's been loaded.  THIS IS A VERY
+          IMPORTANT ROUTINE, so make sure you look it up!
+        - There's also a routine called CleanUpMIDI.  If you call the
+          CleanUpMIDI routine before your program ends, it will make sure
+          that all MIDI files have been unloaded.  Very handy.
+
+Also, in this version, the PauseMIDI and ResumeMIDI routines no longer
+require the SBMIDI driver.  What this means is that SBSIM.COM is now
+not required at all!  You still might want to load it, however, as it
+seems to improve QMIDI's wavetable synthesis.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 1.3 - FILE LIST ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+The QMIDI41.ZIP file should contain the following files.  If you don't
+have all of these files, download a complete copy of QMIDI from here:
+        http://members.tripod.com/~jdorland/qmidi/index.html
+
+    DEMO.BAS            -               Demonstrates many of QMIDI's
+                                        features.
+    DRIVERS.DAT         -               Required for the DriversLoaded
+                                        routine.
+    FILE_ID.DIZ         -               Program description.
+    QMIDI.BAS           -               The QMIDI source code.
+    QMIDI.DOC           -               The QMIDI documentation.
+    RMI2MID.BAS         -               A utility that converts .RMI files
+                                        to .MID format.
+    SAMPLE?.MID         -               A few MIDI files that sound nice
+                                        with QMIDI.
+    SB122OLD.EXE        -               SBMIDI version 1.22 for old
+                                        Sound Blaster cards.  Unless you
+                                        have an SB 1.5 or SB 2.0 sound card,
+                                        you should use SBMIDI.EXE instead;
+                                        it will provide better sound quality.
+    SBMIDCHK.BAS        -               Source code for the command-line
+                                        SBMIDI detection utility.
+    SBMIDCHK.EXE        -               Executable version of the above
+                                        file.
+    SBMIDI.EXE          -               SBMIDI version 1.22 for Sound
+                                        Blaster Pro, Sound Blaster 16 and
+                                        compatible sound cards.
+    SBSIM.CFG           -               Configuration file for the SBSIM
+                                        driver.
+    SBSIM.COM           -               The SBSIM sound driver.  You only
+                                        need to load SBSIM if you want to
+                                        use the PauseMIDI and ResumeMIDI
+                                        routines.
+    SBSIMCHK.BAS        -               Source code for the command-line
+                                        SBSIM detection utility.
+    SBSIMCHK.EXE        -               Executable version of the above
+                                        file.
+    SMALL.BAS           -               Stripped-down version of QMIDI.BAS.
+                                        ~50% smaller, but missing some
+                                        features.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 1.4 - ACKNOWLEDGEMENTS ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+QMIDI has been possible thanks to the efforts of many programmers, not
+just myself.  The following people have contributed to this version of
+QMIDI, directly or otherwise:
+
+    Mike Huff
+        Author of a QuickBASIC MIDI player that appeared in the All
+        BASIC Code packets.  I based QMIDI on his work.
+    Angelo Mottola
+        Contributed the Pause/Resume code.
+    Robert Claypool
+        Wrote an alternate driver detection routine, which has been
+        combined with the old routine.  Best of both worlds!
+    Douggie Greene
+        Author of the IntX routione used in QMIDI.
+    Byron Smith
+        Wrote the bit manipulation routines used in QMIDI.
+
+Also, thanks to Creative Labs, for their excellent SBMIDI and SBSIM
+utilities, and for the Sound Blaster Series Hardware Programming Guide.
+
+
+
+ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+º CHAPTER 2 - GETTING STARTED º
+ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 2.0 - THE SOUND DRIVERS ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ The SBMIDI Driver ÄÄÄ
+
+Two different versions of SBMIDI are included with QMIDI -- SBMIDI.EXE and
+SB122OLD.EXE.  You must load one of these drivers before you can use QMIDI.
+
+SBMIDI.EXE provides the best sound quality, and works with most cards.
+SB122OLD.EXE should only be used if you have a Sound Blaster 1.5 or 2.0
+sound card.
+
+To load SBMIDI, simply type the name of the driver at the DOS prompt:
+
+    SBMIDI <Enter>
+       -- or --
+    SB122OLD <Enter>
+
+If you have an MPU-401 compatible wavetable sound card, you can use
+wavetable synthesis with QMIDI, by loading SBMIDI with the '/3' switch:
+
+    SBMIDI /3 <Enter>
+
+
+ÄÄÄ The SBSIM Driver ÄÄÄ
+
+The SBSIM driver is optional.  You don't have to load it in order to
+use QMIDI.  However, it seems to improve sound quality when using
+wavetable synthesis, so you may want to load SBSIM anyway.
+        
+To load the driver, just type its name at the DOS prompt:
+
+    SBSIM <Enter>
+
+When you load SBSIM, you may see one or more of the following error
+messages:
+
+    - "Error - FMDRV couldn't be loaded"
+    - "Error - CTVDSK.DRV couldn't be loaded"
+    - "Error - CT-VOICE.DRV couldn't be loaded"
+    - "Error - AUXDRV.DRV couldn't be loaded"
+
+The four drivers listed above are not required for QMIDI to work, so if
+you see any of those messages, just ignore them.
+
+NOTE: ALWAYS load the SBMIDI driver before loading SBSIM.
+
+
+ÄÄÄ Unloading the Drivers ÄÄÄ
+
+When you're done using QMIDI, you'll want to unload the drivers.  To do this,
+simply run them again using the '/U' switch.  For example:
+
+    SBSIM /U <Enter>
+    SBMIDI /U <Enter>
+
+NOTE: If both sound drivers are loaded, ALWAYS unload SBSIM first.  If you
+don't, you may not be able to remove it from memory at all.
+
+
+ÄÄÄ Notes ÄÄÄ
+
+    - Never load the sound drivers using the BASIC "SHELL" command.  They
+      won't be loaded properly using this method.  The drivers should always
+      be loaded directly from DOS, or from a batch (.BAT) file that is
+      run from DOS.
+
+    - If you don't want the drivers to display any text, add '>nul' to the
+      end of the command line.  For example:
+
+        SBMIDI >nul <Enter>
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 2.1 - THE BASICS ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+After loading the sound drivers, start your BASIC editor.  If you're using
+QuickBasic, VB-DOS or PDS, you'll need to load the IDE with the '/L'
+switch:
+
+    QB  /L      'For QuickBasic users
+    VBDOS /L    'For VB-DOS users
+    QBX /L      'For PDS users
+
+
+Open QMIDI.BAS and find the following line:
+
+    '---[ END OF REQUIRED CODE ]---
+
+Your code should start below this line.
+
+
+ÄÄÄ Playing Music ÄÄÄ
+
+Playing a MIDI file with QMIDI is very easy.  All you need to do is:
+
+    - Call the LoadMIDI routine to load the file into memory.  The
+      LoadMIDI routine will return a "Handle" -- this is a number that
+      you'll have to use when you want to play the MIDI file, or
+      unload it.
+
+      For example, if you the MIDI file you want to load is called
+      MIDIFILE.MID, you might use this command:
+
+            HandleVar% = LoadMIDI("MIDIFILE.MID")
+
+    - Then, to start playing the music, you'd call PlayMIDI, and specify
+      the HandleVar% variable:
+
+            PlayMIDI HandleVar%
+
+    - Call the StopMIDI routine when you want to stop the music:
+
+            StopMIDI
+
+    - Finally -- and THIS IS IMPORTANT -- before your program ends, you
+      need to unload the MIDI file.  It's a simple matter of calling the
+      UnloadMIDI routine, like so:
+
+            UnloadMIDI HandleVar%
+
+Of course, there are other things you can do with QMIDI, too.  I'll cover
+some of them below.
+
+
+ÄÄÄ Pausing the Music ÄÄÄ
+
+To pause a MIDI file, simply call the PauseMIDI routine:
+
+        PauseMIDI
+
+When you want to start playing the music again, call the ResumeMIDI
+routine:
+
+        ResumeMIDI
+
+NOTE: Music pausing may not work properly when using wavetable synthesis.
+
+
+ÄÄÄ Timing the Music ÄÄÄ
+
+You can use the TimeMIDI! function to find out how long a MIDI file has
+been playing:
+
+Variable! = TimeMIDI!
+
+TimeMIDI! will return the number of seconds that have passed since the
+music was started.
+
+
+ÄÄÄ Looping the Music ÄÄÄ
+
+If you're using MIDI files for background music in your program, you'll
+probably want the music to loop infinitely.  You can do this with the
+LoopMIDI routine.  LoopMIDI checks to see if the MIDI file has finished
+playing, and if it has, the music is restarted.
+
+
+ÄÄÄ Example ÄÄÄ
+
+Here's a short program that demonstrates the routines I coverd above:
+
+    'Clear the screen.
+    CLS
+    'Load SAMPLE1.MID into memory.
+    MIDIHandle% = LoadMIDI("SAMPLE1.MID")
+    'Begin playing the music.
+    PlayMIDI MIDIHandle%
+
+    'The following loop will repeat until the user presses a key.
+    DO UNTIL LEN(INKEY$)
+    'Move the cursor to the top left corner of the screen.
+    LOCATE 1, 1
+    'Update the timer.
+    PRINT USING "Music has been playing for ###.## seconds."; TimeMIDI!
+    'Loop the music back to the beginning if necessary.
+    LoopMIDI
+    'Repeat the loop
+    LOOP
+
+    'Stop the music.
+    StopMIDI
+    'Unload the MIDI file.
+    UnloadMIDI MIDIHandle%
+    'Quit.
+    END
+
+
+
+ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+º CHAPTER 3 - ADVANCED TOPICS º
+ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 3.0 - DETECTING THE SOUND DRIVERS ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+In order for QMIDI to work, it needs to know where the SBMIDI and SBSIM
+drivers are located.  This is where the DriversLoaded routine comes in.
+DriversLoaded detects whether or not SBMIDI and SBSIM are loaded, and also
+finds out which interrupts they are using.
+
+The syntax for DriversLoaded is as follows:
+
+    DriversLoaded SBMIDI%, SBSIM%
+
+When DriversLoaded is finished, the interrupt that the SBMIDI driver is
+using is placed in the SBMIDI% variable, and the interrupt that SBSIM is
+using is placed in the SBSIM% variable.
+
+The QMIDI source code already contains a call to the DriversLoaded routine,
+which occurs before any of your code is executed.  It looks like this:
+
+    DriversLoaded SBMIDI.INTERRUPT, SBSIM.INTERRUPT
+    IF SBMIDI.INTERRUPT = 0 THEN SBMIDI.INTERRUPT = &H80
+    IF SBSIM.INTERRUPT = 0 THEN SBSIM.INTERRUPT = &H81
+
+This code is sufficient for detecting the sound drivers.  You don't really
+need to replace it unless you want to.  There are some good reasons for
+replacing the code, however.  For example, you might want to have your
+program print a warning message if one or both of the drivers could not be
+detected.  Here's an example:
+
+    'Check for the drivers
+    DriversLoaded SBMIDI.INTERRUPT, SBSIM.INTERRUPT
+    'If either of the drivers could not be found, print a warning
+    'message.
+    IF SBMIDI.INTERRUPT = 0 OR SBSIM.INTERRUPT = 0 THEN
+        PRINT "WARNING!  One or both of the sound drivers required for
+        PRINT "this program could not be detected.  If you choose to
+        PRINT "continue, you may not hear sound, or your computer may
+        PRINT "lock up.  What do you want to do?"
+        PRINT
+        PRINT "Press C to continue, or any other key to quit."
+        'Get a key press
+        A$ = UCASE$(INPUT$(1))
+        'If the user pressed 'C', use the default values for the
+        'interrupts and continue the program.
+        IF A$ = "C" THEN
+            SBMIDI.INTERRUPT = &H80
+            SBSIM.INTERRUPT = &H81
+        'Otherwise, end the program.
+        ELSE
+            CLS
+            END
+        END IF            
+    END IF
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 3.1 - DETECTING SOUND CARD SETTINGS ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+QMIDI provides routines to control mixer settings (volume, bass and treble).
+For these routines to work, QMIDI has to know the type of sound card that's
+installed, and the card's I/O port.  Without this information, the mixer
+chip can't be controlled properly.
+
+The DetectSettings routine will detect the sound card type and the I/O
+port, as well as the following information:
+
+        - IRQ
+        - 8-bit (Low) DMA
+        - 16-bit (High) DMA
+        - MPU-401 port
+
+The syntax for the DetectSettings routine is:
+
+    DetectSettings BasePort%, IRQ%, LoDMA%, HiDMA%, CardType%, MPU401%
+
+Where:
+
+    BasePort% - This is the base port (or "I/O port") of the sound card.
+    IRQ% - This is the IRQ number of the sound card.
+    LoDMA% - This is the 8-bit DMA channel of the card.
+    HiDMA% - This is the 16-bit DMA channel of the card.  Not all sound
+             cards have a 16-bit DMA; in this case, a value of 0 will
+             be returned.
+    CardType% - This returns a value from 1 to 6, specifying the type of
+                sound card installed:
+
+                1 - Sound Blaster 1.0/1.5
+                2 - Sound Blaster Pro
+                3 - Sound Blaster 2.0/2.0CD
+                4 - Sound Blaster Pro 2
+                5 - Sound Blaster Pro (Microchannel Version)
+                6 - Sound Blaster 16/16 ASP/AWE32
+    MPU401% - If MPU-401 support is detected, the MPU-401 port is returned.
+              If it is not detected, a value of 0 is returned.
+              
+Like the DriversLoaded routine, the QMIDI source code already contains
+a call to the DetectSettings routine, which is executed automatically.  Here
+it is:
+
+    DetectSettings SB.BASEPORT, SB.IRQ, SB.LODMA, SB.HIDMA, SB.CARDTYPE,
+                   SB.MPU401
+    IF SB.CARDTYPE = 0 THEN SetCard 2
+    IF SB.BASEPORT = 0 THEN SB.BASEPORT = &H220
+    IF SB.IRQ = 0 THEN SB.IRQ = 5
+    IF SB.LODMA = 0 THEN SB.LODMA = 1
+    IF SB.HIDMA = 0 AND SB.CARDTYPE = 6 THEN SB.HIDMA = 5
+
+
+ÄÄÄ The SetCard Routine ÄÄÄ
+
+If you want to set the sound card type manually, do not directly alter
+the SB.CARDTYPE variable.  Instead, use the SetCard routine.  Modifying
+SB.CARDTYPE directly will not set the MIXER.CHIP variable properly, and
+the mixer control routines may not work.
+
+
+ÄÄÄ Notes ÄÄÄ
+
+    - You should never set the SB.CARDTYPE variable directly.  If you do,
+      the MIXER.CHIP variable may not be set properly, in which case the
+      mixer control routines will not work correctly.  Instead, use the
+      SetCard routine whenever you want to change the card type.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 3.2 - ERROR HANDLING ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+When something goes wrong with one of QMIDI's routines, an error code is
+stored in a shared integer variable called MIDI.ERROR.
+
+MIDI.ERROR contains the error code from the last routine that was executed
+If no error occurred in the last QMIDI routine that was called, MIDI.ERROR
+will contain a value of 0.  So, if you decide to use error handling in your
+programs, you should check for errors after every call to a QMIDI routine.
+
+QMIDI's error codes are as follows:
+
+    0 - NO ERROR
+        No error occurred in the last QMIDI routine.
+    1 - FILE DOES NOT EXIST
+        QMIDI tried to access a file that doesn't exist.  This error
+        usually occurs in the LoadMIDI routine, when it can't find the
+        specified MIDI file.  This error will also occur in DriversLoaded,
+        if the file DRIVERS.DAT is not in the current directory.
+    2 - OUT OF MEMORY
+        There is not enough free conventional memory to load the
+        specified MIDI file.
+    3 - NO MIDI FILE PLAYING
+        There is no MIDI file playing, and you tried to use a routine that
+        only works whem music is playing (like StopMIDI or TimeMIDI!).  
+    4 - INVALID SBMIDI INTERRUPT
+        You tried to use a QMIDI routine that calls the SBMIDI driver
+        (like PlayMIDI or StopMIDI), but the value in the SBMIDI.INTERRUPT
+        variable is invalid.
+    5 - INVALID SBSIM INTERRUPT
+        You tried to use the PauseMIDI or ResumeMIDI routine, but the
+        value in the SBSIM.INTERRUPT variable is invalid.
+    6 - NO MIXER CHIP
+        You tried to use one of QMIDI's mixer control routines, but your
+        sound card does not appear to have a mixer chip.
+    7 - COULD NOT DETECT SOUND CARD
+        The DriversLoaded routine could not figure out what type of sound
+        card you have.
+    8 - FEATURE UNAVAILABLE
+        You tried to use a mixer control that is not supported by your
+        your sound card.  For example, if you try to use the SetBass
+        routine, and you don't have a Sound Blaster 16 (or compatible)
+        card, you'll receive this error, because only SB16 cards support
+        Bass adjustment.
+    9 - FILE IS CORRUPT
+        The DRIVERS.DAT routine is corrupt.  This error occurs in the
+        DriversLoaded routine, when the DRIVERS.DAT file is not exactly
+        1024 bytes in size.
+   10 - INVALID SOUND CARD TYPE
+        You specified a card type that is invalid.  This error occurs when
+        you call the SetCard routine and specify a number that is not
+        between 1 and 6.
+   11 - COULD NOT PLAY MUSIC
+        It appears that the PlayMIDI routine could not start playing
+        music.
+   12 - ALL HANDLES IN USE
+        You tried to load a MIDI file, but all 256 MIDI handles are in
+        use.  You should NEVER get this error, unless you somehow manage
+        to load 256 MIDI files into memory at the same time.
+   13 - INVALID HANDLE NUMBER
+        You called a routine that requires you to specify a MIDI handle,
+        and the handle you provided is invalid.  This error occurs if
+        the handle number you specify is less than 0 or greater than 255.
+        
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 3.3 - QMIDI'S SHARED VARIABLES ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+QMIDI uses many Shared variables (variables that can be used by
+any subroutine in a program).  These variables control how QMIDI functions.
+The following is a list of all Shared variables used by QMIDI, and what they
+are used for:
+
+ÄÄÄ QMIDIRegs ÄÄÄ
+Stores the registers used for interrupt calls.
+
+ÄÄÄ MEM.SEGMENT(0 TO 255) ÄÄÄ
+Stores the segment of memory where the current MIDI file is stored.
+DO NOT modify this array.
+
+ÄÄÄ MEM.ALLOCATED(0 TO 255) ÄÄÄ
+Stores the amount of memory that QMIDI took from BASIC, in order to
+make room for the MIDI file.  DO NOT modify this array.
+
+ÄÄÄ CURRENTHANDLE ÄÄÄ
+Stores the handle number of the MIDI file that is currently playing.
+DO NOT modify this variable.
+
+ÄÄÄ MIDI.PLAYTIME ÄÄÄ
+If this variable contains a value of 0, no music is currently playing.
+Any non-zero value means that music is playing.  DO NOT modify this
+variable, or the TimeMIDI routine will be inaccurate.
+
+ÄÄÄ MIDI.ERROR ÄÄÄ
+Contains the error code returned by the last QMIDI routine that was executed.
+Modifying this variable serves no purpose.
+
+ÄÄÄ SBMIDI.INTERRUPT ÄÄÄ
+Contains the interrupt number to use when calling the SBMIDI driver.
+See Section 3.0 ("Detecting the Sound Drivers") for more
+information.
+
+ÄÄÄ SBSIM.INTERRUPT ÄÄÄ
+Contains the interrupt number to use when calling the SBSIM driver.
+This variable is covered in Section 3.0.
+
+ÄÄÄ PAUSED ÄÄÄ
+A non-zero value indicates that the music is currently paused.  DO NOT
+modify this variable, or the TimeMIDI routine will not work properly.
+
+ÄÄÄ MIXER.CHIP ÄÄÄ
+An integer variable containing a value between 0 and 3 that identifies
+the sound card's mixer chip.  This variable is set by the DetectSetings
+and SetCard routines, and should NOT be modified by your programs.
+
+ÄÄÄ SB.BASEPORT ÄÄÄ
+Stores the sound card's I/O port.  This variable may be modified, but
+please note: if the value in this variable is not correct, the mixer
+control routines will not work.
+
+ÄÄÄ SB.IRQ ÄÄÄ
+An integer variable for storing the sound card's IRQ.  This variable may
+be modified without causing any problems.
+
+ÄÄÄ SB.LODMA ÄÄÄ
+An integer variable for storing the sound card's 8-bit DMA.  This variable
+may be modified without causing any problems.
+
+ÄÄÄ SB.HIDMA ÄÄÄ
+An integer variable for storing the sound card's 16-bit DMA.  This variable
+may be modified without causing any problems.
+
+ÄÄÄ SB.CARDTYPE ÄÄÄ
+An integer variable containing the type of sound card installed.  This
+variable should NOT be modified directly by your programs.  Instead, use
+the SetCard routine.  Note that, if the card type is set incorrectly,
+the mixer control routines may not work.
+
+ÄÄÄ SB.MPU401 ÄÄÄ
+An integer variable containing the MPU-401 port.  The actual port number
+is not important, as none of the QMIDI routines use it.  If this variable
+contains a non-zero value after running the DetectSettings routine, then
+MPU-401 support was detected (the MPU-401 interface is used for
+wavetable synthesis).  A value of zero means that MPU401 support was not
+detected.  This variable may be modified without causing any problems.
+
+ÄÄÄ BIT.STORAGE ÄÄÄ
+Completely useless except to QMIDI's routines.  Modifying it won't cause
+any problems, but there's really no reason to do so.
+
+ÄÄÄ SENSITIVE ÄÄÄ
+A non-zero value enables Sensitive Error Handling, which causes QMIDI to
+handle some errors differently than it usually does:
+
+        - If the DetectSettings routine cannot find the sound card
+          type, or if it detects a sound card without a mixer chip,
+          mixer operations will be disabled.  Normally, QMIDI just
+          assumes the default mixer chip.
+        - When executing a routine that calls SBMIDI or SBSIM, the
+          routine will abort if the value in the SBMIDI.INTERRUPT
+          or SBSIM.INTERRUPT variable appears to be invalid.
+
+ÄÄÄ REVERSE.STEREO ÄÄÄ
+A non-zero value causes QMIDI's mixer control routines to swap the left
+and right audio channels when performing mixer operations.  There is more
+detailed information on this in the next section.
+
+ÄÄÄ SOUND.DISABLED ÄÄÄ
+When this variable has a value of 1, QMIDI will not play any music.  If you
+want to give your users the option of disabling music in your programs, this
+is an easy way to do it.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 3.4 - MIXER CONTROL ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+This section describes QMIDI's mixer control routines.
+
+Most sound cards have a mixer chip.  The mixer chip allows various
+sound card settings to be controlled by software.  These settings include
+volume and, on some sound cards, bass & treble.
+
+In order for mixer operations to work, the sound card must have a
+mixer chip.  The following Sound Blaster cards have mixer chips:
+
+    - Sound Blaster 2.0 CD Interface (SB2CD)
+    - Sound Blaster Pro/Pro 2
+    - Sound Blaster 16
+
+The vast majority of PC sound cards are compatible with one of the above
+Sound Blaster cards.
+
+As far as I know, the following sound cards DO NOT have mixer chips, and
+will not work with QMIDI's mixer control routines:
+
+    - Sound Blaster 1.0
+    - Sound Blaster 1.5
+    - Sound Blaster 2.0
+
+
+ÄÄÄ Controlling Volume ÄÄÄ
+
+On any sound card with a mixer chip, you can control the volume levels
+of three different sources: Master, MIDI and Voice.
+
+"Master Volume" affects all sound.  Turning it up or down will affect
+everything that comes out of your speakers.
+
+"MIDI Volume" affects MIDI output only.  Turning it up or down will affect
+MIDI music, but not other types of sound.
+
+"Voice Volume" affects digital output only.  .WAV and .VOC files are two
+examples of digital sound.
+
+
+ÄÄÄ Reading Volume Settings ÄÄÄ
+
+You can retrieve the current volume settings using these three routines:
+
+        GetMaster LeftChannel%, RightChannel%
+        GetMIDI LeftChannel%, RightChannel%
+        GetVoice LeftChannel%, RightChannel%
+
+The current volume level for the Left audio channel will be returned in
+LeftChannel%.  The current volume of the Right audio channel will be
+returned in RightChannel%.
+
+Possible volume levels range from 0 (softest) to 31 (loudest).
+
+In the following example, the Master volume level is retrieved, and then
+printed on the screen:
+
+    GetMaster LeftChannel%, RightChannel%
+    PRINT "The Master volume level for the left channel is:"; LeftChannel%
+    PRINT "The Master volume level for the right channel is:"; RightChannel%
+
+
+ÄÄÄ Changing Volume Settings ÄÄÄ
+
+These three routines are used to modify the volume settings:
+
+        SetMaster LeftChannel%, RightChannel%
+        SetMIDI LeftChannel%, RightChannel%
+        SetVoice LeftChannel%, RightChannel%
+
+For LeftChannel% and RightChannel%, you can specify a value between 0
+and 31.
+
+Here's a simple example that gets two values from the user, and then
+uses those values to set the Master volume level.
+
+    INPUT "Enter Master volume setting for left channel: ", LeftChan%
+    INPUT "Enter Master volume setting for right channel: ", RightChan%
+    SetMaster LeftChan%, RightChan%
+
+Later in this section, I'll show you how to implement fading and panning
+effects, using these routines.
+
+
+ÄÄÄ Bass and Treble ÄÄÄ
+
+QMIDI also has routines for controlling the bass and treble settings.
+These routines will only work with Sound Blaster 16-compatible sound cards.
+
+The routines used to adjust bass and treble are GetBass, SetBass, GetTreble
+and SetTreble.  The syntax for these routines is as follows:
+
+        GetBass LeftChannel%, RightChannel%
+        SetBass LeftChannel%, RightChannel%
+        GetTreble LeftChannel%, RightChannel%
+        SetTreble LeftChannel%, RightChannel%
+
+For the GetBass and GetTreble routines, a value between 0 and 31 will be
+returned for LeftChannel% and RightChannel%.  For SetBass and SetTreble,
+you need to specify a value between 0 and 31.
+
+For example, to get the current bass level, you would use code like this:
+
+    GetBass LeftChan%, RightChan%
+
+And the following code will set the Treble level to 16 for both channels:
+
+    SetTreble 16, 16
+
+
+ÄÄÄ Fading ÄÄÄ
+
+Volume fading is relatively simple.  It just involves a FOR....NEXT loop that
+sets the volume level lower or higher each time.  However, if you don't
+use any kind of delay, there won't be a fading effect at all, but
+rather an abrupt change in volume.
+
+To correct this, you can use QMIDI's Delay routine.  Delay, as the name
+suggests, causes a delay, which lasts a fraction of a second.  This delay
+will be nearly identical in length no matter what computer it is used on.
+The syntax for Delay is:
+
+        Delay Repetitions%
+
+Repetitions% specifies how many times to repeat the delay.  More repetitions
+will mean a longer delay.  For the examples in this section, we'll use
+8 repetitions, but you can experiment if you want fading to be faster
+or slower.
+
+The following example gets the current Master volume level, and then
+executes a FOR....NEXT loop that gradually decreases the volume to 0:
+
+    'Get the current volume level
+    GetMaster LeftChan%, RightChan%
+    'Make sure the volume level for the left and right channels is equal.
+    'Otherwise, the volume will not fade evenly in both channels.
+    SetMaster LeftChan%, LeftChan%
+
+    'Execute a loop that goes from the current volume level, all the way
+    'down to 0.
+    FOR I% = LeftChan% TO 0 STEP -1
+        'A short delay
+        Delay 8
+        'Set the volume level to the value in I%
+        SetMaster I%, I%
+    NEXT I%
+
+    'Before you end your programs, you should always set the volume
+    'back to its original level.
+    SetMaster LeftChan%, RightChan%
+
+ÄÄÄ Notes on Fading ÄÄÄ
+
+    - When performing fading, you may hear popping, or notice that the
+      fading does not seem smooth.  This is because only SB16 compatible
+      sound cards have true 32-level volume control.  Other cards only have
+      4- or 8-level volume control.  On these cards, the volume level will
+      actually only change every several steps, which may result in jerky
+      fading and noticable popping.
+
+ÄÄÄ Panning ÄÄÄ
+
+"Panning" refers to sound shifting from one speaker to the other.  Using
+QMIDI's volume control routines, you can implement panning effects in your
+programs.
+
+It's not too difficult to do; it's actually just an extension of volume
+fading.  Instead of fading the volume in or out once, you do it two
+different times, with different audio channels, to create the illusion that
+the source of the sound is moving.
+
+As an example, we'll write some code that makes the sound pan from left
+to right.  First, we need to silence the right channel completely:
+
+    'Get the current volume levels
+    GetMaster LeftChan%, RightChan%
+    'Set the left channel volume to 16, and the right channel volume to
+    '0 (silent).  This way, sound will only be coming out of the left
+    'speaker.
+    SetMaster 16, 0
+
+After this, any sound that plays will come out of the left speaker at
+half volume (16).  Now, we have to start panning the sound to the right.
+There are two steps involved in this.
+
+First, we have to fade in the right channel volume, so it matches the
+left channel volume (16).  This will make it seem like the sound is
+shifting smoothly from the left to the center:
+
+    'Execute a loop that raises the right channel volume from 0 to 16
+    FOR I% = 0 TO 16
+        'A short delay
+        Delay 8
+        'Set the new volume level
+        SetMaster 16, I%
+    NEXT I%
+
+That's it for the first step.  After executing the above code, sound will
+be coming out of the left and right speakers equally.  The second step
+is to fade out the left channel:
+
+    'Reduce the volume level of the left channel until to 0
+    FOR I% = 16 TO 0 STEP -1
+        'A short delay
+        Delay 8
+        'Set the new volume level
+        SetMaster I%, 16
+    NEXT I%
+
+After this, sound will only becoming out of the right speaker.  That's it!
+We've just created a panning effect!
+
+What about fading from right to left?  Just reverse the process.  First,
+fade in the left channel, then fade out the right channel.
+
+As an example, here is a program that combines all of the code in this
+section.  It starts playing a MIDI file, then the sound pans back and
+forth between speakers until a key is pressed:
+
+    'Load the MIDI file into memory.
+    MIDIHandle% = LoadMIDI("SAMPLE1.MID")
+    'Get the original MIDI volume levels.
+    GetMIDI OriginalL%, OriginalR%
+    'Set the left channel volume to 16, and silence the right channel
+    SetMIDI 16, 0
+    'Begin playing the file
+    PlayMIDI MIDIHandle%
+    'Print a message
+    PRINT "Press a key to quit."
+    'Loop until a key is pressed
+    DO UNTIL LEN(INKEY$)
+        'Fade in the right audio channel
+        FOR I% = 0 TO 16
+            'Create a delay
+            Delay 8
+            'Set the new volume level
+            SetMIDI 16, I%
+            'Check for a key press; if one is found, exit the loop
+            IF LEN(INKEY$) THEN EXIT DO
+        NEXT I%
+        'Fade out the left audio channel
+        FOR I% = 16 TO 0 STEP -1
+            'Create a delay
+            Delay 8
+            'Set the new volume level
+            SetMIDI I%, 16
+            'Check for a key press; if one is found, exit the loop
+            IF LEN(INKEY$) THEN EXIT DO
+        NEXT I%
+
+        'The music has now panned from left to right.  Now, we need
+        'to make it pan back to the left.
+
+        'Fade in the left audio channel
+        FOR I% = 0 TO 16
+            'Create a delay
+            Delay 8
+            'Set the new volume level
+            SetMIDI I%, 16
+            'Check for a key press; if one is found, exit the loop
+            IF LEN(INKEY$) THEN EXIT DO
+        NEXT I%
+        'Fade out the right audio channel
+        FOR I% = 16 TO 0 STEP -1
+            'Create a delay
+            Delay 8
+            'Set the new volume level
+            SetMIDI 16, I%
+            'Check for a key press; if one is found, exit the loop
+            IF LEN(INKEY$) THEN EXIT DO
+        NEXT I%
+
+        'In the above code, the music panned from left to right, and then
+        'back to the left.  This process will now repeat.
+        LOOP
+
+        'Stop the music
+        StopMIDI
+        'Return the volume to its original level
+        SetMIDI OriginalL%, OriginalR%
+        'Unload the MIDI file.
+        UnloadMIDI MIDIHandle%
+        'End the program
+        END
+
+
+ÄÄÄ Notes on Panning ÄÄÄ
+
+    - It is best to use sound panning with monaural MIDI files.  If you
+      use it with stereo MIDI files, certain instruments will probably
+      cut out.
+
+    - When using panning, you may notice that the audio channels are
+      reversed.  For example, when music is supposed to be panning from
+      left to right, it actually pans from right to left.  Sometimes
+      this is caused by having your speakers placed incorrectly
+      (the left speaker on the right, and the right speaker on the left),
+      For whatever reason, if the audio channels are reversed on your
+      computer, you can fix it by setting the REVERSE.STEREO variable to 1,
+      like this:
+
+                REVERSE.STEREO = 1
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 3.5 - BATCH FILES ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+One disadvantage to using QMIDI is that you cannot load the SBMIDI and SBSIM 
+drivers from within BASIC programs.  This means that, if the DriversLoaded
+routine cannot find the drivers, all you can do is end the program and
+tell the user to load them.  That's not very user-friendly at all.
+
+The alternative is starting your program from a batch file.  This way, you
+can detect the sound drivers using the SBMIDCHK and SBSIMCHK utilities.  This
+is useful because, if the drivers aren't loaded, the batch file can load
+them before starting your program.
+
+This section assumes that you know at least a little bit about how batch
+files work.  Please do not send e-mail asking me to teach you how to use
+batch files.  If I had the time to write a tutorial about it, I'd have
+done it already. :-)  Instead, refer to your DOS manual.
+
+The SBMIDCHK and SBSIMCHK programs both work the same.  You call them
+from a batch file, with no command-line arguments:
+
+    SBMIDCHK
+      -or-
+    SBSIMCHK
+
+The program will then check to see if SBMIDI or SBSIM (depending on which
+of the two utilities is being used) is loaded.  If it is, an ERRORLEVEL
+that is greater than 0 will be returned.  If the program cannot find the
+sound driver, it will return an ERRORLEVEL of 0.
+
+The batch file can then check the errorlevel.  If it is greater than 0,
+that means the driver is already loaded.  If the ERRORLEVEL is 0, then
+the batch file can load the driver before your program is executed.
+
+For example: the following batch file checks for the presence of the sound
+drivers.  If the drivers are not detected, the batch file will load them.
+After the drivers are loaded, a program is run.  When the program is
+finished, the drivers are unloaded, and the batch file ends.
+
+    REM Keep the commands in the batch file from being printed on the screen
+    @ECHO OFF
+    REM Execute the SBMIDCHK program
+    SBMIDCHK
+    REM Check the ERRORLEVEL.  If it is 1 or higher, then the SBMIDI driver
+    REM does not need to be loaded
+    IF ERRORLEVEL 1 GOTO SKIPSBMIDI
+    REM If the errorlevel is 0, then load the SBMIDI driver.
+    SBMIDI >nul
+    REM The :SKIPSBMIDI label
+    :SKIPSBMIDI
+    REM Execute the SBSIMCHK program
+    SBSIMCHK
+    REM Check the ERRORLEVEL.  If it is 1 or higher, then the SBSIM driver
+    REM does not need to be loaded
+    IF ERRORLEVEL 1 GOTO SKIPSBSIM
+    REM If the errorlevel is 0, then load the SBSIM driver.
+    SBSIM >nul
+    REM The :SKIPSBSIM label
+    :SKIPSBSIM
+    REM Start the application
+    MYPROG.EXE
+    REM Unload the SBSIM driver
+    SBSIM /U >nul
+    REM Unload the SBMIDI driver
+    SBMIDI /U >nul
+    REM Return to DOS
+
+The above batch file will check for the sound drivers, load them if
+necessary, start a program, and then unload the drivers afterward.
+Not too bad for a dozen lines.
+
+Using batch files and the SBMIDCHK & SBSIMCHK utilities, users of your
+programs will never have to worry about loading the sound drivers
+themselves.
+
+
+
+ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+º CHAPTER 4 - QMIDI QUICK REFERENCE º
+ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+This chapter provides summaries of all of QMIDI's routines, in
+alphabetical order.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB CleanUpMIDI () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Unloads all MIDI files that are in memory.
+
+ÄÄÄ Syntax ÄÄÄ
+    CleanUpMIDI
+
+ÄÄÄ Notes ÄÄÄ
+    - It's a good idea to place a call to CleanUpMIDI at the very end
+      of your program.  That way, you can make sure that all MIDI files
+      are unloaded before your program ends.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB Delay (Repetitions%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Causes a short (~1/50th sec.), machine-independent delay
+
+ÄÄÄ Syntax ÄÄÄ
+    Delay Repetitions%
+
+ÄÄÄ Arguments ÄÄÄ
+    Repetitions%
+        Specifies how many times to repeat the delay
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB DetectSettings (BasePort%, IRQ%, LoDMA%, HiDMA%, CardType%, MPU401%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns various information about the sound card
+
+ÄÄÄ Syntax ÄÄÄ
+    DetectSettings BasePort%, IRQ%, LoDMA%, HiDMA%, CardType%, MPU401%
+
+ÄÄÄ Arguments ÄÄÄ
+    BasePort%
+        The sound card's I/O port will be returned in this variable.
+    IRQ%
+        The card's IRQ
+    LoDMA%
+        The card's 8-bit DMA channel
+    HiDMA%
+        The card's 16-bit DMA channel (if any)
+    CardType%
+        The sound card type (see Section 3.1 for more information).
+    MPU401%
+        The card's MPU-401 port (if any)
+
+ÄÄÄ Notes ÄÄÄ
+    - See Section 3.1 for more information on the use of this routine.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB DriversLoaded (SBMIDI%, SBSIM%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Attempts to detect whether the sound drivers are properly loaded
+
+ÄÄÄ Syntax ÄÄÄ
+    DriversLoaded SBMIDI%, SBSIM%
+
+ÄÄÄ Arguments ÄÄÄ
+    SBMIDI%
+        A variable that will contain the interrupt that the the SBMIDI
+        driver is loaded at.
+    SBSIM%
+        A variable that will contain the interrupt that that the 
+        the SBSIM driver is loaded at.
+
+ÄÄÄ Notes ÄÄÄ
+   - If SBMIDI% or SBSIM% contain a value of 0, DriversLoaded could not
+     find that particular driver at any of the interrupts it checked.
+
+ÄÄÄ Example ÄÄÄ
+    'This code appears at the beginning of QMIDI.BAS.  See Section
+    '3.0 for more information on this code.
+    DriversLoaded SBMIDI.INTERRUPT, SBSIM.INTERRUPT
+    IF SBMIDI.INTERRUPT = 0 THEN SBMIDI.INTERRUPT = &H80
+    IF SBSIM.INTERRUPT = 0 THEN SBSIM.INTERRUPT = &H81
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB GetBass (LeftChannel%, RightChannel% ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the current Bass level
+
+ÄÄÄ Syntax ÄÄÄ
+    GetBass LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A variable that will contain the Bass level for the left audio
+        channel
+    RightChannel%
+        Will contain the Bass level for the right audio channel
+
+ÄÄÄ Notes ÄÄÄ
+    - Bass control only works with Sound Blaster 16-compatible sound
+      cards.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB GetMaster (LeftChannel%, RightChannel% ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the current Master Volume level
+
+ÄÄÄ Syntax ÄÄÄ
+    GetMaster LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A variable that will contain the volume level for the left audio
+        channel
+    RightChannel%
+        Will contain the volume level for the right audio channel
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB GetMIDI (LeftChannel%, RightChannel% ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the current MIDI Volume level
+
+ÄÄÄ Syntax ÄÄÄ
+    GetMIDI LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A variable that will contain the volume level for the left audio
+        channel
+    RightChannel%
+        Will contain the volume level for the right audio channel
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ FUNCTION GetSynth% () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the music synthesizer that QMIDI is using.
+
+ÄÄÄ Syntax ÄÄÄ
+    A% = GetSynth%
+
+ÄÄÄ Arguments ÄÄÄ
+    GetSynth%
+        Returns a value between 0 and 2:
+                0 - Sound Blaster FM Synthesis
+                1 - External Synthesizer
+                2 - MPU-401 Wavetable Synthesis
+
+ÄÄÄ Notes ÄÄÄ
+   - GetSynth returns the type of music synthesizer that the SBMIDI driver
+     is set up to use.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB GetTreble (LeftChannel%, RightChannel% ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the current Treble level
+
+ÄÄÄ Syntax ÄÄÄ
+    GetTreble LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A variable that will contain the Treble level for the left audio
+        channel
+    RightChannel%
+        Will contain the Treble level for the right audio channel
+
+ÄÄÄ Notes ÄÄÄ
+    - Bass control only works with Sound Blaster 16-compatible sound
+      cards.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB GetVoice (LeftChannel%, RightChannel% ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the current Voice Volume level
+
+ÄÄÄ Syntax ÄÄÄ
+    GetVoice LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A variable that will contain the volume level for the left audio
+        channel
+    RightChannel%
+        Will contain the volume level for the right audio channel
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ FUNCTION LoadMIDI% (Filename$) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Loads a MIDI file into memory
+
+ÄÄÄ Syntax ÄÄÄ
+    Handle% = LoadMIDI%(Filename$)
+
+ÄÄÄ Arguments ÄÄÄ
+    Filename$
+        The name of a MIDI file.
+    LoadMIDI%
+        Returns a "MIDI Handle."  A MIDI Handle is a number that
+        represents the MIDI file you're loading.  This MIDI Handle
+        is used with routines such as PlayMIDI and UnloadMIDI.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB LoopMIDI () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Restarts the MIDI file if it has finished playing
+
+ÄÄÄ Syntax ÄÄÄ
+    LoopMIDI
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ FUNCTION MemUsed& (Handle%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the amount of Far Heap memory that a MIDI file is using
+
+ÄÄÄ Syntax ÄÄÄ
+    A& = MemUsed&(Handle%)
+
+ÄÄÄ Arguments ÄÄÄ
+    Handle%
+        A MIDI Handle assigned by the LoadMIDI routine.
+    MemUsed&
+        Returns the amount of Far Heap memory that the specified MIDI
+        file is using.
+
+ÄÄÄ Notes ÄÄÄ
+    - The "Far Heap" is essentially the area of memory that BASIC uses
+      to store internal tables and program data (arrays, variables,
+      etc.).  Often, QMIDI has to use some of this memory to store MIDI
+      files.  The MemUsed& function will tell you exactly how much of the
+      Far Heap a particular MIDI file is using.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ FUNCTION MIDIError$ () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns any error that occurred while the last QMIDI routine was being run
+
+ÄÄÄ Syntax ÄÄÄ
+	A$ = MIDIError$
+
+ÄÄÄ Arguments ÄÄÄ
+
+    MIDIError$
+        Returns one of the following error messages:
+            "NO ERROR"
+            "FILE DOES NOT EXIST"
+            "OUT OF MEMORY"
+            "NO MIDI FILE PLAYING"
+            "INVALID SBMIDI INTERRUPT"
+            "INVALID SBSIM INTERRUPT"
+            "NO MIXER CHIP"
+            "COULD NOT DETECT SOUND CARD"
+            "FEATURE UNAVAILABLE"
+            "FILE IS CORRUPT"
+            "INVALID SOUND CARD TYPE"
+            "COULD NOT PLAY MUSIC"
+            "ALL HANDLES IN USE"
+            "INVALID HANDLE NUMBER"
+            "UNKNOWN ERROR"
+
+ÄÄÄ Notes ÄÄÄ
+    - Refer to Section 3.2 for more information on error handling.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ FUNCTION MixerChip$ () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the mixer chip of the currently selected sound card
+
+ÄÄÄ Syntax ÄÄÄ
+    A$ = MixerChip$
+
+ÄÄÄ Arguments ÄÄÄ
+    MixerChip$
+        Returns one of the following strings:
+            "NO MIXER CHIP"
+            "CT1335" (Sound Blaster 2.0CD)
+            "CT1345" (Sound Blaster Pro)
+            "CT1745" (Sound Blaster 16)
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ FUNCTION MusicDone% () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Detects whether the current MIDI file has finished playing.
+
+ÄÄÄ Syntax ÄÄÄ
+    A% = MusicDone%
+
+ÄÄÄ Notes ÄÄÄ
+   - MusicDone returns a value of -1 if the music has finished playing.
+     If the music is still playing, MusicDone returns 0.
+
+ÄÄÄ Example ÄÄÄ
+    'Prints a message on the screen if the music is finished.
+    IF MusicDone% THEN PRINT "The music has finished playing."
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB PauseMIDI () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Pauses a MIDI file that is currently playing
+
+ÄÄÄ Syntax ÄÄÄ
+    PauseMIDI
+
+ÄÄÄ Notes ÄÄÄ
+   - The MIDI timer is frozen when PauseMIDI is used.  It starts counting
+     again when ResumeMIDI is executed.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB PlayMIDI (Handle%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Plays a MIDI file that has been previously loaded with LoadMIDI
+
+ÄÄÄ Syntax ÄÄÄ
+    PlayMIDI Handle%
+
+ÄÄÄ Arguments ÄÄÄ
+    Handle%
+        The MIDI Handle that was assigned by the LoadMIDI routine.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB ResumeMIDI () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Continues playing a MIDI file that has been paused
+
+ÄÄÄ Syntax ÄÄÄ
+    ResumeMIDI
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB SetBass (LeftChannel%, RightChannel%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Changes the Bass level
+
+ÄÄÄ Syntax ÄÄÄ
+    SetBass LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A value between 0 and 31 that specifies the new Bass value
+        for the left audio channel
+    RightChannel%
+        A value between 0 and 31 that specifies the new Bass value
+        for the right audio channel
+
+ÄÄÄ Notes ÄÄÄ
+    - Bass control only works on Sound Blaster 16-compatible sound cards.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB SetCard (CardType%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Sets the sound card type
+
+ÄÄÄ Syntax ÄÄÄ
+    SetCard CardType%
+
+ÄÄÄ Arguments ÄÄÄ
+    CardType%
+        A value between 1 and 6 that specifies the new card type:
+            1 - Sound Blaster 1.0/1.5
+            2 - Sound Blaster Pro
+            3 - Sound Blaster 2.0/2.0CD
+            4 - Sound Blaster Pro 2
+            5 - Sound Blaster Pro (Microchannel Version)
+            6 - Sound Blaster 16/16ASP/AWE32
+
+ÄÄÄ Notes ÄÄÄ
+    - Whenever you want to change the sound card type, use the SetCard
+      routine.  DO NOT modify the SB.CARDTYPE variable directly, because
+      the MIXER.CHIP variable will not be set correctly.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB SetMaster (LeftChannel%, RightChannel%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Changes the Master Volume level
+
+ÄÄÄ Syntax ÄÄÄ
+    SetMaster LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A value between 0 and 31 that specifies the new volume value
+        for the left audio channel
+    RightChannel%
+        A value between 0 and 31 that specifies the new volume value
+        for the right audio channel
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB SetMIDI (LeftChannel%, RightChannel%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Changes the MIDI Volume level
+
+ÄÄÄ Syntax ÄÄÄ
+    SetMIDI LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A value between 0 and 31 that specifies the new volume value
+        for the left audio channel
+    RightChannel%
+        A value between 0 and 31 that specifies the new volume value
+        for the right audio channel
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB SetTreble (LeftChannel%, RightChannel%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Changes the Treble level
+
+ÄÄÄ Syntax ÄÄÄ
+    SetTreble LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A value between 0 and 31 that specifies the new treble value
+        for the left audio channel
+    RightChannel%
+        A value between 0 and 31 that specifies the new treble value
+        for the right audio channel
+
+ÄÄÄ Notes ÄÄÄ
+    - Treble control only works with Sound Blaster 16-compatible sound
+      cards.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB SetVoice (LeftChannel%, RightChannel%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Changes the Voice Volume level
+
+ÄÄÄ Syntax ÄÄÄ
+    SetVoice LeftChannel%, RightChannel%
+
+ÄÄÄ Arguments ÄÄÄ
+    LeftChannel%
+        A value between 0 and 31 that specifies the new volume value
+        for the left audio channel
+    RightChannel%
+        A value between 0 and 31 that specifies the new volume value
+        for the right audio channel
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ FUNCTION SoundCard$ (CardType%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the sound card type in the form of a string
+
+ÄÄÄ Syntax ÄÄÄ
+    A$ = SoundCard$ (CardType%)
+
+ÄÄÄ Arguments ÄÄÄ
+    CardType%
+        A value between 1 and 6 that specifies the card type
+    SoundCard$
+        The sound card that corresponds with the card type in CardType%.
+        For example, if the supplied card type is 2, SoundCard$ will
+        return the text "Sound Blaster Pro"
+        
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB StopMIDI () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Stops a MIDI file that is currently playing
+
+ÄÄÄ Syntax ÄÄÄ
+    StopMIDI
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ FUNCTION TimeMIDI! () ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Returns the length of time that the current MIDI file has been playing
+
+ÄÄÄ Syntax ÄÄÄ
+	A! = TimeMIDI!
+
+ÄÄÄ Arguments ÄÄÄ
+    TimeMIDI!
+        Returns the number of seconds the current MIDI file has been
+        playing.
+
+ÄÄÄ Notes ÄÄÄ
+    - TimeMIDI! returns a 0 if no MIDI file is playing.
+
+    - TimeMIDI! returns the same value all the time when a MIDI file is
+      paused.  When playing resumes, it will start counting again where
+      it left off.
+
+ÄÄÄ Example ÄÄÄ
+	'Continuously updates the amount of time a file has been playing:
+    MIDIHandle% = LoadMIDI("SAMPLE1.MID")
+    PlayMIDI MIDIHandle%
+	DO UNTIL LEN(INKEY$)
+		LOCATE 1,1: PRINT USING "###.##"; TimeMIDI!
+	LOOP
+    StopMIDI
+    UnloadMIDI MIDIHandle%
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ SUB UnloadMIDI (Handle%) ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄ Description ÄÄÄ
+Removes a MIDI file from memory
+
+ÄÄÄ Syntax ÄÄÄ
+    UnloadMIDI Handle%
+
+ÄÄÄ Arguments ÄÄÄ
+    Handle%
+        The Handle that was assigned to the MIDI file by the
+        LoadMIDI routine.
+
+ÄÄÄ Notes ÄÄÄ
+    - All of the MIDI files that you have loaded MUST be unloaded
+      before your program ends.  Otherwise, the memory that the MIDI files
+      are using will not be released.
+
+
+
+ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+º CHAPTER 5 - QMIDI Q & A º
+ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+This chapter covers some of the more common (and some not-so-common)
+questions about QMIDI.  Please do not e-mail me with a question until
+you've made sure that it isn't answered in this chapter.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ Q. I HAVE AN ESS AUDIODRIVE SOUND CARD WITH A SOFTWARE WAVETABLE ³
+³    DRIVER.  CAN I USE THIS DRIVER WITH QMIDI?                    ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    A. Yes.  If you're running QMIDI from Windows, you can take
+       advantage of the AudioDrive's software wavetable driver by
+       loading SBMIDI with the '/3' switch:
+                SBMIDI /3
+       This is not recommended, however, because it is EXTREMELY slow.
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ Q. I HAVE AN ESS AUDIODRIVE SOUND CARD, AND QMIDI DOES NOT WORK. ³
+³    THE SOUND DRIVERS LOAD PROPERLY, BUT THERE IS NO MUSIC.  WHY? ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    A. I have tested QMIDI with two ESS AudioDrive cards: an ES688 and
+       an ES1869.  QMIDI worked fine with the ES688, but had problems
+       with the AudioDrive ES1869 for no apparent reason.  The only way
+       I've been able to get FM synthesis to work with that particular
+       card is to boot the computer directly to DOS, without entering
+       Windows.
+
+       For systems with Windows 3.x, removing the line in your
+       AUTOEXEC.BAT file that reads:
+                WIN
+                    -or-
+                C:\WINDOWS\WIN
+       will make your computer boot to DOS.
+
+       For systems with Windows 95, restart your computer, and press
+       the F8 key when you see the "Starting Windows 95...." text.  This
+       will bring up a menu will several options.  Select the "Command
+       prompt only" option, and your computer will boot to DOS.
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ Q. HOW CAN I GET QMIDI TO WORK WITH MY SOUND BLASTER 1.0 SOUND ³
+³    CARD?                                                       ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    A. I've never tested QMIDI with an SB 1.0 sound card, but I don't
+       think it will work.  The SBMIDI drivers included with QMIDI
+       only directly support the Sound Blaster 1.5, SB 2.0, SB Pro and
+       SB 16 sound cards.
+       
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ Q. WHY DOES MY COMPUTER LOCK UP WHEN I TRY TO PLAY MUSIC? ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    A. This is probably caused by one of two things:
+        1) The sound drivers are not loaded properly.  See Section 2.0
+           for information on loading the sound drivers.
+        2) QMIDI is calling the wrong interrupt when trying to communicate
+           with the driver.  The SBMIDI.INTERRUPT and SBSIM.INTERRUPT
+           Shared variables need to be set correctly in order for QMIDI to
+           work.  See Section 3.0 for more information on these variables.
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ Q. I DON'T UNDERSTAND THIS "MIDI HANDLE" STUFF!  WHAT'S THE DEAL? ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    A. "MIDI Handles" are very similar to BASIC file handles.  When you
+       open a file in BASIC, like this:
+
+            OPEN "MYFILE.TXT" FOR INPUT AS #1
+
+       a File Handle is assigned to MYFILE.TXT.  In the above code,
+       the handle for MYFILE.TXT is 1.
+
+       When you want to read data from MYFILE.TXT, you do so using the
+       file handle that was assigned to it.  For example:
+
+            INPUT #1, Text$
+
+       With QMIDI, when you call the LoadMIDI routine as follows:
+
+            Handle% = LoadMIDI("MYFILE.MID")
+
+       The MIDI Handle for MYFILE.MID is stored in a variable called
+       Handle%.  When you want to do something with that MIDI file --
+       say, begin playing it -- you use the Handle% variable to tell
+       QMIDI which MIDI file to play.  For example:
+
+            PlayMIDI Handle%
+
+
+ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+º CHAPTER 6 - CONTACT INFORMATION º
+ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+If you're having a problem with QMIDI, or just want to tell me what you
+think of it, feel free to e-mail me at:
+        jessedorland@hotmail.com
+
+And if you want to make sure you always have the latest version of
+QMIDI, go here:
+        http://members.tripod.com/~jdorland/qmidi/index.html
+Each new version will be posted there before it appears anywhere else.

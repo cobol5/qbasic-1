@@ -1,0 +1,386 @@
+Yo Andrianov,
+I like the idea of a SIMPLE SHELL GUI program for lesser PC's and I found 
+just what informations your looking for in "The NEW Peter Norton 
+programmers guide to the IBM PC & PS/2", see below for the info about 
+FCB's and Extended FCB's, please
+note these are for DOS 1.0 compatibility and DOS 2.0 + uses file handles. 
+I looked at EXEC 4BH DS:DX pointing to 
+asciiZ string and path and filename e.g. 'c:\dos\fdisk.exe',0
+If AL=00h DOS allocates memory for the child program and creates a NEW 
+PSP at the start of the NEWLY ALLOCATED MEMORY, 
+loads the CHILD program into the MEMORY ABOVE THE PSP and transfers 
+control to it!
+ 
+IF AL=03h then DOS does NOT ALLOCATE memory, nor create a PSP nor 
+transfer control to the program after it is loaded. 
+SO AL=03h is used for OVERLAY and also can be used to load DATA INTO 
+MEMORY..
+ 
+USING FUNCTION 4Bh. If the function succesfully loaded a PROGRAM the 
+carry flag is clear, however since DOS 2.0 +
+this function changes all registers, including SS:SP, so save the current 
+SS and SP values in the CS before you call 4B.
+ 
+ERROR VALUE: Carry Flag Set, AH=01h (Invalid Function) AH=02h (File not 
+found) AH=03 (path not found) 
+AH=05 (Access denied) AH=08h (insufficient memory) AH=0Ah Invalid ENV 
+BLOCK AH=0Bh (Invalid Format).
+ 
+New sub added from DOS 5.0+
+ 
+[NOTE] You cannot use function 4Bh to load overlays created with the DOS 
+LINK program's overlay option.
+LINK builds all program overlays into a single executable file, not into 
+separate files as would be 
+needed with function 4Bh.
+ 
+=================================================================
+When AL=00h ES:BX points to block 14 bytes long
+=================================================================
+00H     2 bytes           Segment Address of env string (if 0 then child 
+has parent env block)
+02H     4 bytes           Segment pointer to command line 
+06H     4 bytes           Segment pointer to first default FCB
+0AH     4 bytes           Segment pointer to second default FCB
+-----------------------------------------------------------------
+ 
+======================================================================
+When AL=03h ES:BX points to a block 4 bytes long.
+======================================================================
+00H     2 bytes           Segment address where file is to be loaded 
+02H     2 bytes           Relocating factor for program (applies to to
+                          EXE-format progrgams)
+----------------------------------------------------------------------
+ 
+                    
+The File Control Block
+----------------------
+As mentioned several times FCB's and the DOS functions that use these are 
+obsolete.
+We recommend that you use the handle-based file I/O functions introduced 
+in DOS Version 2.0
+and described in the next chapter. Usually, the only reason to concern 
+yourself with FCB's
+is when compatibilitity with DOS VERSION 1 is an issue or when you need 
+to use VOLUME LABEL
+creation/deletion as DOS 2.0+ does not handle VOLUME LABELS, use function 
+16H with EXTENDED
+FCB to create a volume label, function 17H to rename it and function 13H 
+to delete it!.
+ 
+With that in mind, lets take a look at the structure of the FCB. The 
+USUAL FCB is a 37-byte
+data structure that contains a variety of information that DOS can use to 
+control file I/O
+(see figure 16-3). A 44 byte, ex-tended FCB is also used in some DOS 
+functions: 7 extra
+bytes are tacked onto the beginning of the usual FCB data structure. (See 
+figure 16-4).
+ 
+ 
+Figure 16-3: Structure of a File Control Block
+--------------------------------------------------------
+Offset          Field Width               Description
+--------------------------------------------------------
+ 
+00H             1                         Drive Identified          
+01H             8                         Filename
+09H             3                         File extension
+0CH             2                         Current block number
+0EH             2                         Record size in bytes
+10H             4                         File size in bytes
+14H             2                         Date
+16H             2                         Time
+18H             8      (RESERVED)
+20H             1*                        Current record Number
+21H             4                         Random-record number
+--------------------------------------------------------------------------
+*Only the low-order 7 bits are used.
+ 
+ 
+The situation with the FCB extension is more than a little peculiar. The 
+extension is used
+only when you work with the attribute field in a directory entry in which 
+read-only, 
+hidden files, system files, system files, volume labels, and 
+subdirectories are identified.
+In general, you need to use extended FCB's only if you are performing 
+directory searches
+or otherwise working with directory entries rather than the contents of 
+files. 
+However, FCB-based functions recognise the extended FCB format if you 
+should choose to
+use it 
+ 
+ 
+Figure 16-4: Structure of an Extended File Control Block
+---------------------------------------------------------------------------
+Offset                  Field Width       Description
+---------------------------------------------------------------------------
+00H                     1                 Extended FCB flag (always FFH)
+01H                     5    (Reserved)
+06H                     1                 Attribute
+07H                     1                 Drive Identifier
+08H                     8                 Filename
+10H                     3                 File extension
+13H                     2                 Current-block number
+15H                     2                 Record size in bytes
+17H                     4                 File size in bytes
+1BH                     2                 Date
+1DH                     2                 Time
+1FH                     8                 (Reserved)
+27H                     1*                Current-record number
+28H                     4                 Random-record number
+-----------------------------------------------------------------------------
+*Only the low-order 7 bits are used.
+ 
+With 2 exceptions, all fields in an extended FCB are identical to those 
+in NORMAL FCB.
+Only the offsets are different: In an extended FCB, the offset of a 
+particular field
+is 7 bytes greater than the offset of the same field in the a NORMAL FCB.
+ 
+ 
+FCB FIELDS (NON-EXTENDED FCB):
+Offset 00H. The first field in a normal (non-extended) FCB  is the DISK 
+DRIVE IDENTIFIER.
+Values for the drive identifier start at 1 - A, 2 - B etc. If the field 
+contains 0 at the
+time an FCB is opened, DOS uses the current default drive and updates 
+this field with
+the corresponding drive identifier.
+ 
+Offsets 01H and 09H. The TWO fields at offsets 01H and 09H contains an 
+8-byte name and
+a 3 byte extension. These fields are left justified and padded on the 
+right with blanks.
+Following DOS conventions, either upper- or lowercase letters may be 
+used. If the filename
+is a device name that DOS recognises, such as CON, AUX,  COM1, COM2, 
+LPT1, LPT2, PRN or NUL
+DOS will use that device driver rather than a disk file.
+ 
+[*PATHNAMES*] NOTE: This is a good place to point out that the FCB 
+mechanism has no 
+provision for working with PATHNAMES. When ever you use FCB's, they 
+always apply to the 
+CURRENT DIRECTORY in any drive. For flexible use of paths and 
+subdirectories, see the new, 
+extended functions in chapter 17 I.E. DOS 2.0 and the use of FILE 
+HANDLES.  
+ 
+Offsets 0CH and 20H. For sequential file operations, the current block 
+and current-record
+field keeps track of the location in the file. The use of these fields is 
+rather odd.
+Instead of using one integrated record number, the record number is 
+divided into a 
+high and low porrtion, referred to as the block number and record number. 
+The record
+number is a 7-bit value, so block 0, record 0; the 128th record is block 
+1, record 0.
+ 
+Before you use the sequential read and write functions 14H and 15H, be 
+sure to initialise
+the current block and record fields to the desired starting location of 
+the file.
+ 
+Offset 0EH. The record size field contains a 2 byte value that specifies 
+the size, in bytes,
+of the logical records in the file. When DOS reads or writes a record, 
+the logical size of 
+of the record is the number of bytes transferred between DOS's disk 
+buffers and the DTA.
+The same file data can be worked on using a variety of record sizes. When 
+the file is is
+opened through functions 0FH or 16H, DOS sets the record size to 128 
+bytes by default.
+If you want another size, such as 1 for single byte operations, you must 
+change the record-
+size field after the file is opened.
+ 
+Offset 10H. The file-size field at offset 10H indicates the file size in 
+bytes. The value is 
+taken from a files directory entry and is placed in the FCB when DOS 
+opens the file.
+For an output file, this field is changed by DOS as the file grows. When 
+the file is closed
+the value is copied from the FCB to tp the file's directory entry. By 
+changing this field
+you can gain some last-minute control over the size of an output, but be 
+careful when doing
+this. You can for example truncate a file you have updated by decreasing 
+the file-size value
+in this field. Also be careful not to use function 17H to rename an open 
+file: This function
+requires that you specify the file's new name in the same part of the FCB 
+used for the file 
+size.
+ 
+Offsets 14H and 16H. The 2-byte field at offset 14H (date) and offset 16H 
+(time) record
+when a file was last updated. These fields use the same format as the 
+corresponding fields in
+a directory entry. (See Chapter 5). The initial values in these fields 
+are copied from a files
+directory entry when the file is opened. They are subsuquently updated 
+each time you write to
+the file. If the file was updated, DOS copies the values from the FCB to 
+the directory entry
+when the file is closed. 
+    
+Offset 21H. The random-record field is used during random read and write 
+operations, just as
+the current record and block numbers are used during sequential 
+operations. This field is in
+the form of a 4 byte, 32 bit integer. Records are numbered from 0, which 
+makes it use the 
+file offset to any record by multiplying the random-record number by the 
+record size. You must
+set this field before any random file operation. DOS leaves it 
+undisturbed.
+ 
+ 
+*************
+*************
+EXTENDED FCB
+*************
+*************
+ 
+An extended FCB has two additional fields not found in a normal FCB:
+1) The first field of an EXTENDED FCB is a flag which must be set to FFh, 
+note this is 
+normally the drive identifier for NORMAL FCB's which have a length of 37 
+bytes, the extended
+FCB has 44 bytes and if you see figure 16-4 you will see OFFSET 07h now 
+is the new Drive Identifier.
+DOS distinguishes between normal and extended FCB's by examining this 
+first byte for the value FFh,
+and then knows if the FCB is normal or EXTENDED.
+ 
+2) Offset 06H in an extended FCB is a 1 byte field that consists of an 
+attribute whose bits signify
+file, volume label, and subdirectory attributes. This bytes format is 
+IDENTICAL to the FORMAT OF AN
+ENTRY FOR A DIRECTORY ENTRY. (Chapter 5 Figure 5-11/5-12). 
+ 
+Figure 5-11.: The eight parts of a directory entry 
+======================================================================================
+OFFSET                Description                
+Size                       Format
+--------------------------------------------------------------------------------------
+ 
+00H                   Filename                   
+8                          Ascii
+08H                   Filename Ext               
+3                          Ascii
+0BH                   
+Attribute                  1                          Bit Coded
+0CH                   Reserved                  10                          
+Unused, zeros
+16H                   Time                       
+2                          Word coded
+18H                   Date                       
+2                          Word coded
+1AH                   Starting Cluster 
+No.       2                          Word
+1CH                   File Size                  4
+ 
+----------------------------------------------------------------------------------------
+ 
+ 
+ 
+Figure 5-12.: The 8 file attribute bit sets
+==========================================================================
+7             6              5         4        3       2        1      0
+==========================================================================
+ 
+.             .              .          .       .       .         
+.     1      READ ONLY
+.             .              .          .       .       .         1     
+.      HIDDEN
+.             .              .          .       .       1         
+.     .      SYSTEM
+.             .              .          .       1       .         .     
+.      VOLUME LABEL
+.             .              .          1       .       .         
+.     .      SUBDIRECTORY
+.             .              1          .       .       .         
+.     .      ARCHIVE
+.             1              .          .       .       .         .     
+.      UNUSED!!!!
+1             .              .          .       .       .         .     
+.      UNUSED!!!!          
+ 
+---------------------------------------------------------------------------
+E.G. Attribute Byte Value:=07h  ,Bit 0,1,2 are ON
+---------------------------------------------------------------------------
+ 
+[NOTE]: On the rare occassion in which you use FCB-based functions 
+instead of file-handle
+this would only ever be for the use wiht VOLUME LABELS for DRIVES etc.
+ 
+======================================================================================
+**************************************************************************************
+======================================================================================
+The Program Segment Prefix (PSP)
+ 
+When DOS loads a program, it sets aside a 256 byte-block of memory for 
+the program:
+the program segment prefix (PSP). The PSP contains the HODGEPODGE of 
+information that
+DOS uses to help run the program. A PSP is associated with every DOS 
+program, no matter
+what language the program was/is written in. 
+ 
+ 
+The Internal Structure of the PSP:
+As you will soon discover, the PSP contains a rather confusing mixture of 
+items.
+(see figure 15-9) The background and history of DOS pull it in different 
+directions --
+backward to the earlier CP/M system and forward to UNIX-type operating 
+environments. 
+As a result, the PSP (Program Segment Prefix) contains elements that 
+serve different
+purposes and are orriented to different programming methods. We'll 
+discuss the elements in
+the order in which they appear.
+ 
+The field at offset 00H (2 Bytes) contains bytes CDH and 20H, the 
+interrupt 20H instruction.
+This IRQ is only one of many ways to terminate a DOS program. The 
+instruction is placed
+at the beginning of the PSP (at offset 00H) so that a program can end 
+itself simply by 
+jumping to this location when the CS (code segment) points to the PSP. 
+Ads you might guess
+this is not the most sensible thing for a program to do; it's always best 
+to go through
+the appropriate interrupt or function call. This odd method of 
+terminating a program is
+a relic of the days when CP/M compatibility was important.
+======================================================================================
+Hex     Decimal         Length             Description
+--------------------------------------------------------------------------------------
+00H     0               2 bytes            INT 20H Instruction see CP/M
+02H     2               2  "               Size of memory in Paragraphs
+04H     4               1  "  (Reserved Normally 0)
+05H     5               5  "               Call to DOS function dispatcher
+0AH    10               4  "               IRQ 22h (Terminate) Address
+0EH    14               4  "               IRQ 23h (CTRL-C) Address
+12H    18               4  "               IRQ 24H (Critical Error) 
+address
+16H    22              22  "  (RESERVED)
+2CH    44               2  "               Environment SEGMENT Address
+2EH    46              34  "  (RESERVED)
+50H    80               3  "               INT 21H, RETF instructions
+53H    83               9  "  (RESERVED)   
+5CH    92              16  "               FCB #1
+6CH   108              20  "               FCB #2
+80H   128              128                 COMMAND LINE PARAMETERS AND 
+DEFAULT DTA 
+                                           (Disk Transfer Area)
+------------------------------------------------------------------------------------------
+Figure 15-9. The parts of the program segment prefix (PSP).
+ 

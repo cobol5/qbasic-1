@@ -1,0 +1,11 @@
+SCREEN 12
+CLS
+
+DIM Array(385) AS INTEGER
+
+DEF SEG = VARSEG(Array(0))
+BLOAD "LtArrRls.bin", 0
+DEF SEG
+
+PUT (0, 0), Array, PSET
+

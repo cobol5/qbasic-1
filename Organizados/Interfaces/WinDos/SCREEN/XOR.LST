@@ -1,0 +1,17 @@
+/ex/f/packc/noe xor.obj+
+c:\program\qb71\library\nocga.obj+
+c:\program\qb71\library\noega.obj+
+c:\program\qb71\library\nooga.obj+
+c:\program\qb71\library\noherc.obj+
+c:\program\qb71\library\nocom.obj+
+c:\program\qb71\library\noems.obj+
+c:\program\qb71\library\nolpt.obj+
+c:\program\qb71\library\noisam.obj+
+c:\program\qb71\library\smallerr.obj+
+c:\program\qb71\library\nofltin.obj+
+c:\program\qb71\library\noedit.obj+
+c:\program\qb71\library\notrnemr.lib
+xor.exe
+nul
+c:\program\qb71\library\bcl71enr.lib+
+c:\program\qb71\library\qbx.lib;

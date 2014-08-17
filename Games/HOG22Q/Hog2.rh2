@@ -1,0 +1,1610 @@
+'-----------------------------Quick Road Hog 2-------------------------------
+'Road Hog 2 was programed by Kevin Reems (lbt1st@aol.com) in 1996.
+'This game is FREEWARE and should be distributed as such.
+'This game also has no copyrights of any kind (so do whatever you want with
+'it).
+'I do request that, if you do give an edited copy of this to someone, also
+'give them the original as well. But you are not bound to do so in any way.
+'
+'Due to this game being written in BASIC the graphics are far from stunning,
+'but give it a try, alot of effort went into this, and it has great gameplay.
+'The system requirements are Quick BASIC, and at least a 486.
+'I highly recommend using a joystick (See THRTL and CTROL in DEFAULTS).
+'-STUFF TO NOTE:
+'Please take a moment to explore the program's DEFAULTS section.
+'It contains all the important starting variables and a description of each.
+'Like graphic detail, controls, starting weapons etc...
+'If you have joystick problems, just above DEFAULTS is a JOYFIX variable that
+'may help. Also note: as soon as you leave the title screen the joystick is
+'detected and calibrated, so make sure it's centered at this time.
+'If turning one way makes you go the other, or steering is just uncontrolable,
+'try changing JOYFIX, also make note if you have any missing wheels that
+'steering may be hard anyway, You may also wish to try running this in Windows
+'3.1/95, on many systems this effects the joystick(s).
+'-If you don't have a joystick, set CTROL to 1, this is in DEFAULTS.
+'Another note: If CTROL is set to 1, JOYFIX has no effect.
+'For my own convenience version 2.0+ has a code (try this same code on my
+'other games), at the title screen hold down Alt and press 9,8,7 on the
+'number-pad then release Alt. This will give you most items.
+'Some Bosses have parts that can be blown off, doing so before killing it
+'will earn more money.
+'-----------THE HOW'TO...
+' Ok, you already should have blown up a nice number of cars,
+'But you probably didn't know just how much was going on . . .
+'Much effort was put into this game to make it as in-depth and FUN as possible
+'(using BASIC anyway) which wasn't easy.
+'For example: Your car (and some enemies) is divided into parts, each with its
+'own hit-points and ability(s), if a tire gets weak, max-speed, acceleration,
+'and traction all drop. If your weapons-bay is damaged, your weapons will be
+'less destructive. And if your engine goes boom, so do you.
+' As of version 2.0 HoadHog 2 has Bosses roughly every 10 stages!
+' You may have noticed the colored tabs at the top of the screen...
+'these show where upcoming enemies are. Note: shooting tabs just wastes ammo.
+' Depending on what weapons you have, there are a few on-screen bars:
+'the thin one shows your engines hit points and is like your "Life meter"
+'the larger red one is ammo for your standard weapon, if you have lasers this
+'will recharge (the recharge rate can be upgraded at the shop).
+'And if you have the Fragmenter another large bar will show its charge.
+'If your fighting a Boss, its Hitpoint meter will be at the top the the screen
+' Hit'em solid, when you ram someone hit them with as much of your car as you
+'can. Doing so can even knock them into buldings and other cars!
+' Stay out of the grass/sand! It weakens your engine!
+' Park at a shop (buldings in the middle of the road) to get fixed up and up-
+'grade.
+' E.R.S.(Engine Repair System) If you have one of these your engines hitpoints
+'will increase at the end of each stage!
+' Most of whats in the DEFAULTS is for debugging and testing, combined changes
+'may have undesired results.
+'To get the most out of this game I highly suggest not making any changes that
+'are not nessary to make it run (and don't forget to SAVE)!
+' And thats about it! So enjoy RoadHog 2 by Yummy Creations - Kevin Reems.
+
+'-Trouble shooting
+'P My joystick don't work.
+'A  Make sure its centered till you begin play.
+'   Try changing JOYFIX (see above)
+'   If you have Windows 95, make a shortcut, try running it in any version of
+'   windows.
+'   If your using the MS-Sidwinder 3D Pro, switch to position 1 (one dot).
+'Q How do I control my speed ?
+'A  Using the keyboard- Keypad 8 (NumLock must be ON) using a joystick-
+'   If THRTL is 0 use up/down on Joystick-1, if 1 use Joystick-2/Throttle
+'   THRTL is set in DEFAULTS
+'Q I don't have a joystick, can I use the keyboard ?
+'A  YES, change CTROL in DEFAULTS to 1, use the number-pad to steer.Press "Z"
+'   to fire, "X" to shoot missile(s), and "C" to use the Fragmenter
+'   [Fire, Missile, and Fragmenter keys can be changed in DEFAULTS].
+'P I'm not sure if I have Quick-BASIC on my system.
+'A  In BASIC (you should be there already) click on RUN at the top of the
+'   screen, Do you see "Make EXE File..." ? If you don't, it's probably
+'   Q-BASIC, and you should get RoadHog 2 version 2.0 (this is ver 2.Q).
+'
+'Q I only have GW-BASIC or BASICA will the game run ?
+'A  No, Road Hog 2 has few line numbers, has unsupported effects, and
+'   would run slow anyway.
+'Q I have Q-BASIC not Quick-BASIC, will it run ?
+'A  Yes, But Very Slow, you should get RoadHog 2 ver 2.0 (this is ver 2.Q)
+'Q How do I know where the end of a stage is ?
+'A  Stages in this game are very short and often have a bridge at the end,
+'   also, the beginning and end of each stage has no grass/sand or buldings.
+'P I have enough money, but when I try to buy and E.R.S it doesn't let me.
+'A  Make sure CAPs Lock is ON.
+'Q Is there a way to see how much money I have when I'm on the road ?
+'A  Press "P" to pause, you'll see your money, score, stage...
+'Q How come the first few shops don't sell the E.R.S. ?
+'A  More advanced items are sold later in the game (the longer you play the
+'   more things are available).
+'Q Is there any hidden stuff in this game ?
+'A  Sure!
+'Q How come my ramming grill disappeared ?
+'A  The front of your car must be strong enough to support it...yours was not.
+'P The game flashes and/or runs too slow, and the background is jerky.
+'A  Because Road Hog 2 was programed in BASIC, it won't run well on slower
+'   computers, BASIC has no standard way to make scrolling backgrounds
+'   so I actually had to make a graphic engine to run the backgrounds.
+'   But to keep the forground smooth, the background must be more jerky.
+'   Make sure you have Quick-BASIC. Change the DELAYs to a lower number.
+'   Try changing SCRAM to 1 (this will remove all unarmed cars from the game).
+'   However if you do have a fast enough system try changing DETL to 5 !
+'Q How come the rest of the game don't look as good as the Bosses ?
+'A RoadHog 2, unlike other driving games (including RoadHog 1, Spyhunter for
+'   the NES {witch inspired RoadHog 1}) has characters doing stuff off-screen.
+'   So if you damage someone and they run away, off the screen, when they come
+'   back they are still damaged(instead of never being seen again). Also,
+'   RoadHog 2 uses two screen pages(most of the game uses one and the
+'   background engine uses the other). Both of these wouldn't be allowed (or
+'   would be harder then hell to keep) using the high quality graphics.
+'Q How did you get those graphics in BASIC ?
+'A  It was all possible when I got QBPaint from THE S.H. SOFTWORX
+'   this program lets you import BMP images into your programs (You can
+'   do a Program Search for "qbpaint" with AOL for an easy download).
+'   so I made all the pretty graphics using Corel 4 PhotoPaint in a 256 color
+'   mode(instead of 24-bit[16.75something colors]) imported them with QBPaint
+'   into the new "BOSSMODE" that I added to RoadHog 2 and wala! Cool Bosses!
+'Q Where's the cool music ?
+'A  If you have a CD-ROM, pop in a music-cd and play it.
+'P Sometimes I'm following another car and it disappears.
+'A  The car went to the next stage, keep driving and you will too.
+'Q Will moving my hat-switch or twisting my MS-Sidewinder 3D Pro do anything ?
+'A  Not in this version of the game...
+'Q Why isn't there any sound ?
+'A  For an unknown reason the added sound effects drop all car speeds,
+'   this obviously took away from the gameplay. If you know BASIC try adding
+'   the sound and making a way to speed things up. Success should get you some
+'   great pops and beeps! I'm working on getting SoundBlaster sound to work,
+'   if you know anything about this e-mail me at lbt1st@aol.com !
+'Q If I sell this game would I get in trouble ?
+'A  Nope, But congrats to anyone who gets more than $10.00
+'P When fighting a boss the game runs too fast/slow.
+'A Change BOSPUS in DEFAULTS (the lower the number the faster)
+'P My computer keeps beeping at me!
+'A  Keyboard users shouldn't hold down keys(tap them). One tap turns a little,
+'   another a little more etc... A1SEN controls how much is "a little".
+'Q How can I get the latest version of Road Hog 2 ?
+'A  Download from AOL (Keyword BASIC)
+'Q  How did you manage to make this game in BASIC ?
+'A   I have no life at all.
+'----The Following statement from RoadHog 2 version 1.0 is INVALID:
+'   [ If you ever notice something happening with your drives and your sure
+'   another program is not reading/writing from them STOP RUNNING ROAD HOG 2!
+'   Road Hog 2 will never access any of your drives upon loading.]
+' RoadHog 2 now HAS MULTIPLE FILES!
+'   Because its so easy to edit this program, someone you got it from may
+'   tell it to do something like, oh...delete your DOS directory, or worse.
+'   And because of this,
+'   I will take no responsibility for ANY undesired effects due
+'   to running any version of Road Hog 2.
+
+'If you are creating a Demo CD feel free to slap this on there.
+
+'  If you have any other questions or problems e-mail me at lbt1st@aol.com or
+'  fix them yourself.
+
+'---Updates From the last version:
+
+'As you should know this is Quick RoadHog 2 ver 2.Q
+' the game it-self is the same as RoadHog 2 ver 2.0
+' the difference, this version is made for Quick-BASIC not Q-BASIC.
+'Quick-BASIC is Much faster than Q-BASIC, so people with Quick-BASIC,
+' RoadHog 2 ver 2.0 and a high-speed computer had a game that ran too fast!
+' So for those people, Quick RoadHog 2 !
+'The DEFAULTS section has also had an up-lift for easier use.
+
+'Note that ALL preveous text is updated with each new version of the game.
+
+'---The following is the main program (This is not a text file).
+
+DECLARE SUB SETHUES (HUE() AS ANY, SC%, EC%)
+CLEAR : SCREEN 13
+TYPE HUES
+RED AS INTEGER
+GRN AS INTEGER
+BLU AS INTEGER
+END TYPE
+
+'---------------1ST BOSS
+OPEN "C:\BASIC\HOG2\BOS1A.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM B1A(ARYSIZE)
+DEF SEG = VARSEG(B1A(0))
+BLOAD "C:\BASIC\HOG2\BOS1A.QBI", 0
+
+OPEN "C:\BASIC\HOG2\BOS1B.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM B1B(ARYSIZE)
+DEF SEG = VARSEG(B1B(0))
+BLOAD "C:\BASIC\HOG2\BOS1B.QBI", 0
+
+OPEN "C:\BASIC\HOG2\BOS1C.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM B1C(ARYSIZE)
+DEF SEG = VARSEG(B1C(0))
+BLOAD "C:\BASIC\HOG2\BOS1C.QBI", 0
+
+'---------------------2ND BOSS
+OPEN "C:\BASIC\HOG2\BOS2A.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM B2A(ARYSIZE)
+DEF SEG = VARSEG(B2A(0))
+BLOAD "C:\BASIC\HOG2\BOS2A.QBI", 0
+
+OPEN "C:\BASIC\HOG2\BOS2B.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM B2B(ARYSIZE)
+DEF SEG = VARSEG(B2B(0))
+BLOAD "C:\BASIC\HOG2\BOS2B.QBI", 0
+
+OPEN "C:\BASIC\HOG2\BOS2C.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM B2C(ARYSIZE)
+DEF SEG = VARSEG(B2C(0))
+BLOAD "C:\BASIC\HOG2\BOS2C.QBI", 0
+
+'---------------------------3RD BOSS
+OPEN "C:\BASIC\HOG2\BOS3A.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM B3A(ARYSIZE)
+DEF SEG = VARSEG(B3A(0))
+BLOAD "C:\BASIC\HOG2\BOS3A.QBI", 0
+
+OPEN "C:\BASIC\HOG2\BOS3B.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM B3B(ARYSIZE)
+DEF SEG = VARSEG(B3B(0))
+BLOAD "C:\BASIC\HOG2\BOS3B.QBI", 0
+
+OPEN "C:\BASIC\HOG2\BOS3C.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM B3C(ARYSIZE)
+DEF SEG = VARSEG(B3C(0))
+BLOAD "C:\BASIC\HOG2\BOS3C.QBI", 0
+
+'---------------------------3RD GUN(S)
+OPEN "C:\BASIC\HOG2\GUN3A.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM G3A(ARYSIZE)
+DEF SEG = VARSEG(G3A(0))
+BLOAD "C:\BASIC\HOG2\GUN3A.QBI", 0
+
+OPEN "C:\BASIC\HOG2\GUN3B.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM G3B(ARYSIZE)
+DEF SEG = VARSEG(G3B(0))
+BLOAD "C:\BASIC\HOG2\GUN3B.QBI", 0
+
+OPEN "C:\BASIC\HOG2\GUN3C.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM G3C(ARYSIZE)
+DEF SEG = VARSEG(G3C(0))
+BLOAD "C:\BASIC\HOG2\GUN3C.QBI", 0
+
+'-----------------------MINES
+OPEN "C:\BASIC\HOG2\MINE.QBI" FOR INPUT AS #1
+FILESIZE& = LOF(1)
+CLOSE #1
+ARYSIZE = (FILESIZE& - 7) \ 2 - 1
+REDIM MIN(ARYSIZE)
+DEF SEG = VARSEG(MIN(0))
+BLOAD "C:\BASIC\HOG2\MINE.QBI", 0
+
+'--------------------START TITLE STUFF
+1845 MON = 500: TRS = 2
+SCREEN 13
+WINDOW SCREEN (0, 0)-(100, 100)
+PALBLUE = INT(P(I) / 65536)
+PALGREEN = INT((P(I) - RM3 * 65536) MOD 256)
+PALBLUE = INT(P(I) - RM3 * 65536 - RM2 * 256)
+DATA "A"," ","Y","u","m","m","y"," ","G","a","m","e"
+RESTORE
+51 READ letter$
+col = 16
+slot = slot + 1
+FOR WEE = 22 TO 1 STEP -1
+COLOR col: col = col + 1: IF col > 31 THEN col = 31
+LOCATE WEE, slot
+PRINT letter$: LOCATE WEE + 1, slot: PRINT " "
+FOR dly = 0 TO 1000: NEXT dly
+NEXT WEE
+IF slot < 12 AND INKEY$ = "" THEN 51
+RANDOMIZE (TIMER): KEY OFF
+FOR WEE = 100 TO 300 STEP 75: SOUND WEE, .5: NEXT WEE: PLAY "MBT255L35N1L2N80"
+COLOR 15: LOCATE 1, 1: PRINT "A Yummy Game": WINDOW SCREEN (0, 0)-(100, 100)
+FOR WEE = 0 TO 40000: NEXT WEE
+FOR WEE = 10 TO 0 STEP -.005: LINE (0, WEE)-(100, WEE), 0: NEXT WEE
+FOR WEE = 500 TO 100 STEP -50: SOUND WEE, .3: NEXT WEE
+FOR WEE = 31 TO 16 STEP -.5
+COLOR WEE
+LOCATE 23, 1: PRINT "Programed by Kevin Reems"
+FOR dly = 0 TO 4000: NEXT dly
+NEXT WEE
+COLOR 15
+SCREEN 7: WINDOW SCREEN (0, 0)-(100, 100)
+CLS : SCREEN , , 1, 0: CLS
+'______________________Title Screen
+LINE (0, 0)-(100, 30), 4, BF: LINE (0, 30)-(100, 90), 6, BF
+FOR WEE = 30 TO 50 STEP 2: LINE (0, WEE)-(100, WEE), 4: NEXT WEE
+LINE (0, 90)-(100, 100), 9, BF
+LINE (0, 90)-(100, 100), 0, B: PAINT (5, 95), 8, 0
+FOR WEE = 0 TO 50: PSET (80 + (RND * 20), 80 + (RND * 20)), 0: NEXT WEE
+FOR WEE = 0 TO 10: Y = RND: IF Y > .5 THEN X = 0 ELSE X = 7
+LINE (70 + (RND * 30), 70 + (RND * 30))-(70 + (RND * 30), 70 + (RND * 30)), X: NEXT WEE
+FOR WEE = 0 TO 95 STEP 5: LINE (WEE, 91 - (RND * 9))-(WEE + 5, 90), 0, BF: NEXT WEE
+LINE (100, 40)-(55, 25), 12: LINE (55, 25)-(70, 45), 12: LINE (70, 45)-(40, 50), 12: LINE (40, 50)-(65, 55), 12: LINE (65, 55)-(50, 75), 12: LINE (50, 75)-(100, 60), 12: PAINT (99, 50), 12, 12
+LINE (10, 94)-(65, 96), 0, BF
+LINE (7, 95)-(68, 95), 0
+LINE (9, 94.5)-(66, 95.5), 0, B
+FOR WEE = 8 TO 67: PSET (WEE, 95 - (RND * 5)), 0: NEXT WEE
+FOR WEE = 0 TO 50 STEP 5
+CIRCLE (100 - WEE, 60 - WEE), 5 + (RND * 5), 0
+NEXT WEE
+LINE (100, 40)-(75, 10), 1: LINE (75, 10)-(90, 45), 1: LINE (90, 45)-(70, 50), 1: LINE (70, 50)-(85, 55), 1: LINE (85, 55)-(70, 90), 1: LINE (70, 90)-(100, 60), 1: PAINT (99, 50), 9, 1
+LINE (50, 60)-(40, 57), 0: LINE (50, 60)-(45, 50), 0
+LINE (20, 48)-(37, 57), 8, BF
+FOR WEE = 20 TO 37 STEP 1: LINE (WEE, 48)-(WEE, 57), 1: NEXT WEE
+LINE (40, 57)-(37, 57), 0
+LINE (40, 57)-(35, 45), 0
+LINE (45, 50)-(35, 45), 0
+LINE (35, 45)-(5, 45), 0
+LINE (0, 50)-(5, 45), 0
+LINE (37, 57)-(31, 48), 0
+LINE (22, 49)-(31, 48), 0
+LINE (22, 49)-(20, 57), 0
+LINE (0, 58)-(20, 57), 0
+LINE (3, 40)-(20, 45), 0
+LINE (3, 40)-(0, 41), 0
+LINE (21, 45)-(22, 43), 0
+LINE (33, 43)-(22, 43), 0
+LINE (33, 43)-(32, 44), 0
+LINE (30, 44)-(32, 44), 0
+LINE (31, 44)-(32, 45), 0
+PAINT (1, 45), 0, 0
+PAINT (1, 55), 1, 0
+PAINT (45, 55), 8, 0
+PAINT (23, 44), 8, 0
+CIRCLE (28, 55), 4, 0
+PAINT (28, 55), 0, 0
+CIRCLE (28, 55), 2, 7
+PAINT (28, 55), 8, 7
+LINE (25, 55)-(32, 55), 7
+PAINT (28, 54.5), 4, 7
+LINE (25, 55)-(32, 55), 0
+LINE (4, 46)-(15, 50), 8, BF
+LINE (15, 47)-(25, 49), 8, BF
+LINE (15, 47.5)-(25, 47.5), 7
+LINE (4, 46.5)-(15, 46.5), 7
+LINE (4, 46)-(15, 50), 0, B
+LINE (15, 47)-(25, 49), 0, B
+SCREEN , , 1, 1: COLOR , 15: COLOR 4, 0
+FOR WEE = 0 TO 50 STEP 5
+CIRCLE (90 - WEE, 50 - WEE), 5 + (RND * 5), 8
+NEXT WEE
+FOR WEE = 28 TO -5 STEP -6: CIRCLE (WEE, 55), 4, 0: NEXT WEE
+COLOR 1
+LOCATE 1, 1: PRINT "         Quick "
+COLOR 4
+LOCATE 1, 16: PRINT "ROAD HOG 2               "
+COLOR 1: LOCATE 1, 27: PRINT "V 2.Q": COLOR 4
+LOCATE 23, 1: PRINT "Road Hog 2 is Freeware Programmed in '96"
+FOR WEE = 10 TO 0 STEP -1
+CIRCLE (25 - WEE, 46 - WEE), RND, 8
+NEXT WEE
+1 WEE$ = INKEY$: IF WEE$ = "" THEN WEE = RND: GOTO 1: '____________GAME START
+SCREEN 7: CLS
+JOYFIX = 1: '******************************* JoyStick Correction (1=ON/2=OFF)
+A1 = STICK(0): B1 = STICK(1): ' Joystick Detect & Calibrate
+A2 = STICK(2): B2 = STICK(3)
+IF JOYFIX = 2 THEN 20
+IF A1 < 130 THEN A1 = A1 + 256'JoyStick Correction Stuff
+IF A2 < 130 THEN A2 = A2 + 256
+IF B1 < 130 THEN B1 = B1 + 256
+IF B2 < 130 THEN B2 = B2 + 256
+20 '(MUST STAY)
+A1M = A1: A2M = A2: B1M = B1: B2M = B2
+COLOR 2, 0
+REM__________________________________________________________________DEFAULTS
+'      YOUR STARTING HP | MY DEFAULTS                                       *
+DP1 = 99:   '           | 99          ENGINE                                *
+DP2 = 99:   '           | 99          WEP/SYS                               *
+DP3 = 74:   '           | 74          FR                                    *
+DP4 = 74:   '           | 74          FL                                    *
+DP5 = 49:   '           | 49          RR                                    *
+DP6 = 49:   '           | 49          RL                                    *
+'                Quick RoadHog 2 Delays                                     *
+'                The bigger the delay the slower it runs                    *
+DELAY = 0:     'MAIN-IN-GAME DELAY                                          *
+BOSPUS = 2000: 'DELAY WHEN FIGHTING BOSSES                                  *
+'                If you have a high-end Pentium try high detail instead     *
+'                of having large delays.                                    *
+DETL = 10:  '   ROAD DETAIL (CAN ONLY BE 5-High/Slow OR 10-Low/Fast)        *
+SCRAM = 0:  '   (0/1) SET TO 1 TO TAKE OUT UNARMED-CARS                     *
+SMOKE = 15: '   (0=None or 10-30) HOW MUCH SMOKE DAMAGED CARS RELEASE       *
+'                                                                           *
+CASH = 0:   'HOW MUCH MONEY YOU START WITH                                  *
+'            Key Config.                                                    *
+B2SEN = 50: 'HOW SENSITIVE UP/DOWN ARROW KEYS ARE                           *
+A1SEN = 75: 'HOW SENSITIVE LEFT/RIGHT ARROW KEYS ARE                        *
+F1$ = "Z":  'PRIMARY FIRE KEY                                               *
+F2$ = "X":  'FIRE MISSILE KEY                                               *
+F3$ = "C":  'FRAGMENT                                                       *
+CTROL = 0:  'CONTROL INTERFACE (0=JOYSTICK/1=KEYBOARD)                      *
+THRTL = 1:  'GAS PETAL CONTROL (0=JOYSTICK1-Y, 1=JOYSTICK2-Y/THROTTLE)      *
+CONTST = 0: 'CONTROL TEST (0=OFF/1=ON)                                      *
+'                                                                           *
+'            Starting Weapons etc.                                          *
+GUN2 = 0:   '(0/1) IF SET TO 1, YOUR CAR STARTS WITH 2 FORWARD GUNS         *
+LASER = 0:  '(0/1) IF SET TO 1, YOUR FORWARD GUNS START AS LASERS           *
+RECHRG = .1: 'STARTING RECHAGE RATE FOR LASER (MUST BE LESS THEN 1)         *
+RAM = 0:     'STARTING LEVEL OF RAMMING GRILL (0=NO GRILL)                  *
+ERS = 0:     'NUMBER OF HP THE E.R.S. GIVES YOU PER STAGE                   *
+MIS1 = 0:    'LEVEL OF MISSILE-1 \___(0=NO MISSILE)                         *
+MIS2 = 0:    'LEVEL OF MISSILE-2 /                                          *
+SWAV = 0:    'SET TO 1 TO START WITH FRAGMENTER                             *
+WEP1 = 50:   'STARTING AMMO/CHARGE FOR AUTO CANNON/LASER                    *
+WEP2 = 75:   'STARTING CHARGE OF FRAGMENTER                                 *
+'                                                                           *
+'                     Use the following at your own risk                    *
+HOLS = 0: 'EVIL MIND-CAGE (0=OFF/1=ON) THIS IS NEVER REALLY USED IN THE     *
+          'GAME, BUT YOU MAY FIND SOME FUN IN IT                            *
+'            'All the stuff you shouldn't mess with                         *
+X = 50: Y = 85:          'YOUR STARTING X/Y START POSITIONS                 *
+AC1Y = 510:  AC1D = 100: '\                                                 *
+AC2Y = 650:  AC2D = 100: ' \ ___ START LOCATIONS/HIT POINTS                 *
+BC1Y = 1100: BC1D = 100: ' /                                                *
+BC2Y = 700:  BC2D = 100: '/                                                 *
+BOS1D = 400: 'HIT POINTS FOR 1ST BOSS                                       *
+BOS2D = 600: '               2ND BOSS                                       *
+BOS3D = 900: '               3RD BOSS                                       *
+BC1BST = 10  'MAX ROUNDS PER BURST FOR ENEMY GROUP 1 \                      *
+BC2BST = 15: 'MAX ROUNDS PER BURST FOR ENEMY GROUP 2  |--(1-24)             *
+BC3BST = 20: 'MAX ROUNDS PER BURST FOR ENEMY GROUP 3 /                      *
+LEV = 1:    'STARTING STAGE                                                 *
+YOUCLR = 1: 'YOUR CARS COLOR (1=BLUE, DON'T ENTER HIGHER THEN 15)           *
+AC1C = 3:   '\___UNARMED-CAR COLORS                                         *
+AC2C = 4:   '/                                                              *
+BC1C = 1:   '\                                                              *
+BC2C = 4:   ' |--ENEMY-CAR COLORS                                           *
+BC3C = 0:   '/                                                              *
+SHOWP = 0:  'YOUR CORNER POINTS TEST (0=OFF/1=ON)                           *
+'                                                                           *
+IF CTROL = 1 THEN JOYFIX = 2: '----------------------------------END DEFAULTS
+IF WEE$ = "Û" THEN GUN2 = 1: LASER = 1: RECHRG = .9: ERS = 30: MIS1 = 1: MIS2 = 1: SWAV = 1
+IF LASER = 0 THEN WEP1PC = 4
+IF LASER = 1 THEN WEP1PC = 9
+LEV = LEV - 1
+BC3Y = 1010:  BC3D = 200
+YCUNKY = 110
+IF HOLS = 1 THEN SFTP = 1: SFTH = 1
+AC1X = 50: AC2X = 50
+BC2X = 50
+REM GOING TO DRAW NEW MAP
+GOSUB 1008
+
+1005 REM________________________________________START LOOP
+IF DP1 > 200 THEN DP1 = 200
+IF DP2 > 200 THEN DP2 = 200
+IF DP3 > 100 THEN DP3 = 100
+IF DP4 > 100 THEN DP4 = 100
+IF DP5 > 100 THEN DP5 = 100
+IF DP6 > 100 THEN DP6 = 100
+
+'--------------------------TURN BOSSMODE ON ?
+IF BOSSMODE = 1 THEN 12
+IF LEV = 11 THEN  ELSE 12
+SCREEN 13
+REDIM PAL(255) AS HUES
+DEF SEG = VARSEG(PAL(0))
+BLOAD "C:\BASIC\HOG2\BOS1.PAL", 0
+SETHUES PAL(), 0, 255
+BOS1X = 50: BOS1Y = 0: BOS1H = RND - .5: BOS1V = .5: FLY2X = 50: FLY2Y = 95
+WEP1X = 0: DP1X = 0
+IF LASER = 0 THEN WEP1 = 100
+12 'BOSSMODE JUMP
+
+IF BOSSMODE = 1 THEN 28
+IF LEV = 20 THEN  ELSE 28
+SCREEN 13
+REDIM PAL(255) AS HUES
+DEF SEG = VARSEG(PAL(0))
+BLOAD "C:\BASIC\HOG2\BOS2.PAL", 0
+SETHUES PAL(), 0, 255
+BOS2X = 50: BOS2Y = 50: BOS2H = 0: BOS2V = -2: FLY2X = 50: FLY2Y = 95
+WEP1X = 0: DP1X = 0
+28 'BOSSMODE JUMP
+
+IF BOSSMODE = 1 THEN 44
+IF LEV = 30 THEN  ELSE 44
+SCREEN 13
+REDIM PAL(255) AS HUES
+DEF SEG = VARSEG(PAL(0))
+BLOAD "C:\BASIC\HOG2\BOS3.PAL", 0
+SETHUES PAL(), 0, 255
+BOS3X = 50: BOS3Y = 50: BOS3H = (RND - .5) * 5: BOS3V = -1: FLY2X = 50: FLY2Y = 95: G1X = 50: G2X = 50
+WEP1X = 0: DP1X = 0: gun1d = 140: gun2d = 140
+44 'BOSSMODE JUMP
+
+IF LEV = 11 OR LEV = 20 OR LEV = 30 THEN BOSSMODE = 1: SCREEN 13: WINDOW SCREEN (0, 0)-(100, 100): YY = 0: IF SWH < -1 OR SHOCK = 0 THEN LINE (0, 0)-(100, 100), 8, BF
+
+REM----------------FRAGMENTER CONTROL
+IF SHOCK = 0 THEN SWV = 0: GOTO 37
+IF SWH > 0 AND SWV = 600 THEN SWH = -20
+SWV = SWV + SWH
+IF SWV < 5 THEN SHOCK = 0
+37
+REM----------------------------------------
+IF SFTP = 0 THEN SFTH = 0
+IF SFTP = 0 AND SFTX < 0 THEN SFTX = SFTX + 1
+IF SFTP = 0 AND SFTX > 0 THEN SFTX = SFTX - 1
+IF SFTX > 50 THEN SFTH = -1
+IF SFTX < -50 THEN SFTH = 1
+SFTX = SFTX + SFTH
+REM----------------------------------------             DRAW ROAD
+IF BOSSMODE = 1 THEN 11
+DRX = 0: DRY1 = YY / 10: DRY2 = 0
+1001 SCREEN , , 1, 0
+DRC = POINT(DRX, DRY1)
+SCREEN , , 0, 0
+WINDOW SCREEN (SFTX - SWV, 0)-(SFTX + (100 + SWV), 100)
+LINE (DRX, DRY2)-((DRX + DETL), DRY2 + (DETL * 2)), DRC, BF
+DRX = DRX + DETL: IF DRX = 100 THEN DRX = 0: DRY1 = DRY1 + 1: DRY2 = DRY2 + (DETL * 2)
+IF DRY2 < 100 THEN GOTO 1001
+IF SHOCK = 1 THEN COLOR , 15: COLOR , 0: LINE (-20, 0)-(0, 100), 0, BF: LINE (100, 0)-(120, 100), 0, BF
+'IF SFTP = 1 THEN LINE (-30, 0)-(0, 100), 2, BF: LINE (100, 0)-(130, 100), 2, BF
+WINDOW SCREEN (0, 0)-(100, 100)
+11 'BOSSMODE JUMP
+
+REM----------------BOSS SCREENS
+IF BOSSMODE = 0 THEN 10
+WINDOW SCREEN (0 - (SWV / 2), 0)-(100 + (SWV / 2), 100)
+PUT (FL1X, FL1Y), MIN, PSET
+IF FL1Y = 90 THEN FL1X = RND * 15: FL1Y = 0
+FL1Y = FL1Y + 10
+
+PUT (FL2X, FL2Y), MIN, PSET
+IF FL2Y = 90 THEN FL2X = 90 - (RND * 15): FL2Y = 0
+FL2Y = FL2Y + 10
+IF BOSSMODE = 1 AND SHOCK = 1 THEN LINE (-20, 0)-(0, 100), 0, BF: LINE (100, 0)-(120, 100), 0, BF
+WINDOW SCREEN (0, 0)-(100, 100)
+10 'BOSSMODE JUMP
+
+REM------------------------------------------------------BAD-STUFF(CARS ETC.)
+REM----------BOSS-1 (STAGE-11)
+IF LEV <> 11 THEN 18
+
+IF BOS1PN = 12 THEN BOS1V = BOS1V + 4: BOS1D = BOS1D - 35
+IF BOS1PS = 12 THEN BOS1V = BOS1V - 1: BOS1D = BOS1D - 25
+IF BOS1PE = 12 THEN BOS1H = BOS1H + 3: BOS1D = BOS1D - 15
+IF BOS1PW = 12 THEN BOS1H = BOS1H - 3: BOS1D = BOS1D - 15
+IF BOS1PN = 4 OR BOS1PN = 9 THEN BOS1D = BOS1D - (10 + (BOS1PN * 2))
+IF BOS1PS = 4 OR BOS1PS = 9 THEN BOS1D = BOS1D - (10 + (BOS1PS * 2))
+IF BOS1PE = 4 OR BOS1PE = 9 THEN BOS1D = BOS1D - (5 + (BOS1PE * 2))
+IF BOS1PW = 4 OR BOS1PW = 9 THEN BOS1D = BOS1D - (5 + (BOS1PW * 2))
+
+BOS1X = BOS1X + BOS1H: BOS1Y = BOS1Y + BOS1V
+
+IF BOS1X < 30 THEN BOS1H = BOS1H + .5
+IF BOS1Y < 30 THEN BOS1V = BOS1V + .5
+IF BOS1X > 70 THEN BOS1H = BOS1H - .5
+IF BOS1Y > 70 THEN BOS1V = BOS1V - .5
+
+IF BOS1X < 25 THEN BOS1X = 25
+IF BOS1Y < 25 THEN BOS1Y = 25
+IF BOS1X > 75 THEN BOS1X = 75
+IF BOS1Y > 75 THEN BOS1Y = 75
+IF BOS1D >= 200 THEN PUT (BOS1X - 10, BOS1Y - 10), B1A, PSET
+IF BOS1D >= 100 AND BOS1D < 200 THEN PUT (BOS1X - 10, BOS1Y - 10), B1B, PSET
+IF BOS1D < 100 THEN PUT (BOS1X - 10, BOS1Y - 10), B1C, PSET
+IF BOS1D < 0 THEN 23
+18 '1ST-BOSS JUMP
+
+REM----------BOSS-2 (STAGE-20)
+IF LEV <> 20 THEN 29
+
+IF SHOCK = 1 THEN BOS2D = BOS2D - 5
+IF BOS2PN = 12 THEN BOS2V = BOS2V + 4: BOS2D = BOS2D - 10
+IF BOS2PS = 12 THEN BOS2V = BOS2V - 1: BOS2D = BOS2D - 20
+IF BOS2PE = 12 THEN BOS2H = BOS2H + 3: BOS2D = BOS2D - 15
+IF BOS2PW = 12 THEN BOS2H = BOS2H - 3: BOS2D = BOS2D - 15
+IF BOS2PN = 9 THEN BOS2D = BOS2D - 5
+IF BOS2PS = 9 THEN BOS2D = BOS2D - 10
+IF BOS2PE = 9 THEN BOS2D = BOS2D - 5
+IF BOS2PW = 9 THEN BOS2D = BOS2D - 5
+
+BOS2X = BOS2X + BOS2H: BOS2Y = BOS2Y + BOS2V
+
+IF BOS2X < 30 THEN BOS2H = BOS2H + 1
+IF BOS2Y < 30 THEN BOS2V = BOS2V + 1
+IF BOS2X > 70 THEN BOS2H = BOS2H - 1
+IF BOS2Y > 70 THEN BOS2V = BOS2V - 1
+
+IF BOS2X < 25 THEN BOS2X = 25
+IF BOS2Y < 15 THEN BOS2Y = 15
+IF BOS2X > 75 THEN BOS2X = 75
+IF BOS2Y > 75 THEN BOS2Y = 75
+
+'AI
+IF Y < BOS2Y AND X > BOS2X - 7 AND X < BOS2X + 7 THEN BOS2V = BOS2V - 1
+BOS2H = BOS2H / 1.05: BOS2V = BOS2V / 1.05
+IF X > BOS2X + 15 THEN BOS2H = BOS2H + .1
+IF X < BOS2X - 15 THEN BOS2H = BOS2H - .1
+IF RND > .5 AND Y > BOS2Y + 20 AND BOS2V < .5 THEN BOS2V = BOS2V + .1
+
+IF BOS2D >= 200 THEN PUT (BOS2X - 11, BOS2Y - 10), B2A, PSET
+IF BOS2D >= 100 AND BOS2D < 200 THEN PUT (BOS2X - 11, BOS2Y - 10), B2B, PSET
+IF BOS2D < 100 THEN PUT (BOS2X - 11, BOS2Y - 10), B2C, PSET
+IF BOS2D < 200 THEN FOR WEE = 0 TO SMOKE: PSET (BOS2X + 3 + (RND * 2), BOS2Y + 7 + (RND * 15)), 0: NEXT WEE
+IF BOS2D < 0 THEN 32
+29 '2ND-BOSS JUMP
+
+REM----------BOSS-3 (STAGE-30)
+IF LEV <> 30 THEN 41
+
+IF SHOCK = 1 THEN BOS3D = BOS3D - 4: gun1d = gun1d - 1: gun2d = gun2d - 1
+IF BOS3P = 12 THEN BOS3D = BOS3D - 35
+IF BOS3P = 9 THEN BOS3D = BOS3D - 10
+
+BOS3X = BOS3X + BOS3H: BOS3Y = BOS3Y + BOS3V
+
+IF BOS3X < 30 THEN BOS3H = BOS3H + .5
+IF BOS3Y < 30 THEN BOS3V = BOS3V + .5
+IF BOS3X > 70 THEN BOS3H = BOS3H - .5
+IF BOS3Y > 70 THEN BOS3V = BOS3V - .5
+
+IF BOS3X < 25 THEN BOS3X = 25
+IF BOS3Y < 25 THEN BOS3Y = 25
+IF BOS3X > 75 THEN BOS3X = 75
+IF BOS3Y > 75 THEN BOS3Y = 75
+REM -------------------------3RD BOSS GUN(S)
+IF gun1d = 0 THEN gun1d = -5: CASH = CASH + 100
+IF gun2d = 0 THEN gun2d = -5: CASH = CASH + 100
+
+IF GUN1P = 12 OR GUN1P = 9 THEN gun1d = gun1d - 5
+IF GUN2P = 12 OR GUN2P = 9 THEN gun2d = gun2d - 5
+
+IF gun1d > 29 THEN G1X = G1X + GUNH
+IF gun2d > 29 THEN G2X = G2X - GUNH
+G1X = G1X + BOS3H: G2X = G2X + BOS3H
+GUNH = GUNH / 1.05
+IF X > G1X AND X < G2X THEN GUNH = .5
+IF X < G1X OR X > G2X THEN GUNH = -.5
+IF X > G1X - 2 AND X < G1X + 2 THEN GUNH = 0
+IF X > G2X - 2 AND X < G2X + 2 THEN GUNH = 0
+
+IF G1X < BOS3X - 20 THEN G1X = BOS3X - 20: GUNH = 0
+IF G2X > BOS3X + 20 THEN G2X = BOS3X + 20: GUNH = 0
+
+IF Y < BOS3Y - 10 THEN GUNH = 1: 'CRUSH
+
+IF gun1d < .1 THEN 45
+IF G1X < 25 THEN G1X = 25: BOS3H = BOS3H + 1
+45
+IF gun2d < .1 THEN 46
+IF G2X > 75 THEN G2X = 75: BOS3H = BOS3H - 1
+46
+IF G1X > BOS3X - 10 THEN G1X = BOS3X - 10
+IF G2X < BOS3X + 10 THEN G2X = BOS3X + 10
+
+IF BOS3D >= 400 THEN PUT (BOS3X - 6.5, BOS3Y - 5), B3A, PSET
+IF BOS3D >= 100 AND BOS3D < 400 THEN PUT (BOS3X - 6.5, BOS3Y - 5), B3B, PSET
+IF BOS3D < 100 THEN PUT (BOS3X - 6.5, BOS3Y - 5), B3C, PSET
+'GUN(S)
+IF gun1d < 0 THEN 47
+LINE (G1X + 2, BOS3Y + 3)-(BOS3X - 6.7, BOS3Y + 7), 76, BF
+LINE (G1X + 2, BOS3Y + 3)-(BOS3X - 6.7, BOS3Y + 7), 0, B
+IF gun1d >= 100 THEN PUT (G1X - 2, BOS3Y), G3A, PSET
+IF gun1d >= 30 AND gun1d < 100 THEN PUT (G1X - 2, BOS3Y), G3B, PSET
+IF gun1d < 30 THEN PUT (G1X - 2, BOS3Y), G3C, PSET
+47
+IF gun2d < 0 THEN 48
+LINE (G2X - 2, BOS3Y + 3)-(BOS3X + 6.3, BOS3Y + 7), 76, BF
+LINE (G2X - 2, BOS3Y + 3)-(BOS3X + 6.3, BOS3Y + 7), 0, B
+IF gun2d >= 100 THEN PUT (G2X - 2, BOS3Y), G3A, PSET
+IF gun2d >= 30 AND gun2d < 100 THEN PUT (G2X - 2, BOS3Y), G3B, PSET
+IF gun2d < 30 THEN PUT (G2X - 2, BOS3Y), G3C, PSET
+48
+'
+IF BOS3D < 0 THEN 23
+41 '3RD-BOSS JUMP
+
+IF BOSSMODE = 1 THEN 8
+REM----------ACAR1
+IF SCRAM = 1 THEN 26
+SCREEN , , 1, 0
+WINDOW SCREEN (0, -100)-(100, 2000)
+AC10 = POINT(AC1X - 10, AC1Y - .5)
+AC11 = POINT(AC1X, AC1Y - 1)
+AC12 = POINT(AC1X + 10, AC1Y - .5)
+SCREEN , , 0, 0
+AC1H = AC1H / 1.4
+IF AC1V < -3 THEN AC1V = AC1V + 1
+'AI
+IF AC1V > -3.5 AND AC11 = RDC THEN AC1V = AC1V - 1
+IF AC10 = RDC THEN AC1H = AC1H - 1
+IF AC11 <> RDC THEN AC1V = AC1V + .5
+IF AC12 = RDC THEN AC1H = AC1H + 1
+
+IF AC1Y > 1000 THEN AC1X = 40
+IF AC1X < 5 THEN AC1X = 5
+IF AC1X > 95 THEN AC1X = 95
+IF AC1Y < 100 THEN AC1Y = 1000
+IF AC1V > 0 THEN AC1V = -1
+IF AC1D > 0 THEN AC1X = AC1X + AC1H: AC1Y = AC1Y + AC1V ELSE AC1V = AC1V / 1.5
+
+WINDOW SCREEN (0, YY)-(100, YY + 100)
+AC1PM = POINT(AC1X, AC1Y): IF AC1PM = -1 OR AC1PN = -1 OR AC1PS = -1 THEN AC1PM = RDC: AC1PN = RDC: AC1PS = RDC: AC1PE = RDC: AC1PW = RDC
+IF AC1PN = 7 THEN AC1V = 0: AC1D = AC1D - 50
+IF AC1PN < 2 OR AC1PN = 3 OR AC1PN = 4 OR AC1PN = 5 THEN AC1V = AC1V + 3: AC1D = AC1D - 15
+IF AC1PS < 2 OR AC1PS = 3 OR AC1PS = 4 OR AC1PS = 5 THEN AC1V = AC1V - 3: AC1D = AC1D - 10
+IF AC1PE < 2 OR AC1PE = 3 OR AC1PE = 4 OR AC1PE = 5 THEN AC1H = AC1H + 2: AC1D = AC1D - 10
+IF AC1PW < 2 OR AC1PW = 3 OR AC1PW = 4 OR AC1PW = 5 THEN AC1H = AC1H - 2: AC1D = AC1D - 10
+
+IF AC1PN = 9 THEN AC1V = AC1V + 3: AC1D = AC1D - 20
+IF AC1PS = 9 THEN AC1V = AC1V - 3: AC1D = AC1D - 20
+IF AC1PE = 9 THEN AC1H = AC1H + 2: AC1D = AC1D - 20
+IF AC1PW = 9 THEN AC1H = AC1H - 2: AC1D = AC1D - 20
+
+IF AC1PN = 12 THEN AC1D = AC1D - 30
+IF AC1PS = 12 THEN AC1D = AC1D - 30
+IF AC1PE = 12 THEN AC1D = AC1D - 30
+IF AC1PW = 12 THEN AC1D = AC1D - 30
+
+IF AC1PM <> RDC THEN AC1H = AC1H + ((RND - .5) * -3): AC1D = AC1D - 1
+IF AC1D < 0 THEN CIRCLE (AC1X, AC1Y), 5 + (RND * 3), 5: PAINT (AC1X, AC1Y + 1), 4, 5:  AC1DIE = AC1DIE + 1: IF AC1DIE = 10 THEN AC1D = -100
+IF YY <= 0 AND AC1D < 0 THEN AC1D = 100: AC1Y = 1010: AC1DIE = 0
+IF AC1D < -5 THEN AC1D = 100: AC1Y = 1010: AC1DIE = 0: SOR = SOR + 100: CASH = CASH + 20
+LINE (AC1X - 1.5, AC1Y - 6)-(AC1X + 1.5, AC1Y + 2), AC1C, BF: LINE (AC1X - 1.5, AC1Y - 6)-(AC1X + 1.5, AC1Y + 2), 0, B: LINE (AC1X - 1, AC1Y - 3)-(AC1X + 1, AC1Y), 0, B: LINE (AC1X - 1, AC1Y - 3.5)-(AC1X + 1, AC1Y - 3.5), 1
+IF AC1D < 30 THEN FOR WEE = 0 TO SMOKE: PSET (AC1X + 1 + RND, AC1Y - 3 + (RND * (SMOKE / 2))), 0: NEXT WEE
+WINDOW SCREEN (0, 0)-(100, 100)
+REM----------ACAR2
+SCREEN , , 1, 0
+WINDOW SCREEN (0, -100)-(100, 2000)
+AC20 = POINT(AC2X - 10, AC2Y - 1)
+AC21 = POINT(AC2X, AC2Y - 1)
+AC22 = POINT(AC2X + 10, AC2Y - 1)
+SCREEN , , 0, 0
+AC2H = AC2H / 1.4
+IF AC2V < -2 THEN AC2V = AC2V + 1
+'AI
+IF AC2V > -3.5 AND AC21 = RDC THEN AC2V = AC2V - 1
+IF AC20 = RDC THEN AC2H = AC2H - 1
+IF AC21 <> RDC THEN AC2V = AC2V + .5
+IF AC22 = RDC THEN AC2H = AC2H + 1
+
+IF AC2Y > 1000 THEN AC2X = 60
+IF AC2X < 5 THEN AC2X = 5
+IF AC2X > 95 THEN AC2X = 95
+IF AC2Y < 100 THEN AC2Y = 1000
+IF AC2V > 0 THEN AC2V = -1
+IF AC2D > 0 THEN AC2X = AC2X + AC2H: AC2Y = AC2Y + AC2V ELSE AC2V = AC2V / 1.5
+
+WINDOW SCREEN (0, YY)-(100, YY + 100)
+AC2PM = POINT(AC2X, AC2Y): IF AC2PM = -1 OR AC2PN = -1 OR AC2PS = -1 THEN AC2PM = RDC: AC2PN = RDC: AC2PS = RDC: AC2PE = RDC: AC2PW = RDC
+IF AC2PN = 7 THEN AC2V = 0: AC2D = AC2D - 50
+IF AC2PN < 2 OR AC2PN = 3 OR AC2PN = 4 OR AC2PN = 5 THEN AC2V = AC2V + 3: AC2D = AC2D - 15
+IF AC2PS < 2 OR AC2PS = 3 OR AC2PS = 4 OR AC2PS = 5 THEN AC2V = AC2V - 3: AC2D = AC2D - 10
+IF AC2PE < 2 OR AC2PE = 3 OR AC2PE = 4 OR AC2PE = 5 THEN AC2H = AC2H + 2: AC2D = AC2D - 10
+IF AC2PW < 2 OR AC2PW = 3 OR AC2PW = 4 OR AC2PW = 5 THEN AC2H = AC2H - 2: AC2D = AC2D - 10
+
+IF AC2PN = 9 THEN AC2V = AC2V + 3: AC2D = AC2D - 20
+IF AC2PS = 9 THEN AC2V = AC2V - 3: AC2D = AC2D - 20
+IF AC2PE = 9 THEN AC2H = AC2H + 2: AC2D = AC2D - 20
+IF AC2PW = 9 THEN AC2H = AC2H - 2: AC2D = AC2D - 20
+IF AC2PN = 12 THEN AC2D = AC2D - 30
+IF AC2PS = 12 THEN AC2D = AC2D - 30
+IF AC2PE = 12 THEN AC2D = AC2D - 30
+IF AC2PW = 12 THEN AC2D = AC2D - 30
+
+IF AC2PM <> RDC THEN AC2H = AC2H + ((RND - .5) * -3): AC2D = AC2D - 1
+IF AC2D < 0 THEN CIRCLE (AC2X, AC2Y), 5 + (RND * 3), 5: PAINT (AC2X, AC2Y + 1), 4, 5:  AC2DIE = AC2DIE + 1: IF AC2DIE = 10 THEN AC2D = -100
+IF YY <= 0 AND AC2D < 0 THEN AC2D = 100: AC2Y = 1010: AC2DIE = 0
+IF AC2D < -50 THEN AC2D = 100: AC2Y = 1010: AC2DIE = 0: SOR = SOR + 125: CASH = CASH + 25
+LINE (AC2X - 1.5, AC2Y - 6)-(AC2X + 1.5, AC2Y + 2), AC2C, BF: LINE (AC2X - 1.5, AC2Y - 6)-(AC2X + 1.5, AC2Y + 2), 0, B: LINE (AC2X - 1, AC2Y - 3)-(AC2X + 1, AC2Y), 0, B: LINE (AC2X - 1, AC2Y - 3.5)-(AC2X + 1, AC2Y - 3.5), 1
+IF AC2D < 30 THEN FOR WEE = 0 TO SMOKE: PSET (AC2X + 1 + RND, AC2Y - 3 + (RND * (SMOKE / 2))), 0: NEXT WEE
+WINDOW SCREEN (0, 0)-(100, 100)
+26 'SCRAM JUMP
+REM----------BCAR1
+SCREEN , , 1, 0
+WINDOW SCREEN (0, -100)-(100, 2000)
+BC10 = POINT(BC1X - 10, BC1Y - .5)
+BC11 = POINT(BC1X, BC1Y - 1)
+BC12 = POINT(BC1X + 10, BC1Y - .5)
+SCREEN , , 0, 0
+BC1H = BC1H / 1.4
+IF BC1V < -3 THEN BC1V = BC1V + 1
+'AI
+IF BC1X < 20 THEN BC1H = BC1H + .3
+IF BC1X > 80 THEN BC1H = BC1H - .3
+IF BC1V > -3.5 AND BC11 = RDC THEN BC1V = BC1V - 1
+IF BC10 = RDC THEN BC1H = BC1H - 1
+IF BC11 <> RDC THEN BC1V = BC1V + .5
+IF BC12 = RDC THEN BC1H = BC1H + 1
+IF V > .1 THEN BC1V = BC1V - 1
+
+BC1FT = BC1FT + 1: IF BC1FT = 25 THEN BC1FT = 0: ' WHEN TO FIRE
+IF BC1FT > BC1BST + (LEV / 10) OR BC1PS = -1 THEN BC1ST = 0 ELSE BC1ST = 1
+
+IF BC1Y > 1000 THEN BC1X = 50
+IF BC1X < 5 THEN BC1X = 5
+IF BC1X > 95 THEN BC1X = 95
+IF BC1Y < 100 THEN BC1Y = 1000
+IF BC1V > 0 THEN BC1V = -1
+IF BC1D > 0 THEN BC1X = BC1X + BC1H: BC1Y = BC1Y + BC1V ELSE BC1V = BC1V / 1.5
+
+WINDOW SCREEN (0, YY)-(100, YY + 100)
+BC1PM = POINT(BC1X, BC1Y): IF BC1PM = -1 OR BC1PN = -1 OR BC1PS = -1 THEN BC1PM = RDC: BC1PN = RDC: BC1PS = RDC: BC1PE = RDC: BC1PW = RDC
+IF BC1PN = 7 THEN BC1V = 0: BC1D = BC1D - 50
+IF BC1PN < 2 OR BC1PN = 3 OR BC1PN = 4 OR BC1PN = 5 THEN BC1V = BC1V + 3: BC1D = BC1D - 15
+IF BC1PS < 2 OR BC1PS = 3 OR BC1PS = 4 OR BC1PS = 5 THEN BC1V = BC1V - 3: BC1D = BC1D - 10
+IF BC1PE < 2 OR BC1PE = 3 OR BC1PE = 4 OR BC1PE = 5 THEN BC1H = BC1H + 2: BC1D = BC1D - 10
+IF BC1PW < 2 OR BC1PW = 3 OR BC1PW = 4 OR BC1PW = 5 THEN BC1H = BC1H - 2: BC1D = BC1D - 10
+
+IF BC1PN = 9 THEN BC1V = BC1V + 3: BC1D = BC1D - 15
+IF BC1PS = 9 THEN BC1V = BC1V - 3: BC1D = BC1D - 15
+IF BC1PE = 9 THEN BC1H = BC1H + 2: BC1D = BC1D - 15
+IF BC1PW = 9 THEN BC1H = BC1H - 2: BC1D = BC1D - 15
+IF BC1PN = 12 THEN BC1D = BC1D - (30 - LEV)
+IF BC1PS = 12 THEN BC1D = BC1D - (30 - LEV)
+IF BC1PE = 12 THEN BC1D = BC1D - (30 - LEV)
+IF BC1PW = 12 THEN BC1D = BC1D - (30 - LEV)
+
+IF BC1PM <> RDC THEN BC1D = BC1D - 1
+IF BC1D < 0 THEN CIRCLE (BC1X, BC1Y), 5 + (RND * 3), 5: PAINT (BC1X, BC1Y + 1), 4, 5:  BC1DIE = BC1DIE + 1: IF BC1DIE = 10 THEN BC1D = -100
+IF YY <= 0 AND BC1D < 0 THEN BC1D = 100: BC1Y = 1010: BC1DIE = 0
+IF BC1D < -5 THEN BC1D = 100: BC1Y = 1010: BC1DIE = 0: SOR = SOR + 200: CASH = CASH + 50: IF POD = 1 THEN POD = 0 ELSE IF POD = 0 THEN POD = 1
+LINE (BC1X - 1.5, BC1Y - 6)-(BC1X + 1.5, BC1Y + 2), BC1C, BF: LINE (BC1X - 1.5, BC1Y - 6)-(BC1X + 1.5, BC1Y + 2), 0, B: LINE (BC1X - 1, BC1Y - 3)-(BC1X + 1, BC1Y), 0, B: LINE (BC1X - 1, BC1Y - 3.5)-(BC1X + 1, BC1Y - 3.5), 3: LINE (BC1X + 1.5, BC1Y - _
+ 1.5)-(BC1X + 1.5, BC1Y - 2), 7
+IF BC1D < 30 THEN FOR WEE = 0 TO SMOKE: PSET (BC1X + 1 + RND, BC1Y - 3 + (RND * (SMOKE / 2))), 0: NEXT WEE
+WINDOW SCREEN (0, 0)-(100, 100)
+
+REM----------BCAR2
+SCREEN , , 1, 0
+WINDOW SCREEN (0, -100)-(100, 2000)
+BC20 = POINT(BC2X - 10, BC2Y - .5)
+BC21 = POINT(BC2X, BC2Y - 1)
+BC22 = POINT(BC2X + 10, BC2Y - .5)
+SCREEN , , 0, 0
+BC2H = BC2H / 1.4
+IF BC2V < -4 THEN BC2V = BC2V + 1
+'AI
+IF BC2X < 30 THEN BC2H = BC2H + .2
+IF BC2X > 70 THEN BC2H = BC2H - .2
+IF BC2V > -3.5 AND BC21 = RDC THEN BC2V = BC2V - 1
+IF BC20 = RDC THEN BC2H = BC2H - 1
+IF BC21 <> RDC THEN BC2V = BC2V + .5
+IF BC22 = RDC THEN BC2H = BC2H + 1
+IF V > .1 THEN BC2V = BC2V - 1.5
+
+BC2FT = BC2FT + 1: IF BC2FT = 25 THEN BC2FT = 0: ' WHEN TO FIRE
+IF BC2FT > BC2BST OR BC2PS = -1 OR YY + Y > BC2Y THEN BC2ST = 0 ELSE BC2ST = 1
+
+IF BC2Y > 1000 THEN BC2X = 50
+IF BC2X < 5 THEN BC2X = 5
+IF BC2X > 95 THEN BC2X = 95
+IF BC2Y < 100 THEN BC2Y = 1000
+IF BC2V > 0 THEN BC2V = -1
+IF BC2D > 0 THEN BC2X = BC2X + BC2H: BC2Y = BC2Y + BC2V ELSE BC2V = BC2V / 1.5
+
+WINDOW SCREEN (0, YY)-(100, YY + 100)
+BC2PM = POINT(BC2X, BC2Y): IF BC2PM = -1 OR BC2PN = -1 OR BC2PS = -1 THEN BC2PM = RDC: BC2PN = RDC: BC2PS = RDC: BC2PE = RDC: BC2PW = RDC
+IF BC2PN = 7 THEN BC2V = 0: BC2D = BC2D - 50
+IF BC2PN < 2 OR BC2PN = 3 OR BC2PN = 4 OR BC2PN = 5 THEN BC2V = BC2V + 3: BC2D = BC2D - 10
+IF BC2PS < 2 OR BC2PS = 3 OR BC2PS = 4 OR BC2PS = 5 THEN BC2V = BC2V - 3: BC2D = BC2D - 10
+IF BC2PE < 2 OR BC2PE = 3 OR BC2PE = 4 OR BC2PE = 5 THEN BC2H = BC2H + 2: BC2D = BC2D - 10
+IF BC2PW < 2 OR BC2PW = 3 OR BC2PW = 4 OR BC2PW = 5 THEN BC2H = BC2H - 2: BC2D = BC2D - 10
+
+IF BC2PN = 9 THEN BC2V = BC2V + 4: BC2D = BC2D - 15
+IF BC2PS = 9 THEN BC2V = BC2V - 4: BC2D = BC2D - 15
+IF BC2PE = 9 THEN BC2H = BC2H + 4: BC2D = BC2D - 15
+IF BC2PW = 9 THEN BC2H = BC2H - 4: BC2D = BC2D - 15
+IF BC2PN = 12 THEN BC2D = BC2D - (30 - LEV)
+IF BC2PS = 12 THEN BC2D = BC2D - (30 - LEV)
+IF BC2PE = 12 THEN BC2D = BC2D - (30 - LEV)
+IF BC2PW = 12 THEN BC2D = BC2D - (30 - LEV)
+
+IF BC2PM <> RDC THEN BC2D = BC2D - 1
+IF BC2D < 0 THEN CIRCLE (BC2X, BC2Y), 5 + (RND * 3), 5: PAINT (BC2X, BC2Y + 1), 4, 5:  BC2DIE = BC2DIE + 1: IF BC2DIE = 10 THEN BC2D = -100
+IF YY <= 0 AND BC2D < 0 THEN BC2D = 100: BC2Y = 1010: BC2DIE = 0
+IF BC2D < -5 THEN BC2D = 100: BC2Y = 1010: BC2DIE = 0: SOR = SOR + 200: CASH = CASH + 95: IF POD = 2 THEN POD = 0 ELSE IF POD = 0 THEN POD = 2
+LINE (BC2X - 1.5, BC2Y - 6)-(BC2X + 1.5, BC2Y + 2), BC2C, BF: LINE (BC2X - 1.5, BC2Y - 6)-(BC2X + 1.5, BC2Y + 2), 0, B: LINE (BC2X - 1, BC2Y - 3)-(BC2X + 1, BC2Y), 0, B: LINE (BC2X - 1, BC2Y - 3.5)-(BC2X + 1, BC2Y - 3.5), 1: IF BC2ST = 1 THEN LINE ( _
+BC2X + 1.5, BC2Y - 1.5)-(BC2X + 1.5, BC2Y - 2), 7
+IF BC2D < 30 THEN FOR WEE = 0 TO SMOKE: PSET (BC2X + 1 + RND, BC2Y - 3 + (RND * (SMOKE / 2))), 0: NEXT WEE
+WINDOW SCREEN (0, 0)-(100, 100): '********************************************
+
+REM----------BCAR3
+SCREEN , , 1, 0
+WINDOW SCREEN (0, -100)-(100, 2000)
+BC30 = POINT(BC3X - 10, BC3Y - .5)
+BC31 = POINT(BC3X, BC3Y - 1)
+BC32 = POINT(BC3X + 10, BC3Y - .5)
+SCREEN , , 0, 0
+BC3H = BC3H / 1.4
+'MAX SPEED\
+IF BC3V < -2.5 THEN BC3V = BC3V + 1
+'AI
+IF BC3X < 25 THEN BC3H = BC3H + .3
+IF BC3X > 75 THEN BC3H = BC3H - .3
+IF BC3V > -3.5 AND BC31 = RDC THEN BC3V = BC3V - 1
+IF BC30 = RDC THEN BC3H = BC3H - 1
+IF BC31 <> RDC THEN BC3V = BC3V + .5
+IF BC32 = RDC THEN BC3H = BC3H + 1
+IF V > .1 THEN BC3V = BC3V - 1
+
+BC3FT = BC3FT + 1: IF BC3FT = 25 THEN BC3FT = 0: ' WHEN TO FIRE
+IF BC3FT > BC3BST OR BC3PS = -1 THEN BC3ST = 0 ELSE 75
+GOTO 76
+
+75 'AIMMING
+BC3ST = 2
+IF YY + Y > BC3Y THEN BC3ST = 3
+IF YY + Y < BC3Y - 15 THEN BC3ST = 1
+IF BC3D < 30 THEN BC3ST = 0
+76 REM(MUST STAY)
+
+IF BC3Y > 1000 THEN BC3X = 65
+IF BC3X < 5 THEN BC3X = 5
+IF BC3X > 95 THEN BC3X = 95
+IF BC3Y < 100 THEN BC3Y = 1000
+IF BC3Y < 1011 AND LEV < 8 THEN BC3D = 200: BC3Y = 1010
+IF BC3V > 0 THEN BC3V = -1
+IF BC3D > 0 THEN BC3X = BC3X + BC3H: BC3Y = BC3Y + BC3V ELSE BC3V = BC3V / 1.5
+
+WINDOW SCREEN (0, YY)-(100, YY + 100)
+BC3PM = POINT(BC3X, BC3Y): IF BC3PM = -1 OR BC3PN = -1 OR BC3PS = -1 THEN BC3PM = RDC: BC3PN = RDC: BC3PS = RDC: BC3PE = RDC: BC3PW = RDC
+IF BC3PN = 7 THEN BC3V = 0: BC3D = BC3D - 50
+IF BC3PN < 2 OR BC3PN = 3 OR BC3PN = 4 OR BC3PN = 5 THEN BC3V = BC3V + 3: BC3D = BC3D - 10
+IF BC3PS < 2 OR BC3PS = 3 OR BC3PS = 4 OR BC3PS = 5 THEN BC3V = BC3V - 3: BC3D = BC3D - 5
+IF BC3PE < 2 OR BC3PE = 3 OR BC3PE = 4 OR BC3PE = 5 THEN BC3H = BC3H + 2: BC3D = BC3D - 5
+IF BC3PW < 2 OR BC3PW = 3 OR BC3PW = 4 OR BC3PW = 5 THEN BC3H = BC3H - 2: BC3D = BC3D - 5
+
+IF BC3PN = 9 THEN BC3V = BC3V + 3: BC3D = BC3D - 15
+IF BC3PS = 9 THEN BC3V = BC3V - 3: BC3D = BC3D - 15
+IF BC3PE = 9 THEN BC3H = BC3H + 2: BC3D = BC3D - 15
+IF BC3PW = 9 THEN BC3H = BC3H - 2: BC3D = BC3D - 15
+IF BC3PN = 12 THEN BC3D = BC3D - (20 - LEV)
+IF BC3PS = 12 THEN BC3D = BC3D - (20 - LEV)
+IF BC3PE = 12 THEN BC3D = BC3D - (20 - LEV)
+IF BC3PW = 12 THEN BC3D = BC3D - (20 - LEV)
+
+IF BC3PM <> RDC THEN BC3D = BC3D - 1
+IF BC3D < 0 THEN CIRCLE (BC3X, BC3Y), 5 + (RND * 3), 5: PAINT (BC3X, BC3Y + 1), 4, 5: BC3DIE = BC3DIE + 1: IF BC3DIE = 10 THEN BC3D = -100
+IF YY <= 0 AND BC3D < 0 THEN BC3D = 100: BC3Y = 1010: BC3DIE = 0
+IF BC3D < -5 THEN BC3D = 200: BC3Y = 1010: BC3DIE = 0: SOR = SOR + 200: CASH = CASH + 130: IF POD = 3 THEN POD = 0 ELSE IF POD = 0 THEN POD = 3
+LINE (BC3X - 1.5, BC3Y - 6.5)-(BC3X + 1.5, BC3Y - 3), BC3C, BF: LINE (BC3X - 1.5, BC3Y)-(BC3X + 1.5, BC3Y + 2), BC3C, BF: LINE (BC3X - 1.2, BC3Y - 3)-(BC3X + 1.2, BC3Y), 0, BF: LINE (BC3X - 1, BC3Y - 3.5)-(BC3X + 1, BC3Y - 3.5), 1: LINE (BC3X - .8,  _
+BC3Y)-(BC3X + .8, BC3Y), 1
+IF BC3ST > 0 THEN PSET (BC3X + 1.5, BC3Y - 1.5), 7
+IF BC3ST = 1 OR BC3ST = 3 THEN PSET (BC3X + 1.5, BC3Y - 2 + (BC3ST / 10)), 7
+IF BC3ST = 2 THEN PSET (BC3X + 1.8, BC3Y - 2 + (BC3ST / 10)), 7
+IF BC3D < 30 THEN FOR WEE = 0 TO SMOKE: PSET (BC3X + 1 + RND, BC3Y - 3 + (RND * (SMOKE / 2))), 0: NEXT WEE
+WINDOW SCREEN (0, 0)-(100, 100): '********************************************
+
+REM------------------------REAR GUN-POD
+WINDOW SCREEN (0, YY)-(100, YY + 100)
+IF POD = 0 THEN PODY = 5000
+IF POD = 1 THEN PODX = BC1X: PODY = BC1Y + 1.5: PODC = 3
+IF POD = 2 THEN PODX = BC2X: PODY = BC2Y + 1.5: PODC = 0
+IF POD = 3 THEN PODX = BC3X: PODY = BC3Y + 1.5: PODC = 4
+IF LEV < 7 THEN POD = 0
+REM---AIM
+PODA = 4
+IF X < PODX - 8 THEN IF YY + Y > PODY + 20 THEN PODA = 3 ELSE PODA = 2
+IF X > PODX + 8 THEN IF YY + Y > PODY + 20 THEN PODA = 5 ELSE PODA = 6
+IF X < PODX - 10 AND YY + Y < PODY - 20 THEN PODA = 1
+IF X > PODX + 10 AND YY + Y > PODY - 20 THEN PODA = 7
+
+REM---DRAW GUN-POD
+IF PODA < 4 THEN PODH = PODX - 1 ELSE PODH = PODX + 1: '           1     7
+IF PODA = 4 THEN PODH = PODX: '                                    2     6
+IF PODA = 2 OR PODA = 6 THEN PODV = PODY ELSE PODV = PODY + 1: '   3  4  5
+IF PODA = 1 OR PODA = 7 THEN PODV = PODY - 1
+
+LINE (PODX - .5, PODY - 1)-(PODX + .5, PODY + .5), PODC, B
+LINE (PODX, PODY)-(PODH, PODV), 7
+91 REM(NO POD)
+8 'BOSSMODE JUMP
+
+REM  *******************************************************ENEMY GUN FIRE
+WINDOW SCREEN (0, YY)-(100, YY + 100)
+REM ---1ST BOSS
+IF LEV <> 11 THEN 33
+IF X > BOS1X - 7 AND X < BOS1X + 7 AND Y < BOS1Y - 10 AND RND > .6 THEN CIRCLE (BOS1X - 5, BOS1Y + 1), .7, 6: CIRCLE (BOS1X + 5, BOS1Y + 1), .7, 6: RND1 = X + ((RND - .5) * 5): RND2 = Y + ((RND - .5) * 10): CIRCLE (RND1, RND2), RND * 5, 5: PAINT ( _
+RND1, RND2), 4, 5
+33
+
+REM ---2ND BOSS
+IF LEV <> 20 THEN 38
+IF BOS2F = 0 AND RND > .975 AND X > BOS2X - 20 AND X < BOS2X + 20 AND Y > BOS2Y THEN BOS2F = 1
+IF BOS2F > 0 THEN BOS2F = BOS2F + 1: LINE (BOS2X - 10.7, BOS2Y + 14.2)-(BOS2X - 9, 100), 7, BF: LINE (BOS2X + 9.5, BOS2Y + 14.2)-(BOS2X + 7.7, 100), 7, BF: LINE (BOS2X - 9, BOS2Y + 14.2)-(BOS2X - 9, 100), 9: LINE (BOS2X + 7.7, BOS2Y + 14.2)-(BOS2X + _
+ 7.7, 100), 9: LINE (BOS2X - 10.7, BOS2Y + 14.2)-(BOS2X - 10.7, 100), 9: LINE (BOS2X + 9.5, BOS2Y + 14.2)-(BOS2X + 9.5, 100), 9
+IF BOS2F > 7 THEN BOS2F = 0
+38
+
+REM ---3RD BOSS
+IF LEV <> 30 THEN 49
+IF BOS3F = 0 AND RND > .975 AND Y > BOS3Y THEN BOS3F = 1
+IF gun1d > 0 THEN G1Y = BOS3Y + 16.5 ELSE G1Y = 101
+IF gun2d > 0 THEN G2Y = BOS3Y + 16.5 ELSE G2Y = 101
+IF BOS3F > 0 THEN BOS3F = BOS3F + 1: LINE (G1X - 1, G1Y)-(G1X + 1, 101), 7, BF: LINE (G2X - 1, G2Y)-(G2X + 1, 101), 7, BF: LINE (G1X - 1, G1Y)-(G1X - 1, 101), 9: LINE (G2X - 1, G2Y)-(G2X - 1, 101), 9: LINE (G1X + 1, G1Y)-(G1X + 1, 101), 9: LINE (G2X _
+ + 1, G2Y)-(G2X + 1, 101), 9
+IF BOS3F > 5 THEN BOS3F = 0
+49
+
+IF BOSSMODE = 1 THEN 34: '-----END BOSS-GUN FIRE
+REM ---GUN-POD
+IF RND > .7 AND X > PODX - LEV AND X < PODX + LEV AND YY + Y < PODY + LEV AND YY + Y > PODY - LEV THEN RND1 = (RND - .5) * 5: RND2 = (RND - .5) * 5: LINE (PODX, PODY)-(X + RND1, Y + YY + RND1), 3: CIRCLE (X + RND1, YY + Y + RND2), RND * 4, 3: PAINT  _
+(X + RND1, YY + Y + RND2), 9, 3
+
+REM ---BCAR1
+IF BC1ST = 0 THEN 63
+IF BC1X > X - 3 AND BC1X < X + 3 AND YY + Y < BC1Y - 10 AND YY + Y > BC1Y - 50 THEN RND1 = (RND - .5) * 2: RND2 = (RND - .5) * 8: CIRCLE (BC1X + RND1, YY + Y + RND2), RND * 3, 5: PAINT (BC1X + RND1, YY + Y + RND2), 4, 5: PSET (BC1X + 1.5, BC1Y - 2 - _
+ RND), 6
+63 REM(BC1ST=0)
+
+REM ---BCAR2
+IF BC2ST = 0 THEN 69
+IF BC2X > X - 4.5 AND BC2X < X + 4.5 AND YY + Y < BC2Y - 10 AND YY + Y > BC2Y - 60 THEN RND1 = (RND - .5) * 2: RND2 = (RND - .5) * 8: CIRCLE (BC2X + RND1, YY + Y + RND2), RND * 3, 5: PAINT (BC2X + RND1, YY + Y + RND2), 4, 5: PSET (BC2X + 1.5, BC2Y - _
+ 2 - RND), 6
+69 REM(BC2ST=0)
+
+REM ---BCAR3
+'FOWARD
+IF BC3ST <> 1 THEN 74
+IF BC3X > X - 4.5 AND BC3X < X + 4.5 AND YY + Y < BC3Y - 10 AND YY + Y > BC3Y - 60 THEN RND1 = (RND - .5) * 2: RND2 = (RND - .5) * 8: CIRCLE (BC3X + RND1, YY + Y + RND2), RND * 4, 5: PAINT (BC3X + RND1, YY + Y + RND2), 4, 5: PSET (BC3X + 1.5, BC3Y - _
+ 2 - RND), 6
+74 REM(BC3ST<>1)
+
+'RIGHT
+IF BC3ST <> 2 THEN 77
+IF X > BC3X + 5 AND YY + Y < BC3Y + 5 AND YY + Y > BC3Y - 5 THEN RND1 = (RND - .5) * 5: RND2 = (RND - .5) * 5: CIRCLE (X + RND1, BC3Y + RND2), RND * 4, 5: PAINT (X + RND1, BC3Y + RND2), 4, 5: PSET (BC3X + 1.5 + RND, BC3Y - 2), 6
+77 REM(BC3ST<>2)
+
+'BACK
+IF BC3ST <> 3 THEN 78
+IF BC3X > X - 4.5 AND BC3X < X + 4.5 AND YY + Y > BC3Y AND YY + Y < BC3Y + 60 THEN RND1 = (RND - .5) * 2: RND2 = (RND - .5) * 8: CIRCLE (BC3X + RND1, YY + Y + RND2), RND * 4, 5: PAINT (BC3X + RND1, YY + Y + RND2), 4, 5: PSET (BC3X + 1.5, BC3Y - RND) _
+, 6
+78 REM(BC3ST<>3)
+34 'BOSSMODE JUMP
+
+WINDOW SCREEN (0, 0)-(100, 100)
+IF SOP = 1 OR SHOCK = 1 THEN 35
+REM----------YOUR DAMAGE POINTS         your car:
+DPA = POINT(X - 1.5, Y - 5):   '  DPA /-----------\ DPB    Programmers notes
+DPB = POINT(X + 1.5, Y - 5):   '      | DP3 | DP4 |
+DPC = POINT(X - 2.5, Y - 3):   ' DPC  |-----|-----|  DPD
+DPD = POINT(X + 2.5, Y - 3):   '      |    DP2    |
+DPE = POINT(X - 2.5, Y + 1):   '      |-----------|
+DPF = POINT(X + 2.5, Y + 1):   '      |    DP1    |
+DPG = POINT(X - 1.5, Y + 3.5): ' DPE  |-----------|  DPF
+DPH = POINT(X + 1.5, Y + 3.5): '      | DP5 | DP6 |
+REM--------(DEBUGING)             DPG |-----|-----| DPH
+IF SHOWP = 1 THEN LOCATE 23: PRINT "DPA"; DPA; "DPB"; DPB; "DPG"; DPG; "DPH"; DPH
+' ---------------------APPLY HIT(S)
+IF DP3 = 0 THEN DPA = 8
+IF DP4 = 0 THEN DPB = 8
+IF DP5 = 0 THEN DPG = 8
+IF DP6 = 0 THEN DPH = 8
+IF DPA = 7 THEN DPA = 0: YY = YY + 5: Y = Y + 10: DP3 = DP3 - 15: DP1 = DP1 - (LEV / 5): GOTO 25
+IF DPB = 7 THEN DPB = 0: YY = YY + 5: Y = Y + 10: DP4 = DP4 - 15: DP1 = DP1 - (LEV / 5):  GOTO 25
+IF DPC = 7 THEN DPC = 0: YY = YY + 5: Y = Y + 10: X = X + 5: DP3 = DP3 - 15: DP4 = DP4 - 15: DP1 = DP1 - (LEV / 5): GOTO 25
+IF DPD = 7 THEN DPD = 0: YY = YY + 5: Y = Y + 10: X = X - 5: DP3 = DP3 - 15: DP4 = DP4 - 15: DP1 = DP1 - (LEV / 5): GOTO 25
+IF DPE = 7 THEN DPE = 0: YY = YY + 5: Y = Y + 10: X = X + 2: DP3 = DP3 - 15: DP4 = DP4 - 15: DP1 = DP1 - (LEV / 5): GOTO 25
+IF DPF = 7 THEN DPF = 0: YY = YY + 5: Y = Y + 10: X = X - 2: DP3 = DP3 - 15: DP4 = DP4 - 15: DP1 = DP1 - (LEV / 5): GOTO 25
+IF POINT(X, Y) = 7 THEN DP1 = DP1 - 10
+
+IF DPA = 2 OR DPG = 2 THEN DP1 = DP1 - .5
+IF DPB = 2 OR DPH = 2 THEN DP1 = DP1 - .5
+IF DPA = 6 OR DPB = 6 OR DPG = 6 OR DPH = 6 THEN DP1 = DP1 - 1.5
+IF DPA < 2 OR DPA = 4 THEN DP3 = DP3 - 5: Y = Y + 2: IF H < 0 THEN DP3 = DP3 - (H * -1)
+IF DPB < 2 OR DPB = 4 THEN DP4 = DP4 - 5: Y = Y + 2: IF H > 0 THEN DP4 = DP4 - H
+IF DPG < 2 OR DPG = 4 THEN DP5 = DP5 - 2: IF H < 0 THEN DP5 = DP5 - (H * -1)
+IF DPH < 2 OR DPH = 4 THEN DP6 = DP6 - 2: IF H > 0 THEN DP6 = DP6 - H
+IF DPC < 2 OR DPC = 4 THEN DP2 = DP2 - 3: IF H < 0 THEN DP2 = DP2 - (H * -1)
+IF DPD < 2 OR DPD = 4 THEN DP2 = DP2 - 3: IF H > 0 THEN DP2 = DP2 - H
+IF DPE < 2 OR DPE = 4 THEN DP1 = DP1 - 4: IF H < 0 THEN DP1 = DP1 - (H * -1)
+IF DPF < 2 OR DPF = 4 THEN DP1 = DP1 - 4: IF H > 0 THEN DP1 = DP1 - H
+IF DPA < 2 OR DPA = 4 THEN IF V < 0 THEN DP3 = DP3 - (V * -1)
+IF DPB < 2 OR DPB = 4 THEN IF V > 0 THEN DP4 = DP4 - V
+IF DPA = 9 THEN DP3 = DP3 - INT(RND * 5)
+IF DPB = 9 THEN DP4 = DP4 - INT(RND * 5)
+IF DPC = 9 OR DPD = 9 THEN DP2 = DP2 - INT(RND * 5)
+IF DPE = 9 OR DPF = 9 THEN DP1 = DP1 - INT(RND * 5)
+IF DPG = 9 THEN DP5 = DP5 - INT(RND * 5)
+IF DPH = 9 THEN DP6 = DP6 - INT(RND * 5)
+25 REM----------(BOUNCE)
+IF DPA < 2 OR DPA = 4 OR DPB < 2 OR DPB = 4 THEN IF V < 0 THEN Y = Y + 3: V = V * -1
+IF DPC < 2 OR DPC = 4 OR DPG < 2 OR DPG = 4 THEN IF H < 0 THEN X = X + 3: H = H * -1
+IF DPD < 2 OR DPD = 4 OR DPH < 2 OR DPH = 4 THEN IF H > 0 THEN X = X - 3: H = H * -1
+            
+REM---MISC. COLOR CODES
+IF DPE = 11 AND DPF = 11 AND CLCHK = 15 THEN CLCHK = 0:  GOTO 12345
+CLCHK = CLCHK + 1: IF CLCHK > 15 THEN CLCHK = 0
+35 SOP = 0
+REM---CAR PART(S)
+IF DP2 < 0 THEN DP2 = 0: BOMX = X: BOMY = Y - 1: BOM = 20:
+IF DP3 < 0 THEN DP3 = 0: YCUNKX = X: YCUNKY = Y + 7: BOMX = X - 1: BOMY = Y - 1: BOM = 10
+IF DP4 < 0 THEN DP4 = 0: YCUNKX = X: YCUNKY = Y + 7: BOMX = X + 1: BOMY = Y - 1: BOM = 10
+IF DP5 < 0 THEN DP5 = 0: YCUNKX = X: YCUNKY = Y + 7: BOMX = X - 1: BOMY = Y - 1: BOM = 10
+IF DP6 < 0 THEN DP6 = 0: YCUNKX = X: YCUNKY = Y + 7: BOMX = X + 1: BOMY = Y - 1: BOM = 10
+
+REM____________________DRAW YOUR CAR
+IF CONTST = 1 THEN LINE (0, 0)-(10, 10), 9, B: LINE (5 + (A1 - A1M) / 20, 0)-(5 + (A1 - A1M) / 20, 10), 15: LINE (0, 5 + (B2 - B2M) / 20)-(10, 5 + (B2 - B2M) / 20), 15
+LINE (YCUNKX - .5, YCUNKY - .5)-(YCUNKX + .5, YCUNKY + .5), YOUCLR, B
+CIRCLE (YCUNKX, YCUNKY), .3, 0
+YCUNKY = YCUNKY - YYMOV * 2
+IF YCUNKY > 100 OR YCUNKY < 0 THEN YCUNKY = 50: YCUNKX = 150
+IF BOM > 0 THEN BOM = BOM - 1: CIRCLE (BOMX, BOMY), 1, 5: PAINT (BOMX, BOMY), 4, 5: FOR WEE = 0 TO SMOKE: PSET (BOMX + ((RND - .5) * 2), BOMY + (RND * (SMOKE * 3))), 0: NEXT WEE
+IF V = 0 THEN V = -.001
+'(SHIMMY)
+SAVEX = X: SAVEY = Y
+'PART-DP1
+LINE (X - 1.5, Y - 1)-(X + 1.5, Y + .5), 0, BF
+'PART-DP2
+IF (B2 - B2M) > -50 THEN X = X + (A1 - A1M) / 500
+IF DP2 > 50 THEN LINE (X - 1.5, Y - 3.5)-(X + 1.5, Y - 1.5), YOUCLR, BF: LINE (X - 1, Y - 1.5)-(X + 1, Y - 1.5), 3: LINE (X - 1.5, Y - 3.5)-(X - 1.5, Y - 1.5), 0: LINE (X + 1.5, Y - 3.5)-(X + 1.5, Y - 1.5), 0 ELSE LINE (X - .5, Y - 3)-(X + .5, Y -  _
+1.5), 8, BF: LINE (X - .5, Y - 3)-(X + .5, Y - 1.5), 0, B
+IF DP1 > 100 THEN LINE (X - .6, Y - 4)-(X + .6, Y - 1.3), 7, BF: LINE (X - .6, Y - 4)-(X + .6, Y - 1.3), 0, B
+'PART-DP3/DP4
+IF (B2 - B2M) > -50 THEN X = X + (A1 - A1M) / 500
+IF DP3 > 40 THEN LINE (X - 1.5, Y - 5)-(X, Y - 3.5), YOUCLR, BF: LINE (X - 1.5, Y - 5)-(X - 1.5, Y - 3.5), 0: LINE (X - 1.5, Y - 5)-(X, Y - 5), 0 ELSE IF DP3 > 0 THEN LINE (X - 1.5 + ((A1 - A1M) / 1000), Y - 5)-(X - 1.5 - ((A1 - A1M) / 250), Y - 4) _
+, 0: LINE (X - 1, Y - 4.5)-(X - .5, Y - 4.5), 0
+IF DP4 > 40 THEN LINE (X, Y - 5)-(X + 1.5, Y - 3.5), YOUCLR, BF: LINE (X + 1.5, Y - 5)-(X + 1.5, Y - 3.5), 0: LINE (X + 1.5, Y - 5)-(X, Y - 5), 0 ELSE IF DP4 > 0 THEN LINE (X + 1.5 + ((A1 - A1M) / 1000), Y - 5)-(X + 1.5 - ((A1 - A1M) / 250), Y - 4) _
+, 0: LINE (X + 1, Y - 4.5)-(X + .5, Y - 4.5), 0
+IF DP3 <= 40 AND DP4 <= 40 AND DP2 <= 50 THEN LINE (X, Y - 3)-(X, Y - 4.5), 0
+IF RAM > 0 AND DP3 > 40 AND DP4 > 40 THEN PSET (X - 1, Y - 5.5), 0: PSET (X + 1, Y - 5.5), 0: LINE (X - .5 - (RAM / 2.5), Y - 6.2 + (RAM / 5))-(X + .5 + (RAM / 2.5), Y - 6.2), 0, B ELSE RAM = 0
+'PART-DP5/DP6
+X = SAVEX: Y = SAVEY
+IF (B2 - B2M) > -50 THEN X = X - (A1 - A1M) / 500
+IF DP5 > 40 THEN LINE (X - 1.5, Y + 1)-(X, Y + 3.5), YOUCLR, BF: LINE (X - 1.5, Y + 1)-(X - 1.5, Y + 3.5), 0: LINE (X - 1.5, Y + 3.5)-(X, Y + 3.5), 0 ELSE IF DP5 > 0 THEN LINE (X - 1.5, Y + 2)-(X - 1.5, Y + 3), 0: LINE (X - 1.5, Y + 2.5)-(X - .5, Y  _
++ 2.5), 0
+IF DP6 > 40 THEN LINE (X, Y + 1)-(X + 1.5, Y + 3.5), YOUCLR, BF: LINE (X + 1.5, Y + 1)-(X + 1.5, Y + 3.5), 0: LINE (X + 1.5, Y + 3.5)-(X, Y + 3.5), 0 ELSE IF DP6 > 0 THEN LINE (X + 1.5, Y + 2)-(X + 1.5, Y + 3), 0: LINE (X + 1.5, Y + 2.5)-(X + .5, Y  _
++ 2.5), 0
+IF DP5 < 40 AND DP6 < 40 THEN LINE (X, Y + 1)-(X, Y + 2.5), 0
+LINE (X + 1.4, Y - 1.7)-(X + 1.4, Y), 7
+IF GUN2 = 1 THEN LINE (X - 1.4, Y - 1.7)-(X - 1.4, Y), 7
+X = SAVEX: Y = SAVEY
+REM ---------------------WEAPONS
+
+IF WEE$ = F1$ THEN FIR = -1
+IF LASER = 1 AND WEP1 < 100 THEN WEP1 = WEP1 + RECHRG
+IF WEP1X < WEP1 THEN WEP1X = WEP1X + 2
+IF WEP1X > WEP1 THEN WEP1X = WEP1X - .5
+IF WEP1 > 100 THEN WEP1 = 100
+IF WEP2 > 100 THEN WEP2 = 100
+IF FIR = -1 AND WEP1 < 0 THEN FIR = 0
+IF FIR = 0 THEN 60 ELSE WEP1Y = Y - 2: WEP1 = WEP1 - 1
+IF WEPC1 <> 12 THEN WEPC1 = 12: WEPC2 = 14 ELSE WEPC1 = 14: WEPC2 = 12
+
+61 WEP1Y = WEP1Y - 7
+IF LASER = 0 THEN LINE (X + 1.5, Y - 10)-(X + 1.5, WEP1Y + 1), 0, , &H1000 ELSE LINE (X + 1.5, Y - 10)-(X + 1.5, WEP1Y + 1), 3
+PONT1 = POINT(X + 1, WEP1Y): IF PONT1 = 0 OR PONT1 = 3 OR PONT1 = 4 OR PONT1 = 5 OR PONT1 = 7 THEN CIRCLE (X + 1, WEP1Y), (DP2 / 30) + RND, WEPC1: PAINT (X + 1, WEP1Y), WEP1PC, WEPC1 ELSE IF POINT(X + 1, WEP1Y) > -1 THEN 61
+
+IF GUN2 = 0 THEN 60
+WEP1Y = Y - 2
+68 WEP1Y = WEP1Y - 7
+IF LASER = 0 THEN LINE (X - 1.5, Y - 10)-(X - 1.5, WEP1Y + 1), 0, , &H1000 ELSE LINE (X - 1.5, Y - 8)-(X - 1.5, WEP1Y + 1), 3
+PONT2 = POINT(X - 1, WEP1Y): IF PONT2 = 0 OR PONT2 = 3 OR PONT2 = 4 OR PONT2 = 5 OR PONT2 = 7 THEN CIRCLE (X - 1, WEP1Y), (DP2 / 30) + RND, WEPC2: PAINT (X - 1, WEP1Y), WEP1PC, WEPC2 ELSE IF POINT(X - 1, WEP1Y) > -1 THEN 68
+
+60 REM (FIR=0 / GUN2=0)
+REM ------------------------------------MISSILES
+WINDOW SCREEN (0, YY)-(100, YY + 100): '*************************************
+IF MIS2 > 0 AND MIS1 = 0 THEN MIS1 = MIS2: MIS2 = 0
+MIS = STRIG(5)
+IF WEE$ = F2$ THEN MIS = -1
+LOCATE 1, 1
+IF MIS1A > 0 OR MIS2A > 0 THEN MIS = 0
+IF MIS1 = 0 THEN MIS = 0
+IF MIS = 0 THEN 3
+MIS1X = X: MIS1Y = Y + YY - 5
+MIS1A = 1: MIS1V = 5
+IF MIS2 > 0 THEN MIS1H = -2: MIS1X = X - .5: MIS1Y = Y + YY + 5: MIS1V = -1: MIS2H = 2: MIS2X = X + .5: MIS2Y = Y + YY + 5: MIS2A = 1: MIS2V = -1
+3 REM(MISSILE(S) IS NOT FIRED)
+
+IF MIS1A <> 1 THEN 4
+MIS1Y = MIS1Y - MIS1V: MIS1X = MIS1X + MIS1H
+MIS1V = MIS1V + 1.7: MIS1H = MIS1H / 1.2
+IF MIS1Y < YY THEN MIS1A = 0
+IF MIS1Y < YY + 99 THEN MIS1P = POINT(MIS1X, MIS1Y) ELSE MIS1P = 8
+LINE (MIS1X, MIS1Y)-(MIS1X, MIS1Y + 3), 0
+IF MIS1P < 2 OR MIS1P = 3 OR MIS1P = 4 OR MIS1P = 7 OR MIS1P > 8 THEN MIS1A = 0: CIRCLE (MIS1X, MIS1Y), 5 + (DP2 / 30), 7: PAINT (MIS1X, MIS1Y), 12, 7
+4
+IF MIS2A <> 1 THEN 7
+MIS2Y = MIS2Y - MIS2V: MIS2X = MIS2X + MIS2H
+MIS2V = MIS2V + 1.7: MIS2H = MIS2H / 1.2
+IF MIS2Y < YY THEN MIS2A = 0
+IF MIS2Y < YY + 99 THEN MIS2P = POINT(MIS2X, MIS2Y) ELSE MIS2P = 8
+LINE (MIS2X, MIS2Y)-(MIS2X, MIS2Y + 3), 0
+IF MIS2P < 2 OR MIS2P = 3 OR MIS2P = 4 OR MIS2P = 7 OR MIS2P > 8 THEN MIS2A = 0: CIRCLE (MIS2X, MIS2Y), 5 + (DP2 / 30), 7: PAINT (MIS2X, MIS2Y), 12, 7
+7
+REM----------------------FRAGMENTER
+IF SWAV = 0 THEN 36
+IF WEP2 < 100 THEN WEP2 = WEP2 + .1
+SPL = STRIG(7)
+IF WEE$ = F3$ THEN SPL = -1
+IF SPL = -1 AND WEP2 = 100 THEN SHOCK = 1: SWH = 20
+IF SHOCK = 1 THEN WEP2 = WEP2 - 6
+IF WEP2 < .1 THEN WEP2 = 0
+36 'NO FRAGMENTER JUMP
+
+IF BOSSMODE = 0 THEN 13
+FOR WEE = 0 TO BOSPUS: NEXT WEE
+13 'BOSSMODE JUMP
+REM ---------------------ENIMY POINTS
+IF BOSSMODE = 1 THEN 9
+IF SCRAM = 1 THEN 27
+AC1PN = POINT(AC1X, AC1Y - 8)
+AC1PS = POINT(AC1X, AC1Y + 4)
+AC1PE = POINT(AC1X - 4, AC1Y)
+AC1PW = POINT(AC1X + 4, AC1Y)
+
+AC2PN = POINT(AC2X, AC2Y - 8)
+AC2PS = POINT(AC2X, AC2Y + 4)
+AC2PE = POINT(AC2X - 4, AC2Y)
+AC2PW = POINT(AC2X + 4, AC2Y)
+27 'SCRAM JUMP
+BC1PN = POINT(BC1X, BC1Y - 8)
+BC1PS = POINT(BC1X, BC1Y + 4)
+BC1PE = POINT(BC1X - 4, BC1Y)
+BC1PW = POINT(BC1X + 4, BC1Y)
+
+BC2PN = POINT(BC2X, BC2Y - 8)
+BC2PS = POINT(BC2X, BC2Y + 4)
+BC2PE = POINT(BC2X - 4, BC2Y)
+BC2PW = POINT(BC2X + 4, BC2Y)
+
+BC3PN = POINT(BC3X, BC3Y - 8)
+BC3PS = POINT(BC3X, BC3Y + 4)
+BC3PE = POINT(BC3X - 4, BC3Y)
+BC3PW = POINT(BC3X + 4, BC3Y)
+9 'BOSSMODE JUMP
+
+IF LEV <> 11 THEN 22
+BOS1PN = POINT(BOS1X, BOS1Y - 8)
+BOS1PS = POINT(BOS1X, BOS1Y + 10)
+BOS1PE = POINT(BOS1X - 10, BOS1Y)
+BOS1PW = POINT(BOS1X + 10, BOS1Y)
+22
+IF LEV <> 20 THEN 30
+BOS2PN = POINT(BOS2X, BOS2Y - 8)
+BOS2PS = POINT(BOS2X, BOS2Y + 10)
+BOS2PE = POINT(BOS2X - 10, BOS2Y)
+BOS2PW = POINT(BOS2X + 10, BOS2Y)
+30
+
+IF LEV <> 30 THEN 42
+BOS3P = POINT(BOS3X, BOS3Y + 5)
+GUN1P = POINT(G1X, BOS3Y + 5)
+GUN2P = POINT(G2X, BOS3Y + 5)
+42
+
+WINDOW SCREEN (0, 0)-(100, 100): '********************************************
+ 
+REM------------ON SCREEN INFO.
+IF WEP1X > 0 THEN LINE (0, 97)-(WEP1X / 2, 99), 4, BF
+IF SWAV = 1 AND WEP2 > 0 THEN LINE (50, 97)-(50 + (WEP2 / 2), 99), 1, BF
+IF SWAV = 1 AND WEP2 = 100 THEN LINE (50, 97)-(100, 99), 3, BF
+
+IF DP1X < DP1 THEN DP1X = DP1X + 2
+IF DP1X > DP1 THEN DP1X = DP1X - 3
+IF DP1 > 5 THEN OSCL = 15
+IF DP1 > 10 THEN OSCL = 12
+IF DP1 > 15 THEN OSCL = 5
+IF DP1 > 20 THEN OSCL = 4
+IF DP1 > 25 THEN OSCL = 1
+IF DP1 > 100 THEN OSCL = 3
+LINE (0, 95)-(DP1X / 3, 95), OSCL
+
+IF LEV <> 11 THEN 19
+IF BOS1DX > BOS1D THEN BOS1DX = BOS1DX - 5
+IF BOS1DX < BOS1D THEN BOS1DX = BOS1DX + 5
+LINE (0, 1)-(BOS1DX / 4, 1), 30
+19
+
+IF LEV <> 20 THEN 31
+IF BOS2DX > BOS2D THEN BOS2DX = BOS2DX - 5
+IF BOS2DX < BOS2D THEN BOS2DX = BOS2DX + 5
+LINE (0, 1)-(BOS2DX / 6, 1), 30
+31
+
+IF LEV <> 30 THEN 43
+IF BOS3DX > BOS3D THEN BOS3DX = BOS3DX - 5
+IF BOS3DX < BOS3D THEN BOS3DX = BOS3DX + 5
+LINE (0, 1)-(BOS3DX / 9, 1), 30
+43
+IF BOSSMODE = 1 THEN 52
+FOR WEE = 0 TO DELAY: NEXT WEE
+52 '(SKIP MAIN-IN-GAME DELAY)
+REM____________________CONTROL
+WEE$ = INKEY$
+IF CTROL = 1 THEN 915
+A1 = STICK(0)
+A2 = STICK(2)
+IF THRTL = 0 THEN STIKY = STICK(1) ELSE STIKY = STICK(3)
+IF DP5 > 0 OR DP6 > 0 THEN B2 = STIKY ELSE B2 = B2 + .5
+915 '(MUST STAY)
+IF CTROL = 0 THEN 916
+IF WEE$ = "8" THEN B2 = B2 - B2SEN: 'UP
+IF WEE$ = "4" THEN A1 = A1 - A1SEN: 'LEFT
+IF WEE$ = "6" THEN A1 = A1 + A1SEN: 'RIGHT
+IF WEE$ = "5" OR WEE$ = "2" THEN B2 = B2 + B2SEN: 'DOWN
+916 REM(MUST STAY)
+IF DP5 = 0 AND DP6 = 0 AND B2 > B2M THEN DP1 = 0
+IF DP3 = 0 AND DP4 = 0 THEN A1 = A1M + ((RND - .5) * 200)
+IF JOYFIX = 2 THEN 21
+IF A1 < 130 THEN A1 = A1 + 256'JoyStick Correction Stuff
+IF A2 < 130 THEN A2 = A2 + 256
+IF B1 < 130 THEN B1 = B1 + 256
+IF B2 < 130 THEN B2 = B2 + 256
+21 '(MUST STAY)
+IF CTROL = 0 THEN 917
+IF B2M - B2 > 150 THEN B2 = B2M - 150
+IF B2M - B2 < -75 THEN B2 = B2M + 75
+IF A1M - A1 > 100 THEN A1 = A1M - 100
+IF A1M - A1 < -100 THEN A1 = A1M + 100
+917 REM(MUST STAY)
+FIR = STRIG(1)
+H = H + ((A1 - A1M) / 100)
+IF ((B2 - B2M) / 100) < 0 THEN V = V + ((B2 - B2M) / 100) ELSE V = V + (((B2 - B2M) / 100)) / TRS
+X = X + H
+IF V > 5 THEN V = 5
+TRS = 200 - (DP5 + DP6): TRS = TRS / 150: IF TRS < 1 THEN TRS = 1
+IF DP5 = 0 THEN TRS = TRS * 1.2
+IF DP6 = 0 THEN TRS = TRS * 1.2
+V = V / TRS
+IF BOSSMODE = 1 THEN V = V / 1.5
+Y = Y + V
+IF DP3 > 0 AND DP4 > 0 THEN H = H / ((DP3 + DP4 + DP5 + DP6) / 22)
+IF H > 1 THEN H = 1
+IF H < -1 THEN H = -1
+IF X < 5 THEN X = 5: H = 0
+IF X > 95 THEN X = 95: H = 0
+YYMOV = ((B2 - B2M) / (TRS * 25))
+IF Y < 65 AND BOSSMODE = 0 THEN Y = 65: V = 0: YY = YY + YYMOV
+IF Y > 95 AND BOSSMODE = 0 THEN Y = 95: YY = YY + V: V = 0
+
+IF Y < 5 AND BOSSMODE = 1 THEN Y = 5
+IF Y > 95 AND BOSSMODE = 1 THEN Y = 95
+REM---"WEE$"
+IF WEE$ = "q" OR WEE$ = "Q" THEN GOTO 14
+15 REM(MUST STAY)
+IF WEE$ = "p" OR WEE$ = "P" THEN 9005
+REM----------YOU ARE DEAD
+IF DP1 < .1 THEN GOTO 5
+REM----------WHEN TO MAKE NEW MAP
+IF YY > 0 THEN 2
+IF BOSSMODE = 1 THEN 2
+24 '---GO HERE AFTER A BOSS IS KILLED
+GOSUB 1008
+2 REM (MUST STAY)
+
+GOTO 1005: 'REM----------END LOOP
+
+'GOSUBS
+
+1008 REM______________________________DRAW NEW MAP
+WEE$ = "D"
+YY = 900
+LEV = LEV + 1
+PWRUP = PWRUP + 1
+IF LEV = 10 OR LEV = 19 THEN PWRUP = 4
+RDC = 8: '                              ROAD COLOR
+MLC = 8: '                              OUTLINE COLOR
+SOR = SOR + 500
+IF LEV < 15 THEN BKC = 2 ELSE BKC = 6: 'BACKGROUND COLOR
+SCREEN 7, , 1, 0
+WINDOW SCREEN (0, -100)-(100, 2000)
+LINE (0, 0)-(100, 2000), BKC, BF
+ROAD0X = 2 + INT(RND * 40)
+ROAD1X = 2 + (RND * 50): ROAD6X = 2 + (RND * 50)
+ROAD2X = 2 + (RND * 50): ROAD7X = 2 + (RND * 50)
+ROAD3X = 2 + (RND * 50): ROAD8X = 2 + (RND * 50)
+ROAD4X = 2 + (RND * 50)
+ROAD5X = 2 + (RND * 50)
+
+LINE (0, -10)-(ROAD0X, 100), MLC
+LINE (ROAD0X, 100)-(ROAD1X, 200), MLC
+LINE (ROAD1X, 200)-(ROAD2X, 300), MLC
+LINE (ROAD2X, 300)-(ROAD3X, 400), MLC
+LINE (ROAD3X, 400)-(ROAD4X, 500), MLC
+LINE (ROAD4X, 500)-(ROAD5X, 600), MLC
+LINE (ROAD5X, 600)-(ROAD6X, 700), MLC
+LINE (ROAD6X, 700)-(ROAD7X, 800), MLC
+LINE (ROAD7X, 800)-(ROAD8X, 900), MLC
+LINE (ROAD8X, 900)-(10, 1000), MLC
+
+LINE (10, 1000)-(ROAD0X, 1100), MLC
+LINE (ROAD0X, 1100)-(ROAD1X, 1200), MLC
+LINE (ROAD1X, 1200)-(ROAD2X, 1300), MLC
+LINE (ROAD2X, 1300)-(ROAD3X, 1400), MLC
+LINE (ROAD3X, 1400)-(ROAD4X, 1500), MLC
+LINE (ROAD4X, 1500)-(ROAD5X, 1600), MLC
+LINE (ROAD5X, 1600)-(ROAD6X, 1700), MLC
+LINE (ROAD6X, 1700)-(ROAD7X, 1800), MLC
+LINE (ROAD7X, 1800)-(ROAD8X, 1900), MLC
+LINE (ROAD8X, 1900)-(-50, 2010), MLC
+
+LINE (100, -10)-(ROAD0X + 40, 100), MLC
+LINE (ROAD0X + 40, 100)-(ROAD1X + 40, 200), MLC
+LINE (ROAD1X + 40, 200)-(ROAD2X + 40, 300), MLC
+LINE (ROAD2X + 40, 300)-(ROAD3X + 40, 400), MLC
+LINE (ROAD3X + 40, 400)-(ROAD4X + 40, 500), MLC
+LINE (ROAD4X + 40, 500)-(ROAD5X + 40, 600), MLC
+LINE (ROAD5X + 40, 600)-(ROAD6X + 40, 700), MLC
+LINE (ROAD6X + 40, 700)-(ROAD7X + 40, 800), MLC
+LINE (ROAD7X + 40, 800)-(ROAD8X + 40, 900), MLC
+LINE (ROAD8X + 40, 900)-(60, 1000), MLC
+
+LINE (60, 1000)-(ROAD0X + 45, 1100), MLC
+LINE (ROAD0X + 45, 1100)-(ROAD1X + 45, 1200), MLC
+LINE (ROAD1X + 45, 1200)-(ROAD2X + 45, 1300), MLC
+LINE (ROAD2X + 45, 1300)-(ROAD3X + 45, 1400), MLC
+LINE (ROAD3X + 45, 1400)-(ROAD4X + 45, 1500), MLC
+LINE (ROAD4X + 45, 1500)-(ROAD5X + 45, 1600), MLC
+LINE (ROAD5X + 45, 1600)-(ROAD6X + 45, 1700), MLC
+LINE (ROAD6X + 45, 1700)-(ROAD7X + 45, 1800), MLC
+LINE (ROAD7X + 45, 1800)-(ROAD8X + 45, 1900), MLC
+LINE (ROAD8X + 45, 1900)-(150, 2010), MLC
+
+LINE (-10, -10)-(110, 2010), MLC, B
+PAINT (50, 1), RDC, MLC
+LINE (0, -100)-(100, 0), RDC, BF
+IF DETL = 10 THEN LINE (0, 1800)-(100, 2000), RDC, BF
+RN# = RND
+REM----------INTERSECTION
+IF RN# < .3 THEN LINE (0, ROAD0X * 50)-(100, (ROAD0X * 50) + 30), RDC, BF
+REM----------BULDINGS
+FOR WEE = 0 TO 10
+RN# = RND * 1500
+IF RND > .5 AND POINT(80, RN#) <> RDC THEN BLDX = 80 ELSE BLDX = 0
+LINE (BLDX, RN#)-(BLDX + 20, RN# + 20 + (RND * 25)), 7, BF
+NEXT WEE
+REM----------BRIDGE
+IF RN# > .3 AND LEV > 3 THEN LINE (0, (ROAD0X * 10) + 200)-(100, (ROAD0X * 10) + 275), 8, BF: LINE (0, ROAD0X * 10 - 75)-(100, ROAD0X * 10), 8, BF: LINE (0, ROAD0X * 10)-(100, (ROAD0X * 10) + 200), 1, BF: LINE (ROAD1X, ROAD0X * 10)-(ROAD1X + 30, ( _
+ROAD0X * 10) + 200), 8, BF
+REM----------SHOP
+IF PWRUP > 3 THEN PWRUP = 0: LINE (0, 500)-(100, 650), 8, BF: LINE (30, 525)-(75, 555), 11, BF: LINE (40, 525)-(60, 575), 7, BF
+REM----------*
+WINDOW SCREEN (0, 0)-(100, 100)
+CASH = CASH + INT(RND * 50)
+DP1 = DP1 + ERS
+RETURN
+
+5 REM--------YOU GO BOOM
+SCREEN 7
+WINDOW SCREEN (0, 0)-(100, 100)
+FOR WEE = 5 TO 35
+CIRCLE (X, Y), WEE, 4: PAINT (X, Y), 4, 4
+CIRCLE (X, Y), WEE, 5: PAINT (X, Y), 15, 5
+NEXT WEE
+COLOR , 4: COLOR , 0
+CIRCLE (X, Y), 30, 4: PAINT (X, Y), 0, 4
+FOR WEE = 0 TO 25
+COLOR , 15: COLOR 4, 0
+NEXT WEE
+CLS : LOCATE 1, 15: PRINT "YOU ARE DEAD"
+LOCATE 22: PRINT "SCORE"; SOR; "                   STAGE"; LEV
+IF LEV = 11 THEN LOCATE 22, 22: PRINT "KILLED BY 1ST BOSS"
+IF LEV = 20 THEN LOCATE 22, 22: PRINT "KILLED BY 2ND BOSS"
+IF LEV = 30 THEN LOCATE 22, 22: PRINT "KILLED BY 3RD BOSS"
+6 IF INKEY$ = "" THEN 6 ELSE CLEAR : GOTO 1845
+
+14 REM------QUIT?
+LINE (0, 75)-(55, 100), 0, BF
+LOCATE 20, 1: PRINT "Quit? (Y/N)": PRINT "SCORE"; SOR
+16 WEE$ = INKEY$: IF WEE$ = "" THEN 16
+IF WEE$ = "N" OR WEE$ = "n" THEN 15
+PRINT "RESTART or DROP? (R/D)"
+17 WEE$ = INKEY$: IF WEE$ = "" THEN 17
+IF WEE$ = "D" OR WEE$ = "d" THEN SYSTEM ELSE 1845
+BEEP: GOTO 14
+
+9005 REM------PAUSE
+LINE (0, 75)-(55, 100), 0, BF
+LOCATE 20, 1: PRINT "        PAUSE": PRINT "SCORE"; SOR; " STAGE"; LEV: PRINT "CASH"; CASH
+9006 WEE$ = INKEY$: IF WEE$ = "" THEN 9006 ELSE WEE$ = "": GOTO 15
+
+REM----------THE SHOP SCREEN
+12345 SCREEN , , 0, 0
+WINDOW SCREEN (0, 0)-(100, 100)
+
+LINE (0, 0)-(100, 100), 0, BF: LINE (1, 25)-(100, 25), 2
+LOCATE 1, 1: PRINT "ENGINE:": LOCATE 4, 1: PRINT "TOTAL HP:"
+LINE (0, 20)-(49.5, 17), 0, BF: LINE (0, 10)-(49.5, 7), 0, BF: LINE (50, 25)-(50, .5), 2
+IF (DP1 + DP2 + DP3 + DP4 + DP5 + DP6) / 9 > 50 THEN LINE (0, 20)-(-50 + ((DP1 + DP2 + DP3 + DP4 + DP5 + DP6) / 9), 17), 3, BF ELSE LINE (0, 20)-((DP1 + DP2 + DP3 + DP4 + DP5 + DP6) / 9, 17), 2, BF
+IF DP1 > 100 THEN LINE (0, 10)-((DP1 / 2) - 50, 7), 3, BF ELSE LINE (0, 10)-(DP1 / 2, 7), 2, BF
+LINE (60, 20)-(90, 5), 2, B: LINE (67, 20)-(67, 5), 2: LINE (75, 20)-(75, 5), 2: LINE (80, 20)-(80, 5), 2: LINE (60, 12.5)-(67, 12.5), 2: LINE (80, 12.5)-(90, 12.5), 2
+
+IF DP5 >= 25 AND DP5 < 40 THEN PAINT (63, 12), 4, 2
+IF DP5 >= 10 AND DP5 < 25 THEN PAINT (63, 12), 12, 2
+IF DP5 < 10 THEN PAINT (63, 12), 15, 2
+
+IF DP6 >= 25 AND DP6 < 40 THEN PAINT (63, 13), 4, 2
+IF DP6 >= 10 AND DP6 < 25 THEN PAINT (63, 13), 12, 2
+IF DP6 < 10 THEN PAINT (63, 13), 15, 2
+
+IF DP3 >= 30 AND DP3 < 60 THEN PAINT (83, 12), 4, 2
+IF DP3 >= 10 AND DP3 < 30 THEN PAINT (83, 12), 12, 2
+IF DP3 < 10 THEN PAINT (83, 12), 15, 2
+
+IF DP4 >= 30 AND DP4 < 60 THEN PAINT (83, 13), 4, 2
+IF DP4 >= 10 AND DP4 < 30 THEN PAINT (83, 13), 12, 2
+IF DP4 < 10 THEN PAINT (83, 13), 15, 2
+
+IF DP1 >= 50 AND DP1 < 80 THEN PAINT (73, 13), 4, 2
+IF DP1 >= 25 AND DP1 < 50 THEN PAINT (73, 13), 12, 2
+IF DP1 < 25 THEN PAINT (73, 13), 15, 2
+
+IF DP2 >= 50 AND DP2 < 80 THEN PAINT (77, 13), 4, 2
+IF DP2 >= 25 AND DP2 < 50 THEN PAINT (77, 13), 12, 2
+IF DP2 < 25 THEN PAINT (77, 13), 15, 2
+
+LOCATE 7: PRINT "REPAIR:"
+PRINT "1 FRONT LEFT       $50.00": PRINT "2 FRONT RIGHT      $50.00"
+PRINT "3 REAR LEFT        $50.00": PRINT "4 REAR RIGHT       $50.00"
+PRINT "5 ENGINE           $150.00": PRINT , , "6 WEAPONS BAY/SYS. $100.00"
+IF LASER = 0 THEN PRINT , , "7 AMMO-AUTOGUN     $30.00" ELSE IF RECHRG < .9 THEN PRINT , , "7 UPGRADE RECHARGE $150.00 {"; RECHRG * 10; "}"
+LOCATE 18
+IF GUN2 = 0 AND LASER = 0 THEN PRINT "8 ADD AN AUTO GUN     $300.00"
+IF GUN2 = 1 AND LASER = 0 THEN PRINT "8 UPGRADE TO LASER    $350.00"
+IF GUN2 = 0 AND LASER = 1 THEN PRINT "8 ADD A LASER         $400.00"
+IF DP3 > 50 AND DP4 > 50 AND RAM = 0 THEN PRINT "9 ADD RAMMING GRILL   $150.00"
+IF RAM > 0 AND RAM < 5 THEN PRINT "9 UPGRADE RAM         $100.00 {"; RAM; "}"
+IF LEV > 9 AND ERS = 0 THEN PRINT "A EQUIP E.R.S.        $375.00"
+IF ERS > 0 THEN PRINT "A UPGRADE E.R.S.      $300.00 { +"; ERS; "}"
+IF LEV > 9 AND MIS1 = 0 THEN PRINT "B MISSILE LAUNCHER    $400.00"
+IF LEV > 15 AND MIS1 > 0 AND MIS2 = 0 THEN PRINT "B ADD MIS. LAUNCHER   $400.00"
+IF LEV > 18 AND SWAV = 0 THEN PRINT "C FRAGMENTER          $500.00"
+LOCATE 22: PRINT "Esc Exit              MONEY $"; CASH
+LINE (0, 56.5)-(DP2 / 2, 59), 2, BF
+IF LASER = 0 THEN LINE (0, 64.5)-(WEP1, 67), 2, BF
+
+IF LASER = 0 THEN WEP1PC = 4
+IF LASER = 1 THEN WEP1PC = 9
+
+9001 WEE$ = INKEY$: IF WEE$ = "" THEN 9001
+IF WEE$ = CHR$(27) THEN SCREEN , , 1, 0: WINDOW SCREEN (0, -100)-(100, 2000): LINE (0, 500)-(100, 650), 8, BF: LINE (40, 525)-(60, 575), 7, BF: SOP = 1: GOTO 1005
+IF WEE$ = "1" AND DP3 < 76 AND CASH > 49 THEN CASH = CASH - 50: DP3 = DP3 + 30
+IF WEE$ = "2" AND DP4 < 76 AND CASH > 49 THEN CASH = CASH - 50: DP4 = DP4 + 30
+IF WEE$ = "3" AND DP5 < 76 AND CASH > 49 THEN CASH = CASH - 50: DP5 = DP5 + 30
+IF WEE$ = "4" AND DP6 < 76 AND CASH > 49 THEN CASH = CASH - 50: DP6 = DP6 + 30
+IF WEE$ = "6" AND DP2 < 126 AND CASH > 99 THEN CASH = CASH - 100: DP2 = DP2 + 75
+IF WEE$ = "5" AND DP1 < 149 AND CASH > 149 THEN CASH = CASH - 150: DP1 = DP1 + 50
+IF WEE$ = "7" AND LASER = 1 AND RECHRG < .9 AND CASH > 149 THEN CASH = CASH - 150: RECHRG = RECHRG + .1
+IF WEE$ = "7" AND LASER = 0 AND WEP1 < 76 AND CASH > 29 THEN CASH = CASH - 30: WEP1 = WEP1 + 25
+IF WEE$ = "8" AND LASER = 1 AND GUN2 = 0 AND CASH > 399 THEN CASH = CASH - 400: GUN2 = 1: LASER = 1
+IF WEE$ = "8" AND LASER = 0 AND GUN2 = 1 AND CASH > 349 THEN CASH = CASH - 350: GUN2 = 0: LASER = 1
+IF WEE$ = "8" AND LASER = 0 AND GUN2 = 0 AND CASH > 299 THEN CASH = CASH - 300: GUN2 = 1
+IF WEE$ = "9" AND RAM > 0 AND RAM < 5 AND CASH > 99 THEN CASH = CASH - 100: RAM = RAM + 1
+IF WEE$ = "9" AND DP3 > 50 AND DP4 > 50 AND RAM = 0 AND CASH > 149 THEN RAM = 1: CASH = CASH - 150
+IF WEE$ = "A" AND ERS > 0 AND CASH > 299 THEN CASH = CASH - 300: ERS = ERS + 5
+IF WEE$ = "A" AND ERS = 0 AND CASH > 374 THEN CASH = CASH - 375: ERS = 5
+IF WEE$ = "B" AND LEV > 15 AND CASH > 399 AND MIS2 = 0 AND MIS1 > 0 THEN CASH = CASH - 400: MIS2 = 1
+IF WEE$ = "B" AND LEV > 9 AND CASH > 399 AND MIS1 = 0 THEN CASH = CASH - 399: MIS1 = 1
+IF WEE$ = "C" AND LEV > 18 AND SWAV = 0 AND CASH > 499 THEN CASH = CASH - 500: SWAV = 1
+
+IF WEE$ = "a" OR WEE$ = "b" OR WEE$ = "c" OR WEE$ = "d" THEN LOCATE 1, 1: PRINT "Caps MUST be Locked": GOTO 9001
+GOTO 12345
+
+23 '-------------BOSS 1/3 GOES BOOM
+IF LEV = 11 THEN BOSNX = BOS1X: BOSNY = BOS1Y ELSE BOSNX = BOS3X: BOSNY = BOS3Y
+FOR WEE = 0 TO 50: CIRCLE (BOSNX + ((RND - .5) * 5), BOSNY + ((RND - .5) * 5)), WEE, 12: FOR dly = 0 TO 1000: NEXT dly: NEXT WEE
+WEP1X = 0: DP1X = 0: BOSSMODE = 0: SOR = SOR + 1000: CASH = CASH + 75
+GOTO 24
+
+32 '-------------BOSS 2 GOES BOOM
+FOR WEE = 0 TO 50: CIRCLE (BOS2X + ((RND - .5) * 10), BOS2Y + ((RND - .5) * 10)), RND * 15, 0: CIRCLE (BOS2X + ((RND - .5) * 10), BOS2Y + ((RND - .5) * 10)), RND * 10, 4: FOR dly = 0 TO 1000: NEXT dly: NEXT WEE
+WEP1X = 0: DP1X = 0: BOSSMODE = 0: SOR = SOR + 1500: CASH = CASH + 175
+GOTO 24
+
+DEFINT A-Z
+SUB SETHUES (HUE() AS HUES, SC, EC)
+
+ OUT &H3C8, SC
+
+ FOR I = SC TO EC
+   OUT &H3C9, HUE(I).RED: OUT &H3C9, HUE(I).GRN: OUT &H3C9, HUE(I).BLU
+ NEXT
+
+END SUB
+

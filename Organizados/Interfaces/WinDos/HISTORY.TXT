@@ -1,0 +1,225 @@
+     ษอออออออออออออออออออออป
+     บ     Version 270     บ
+     ศอออออออออออออออออออออผ
+
+1. Directory history size increased from 10 to 50 entries.
+
+2. Drives can now be changed using ALT+DRIVE key combinations.
+
+3. The copying process is now abortable with ESC.
+
+4. The internal ZIP reading is now also abortable with ESC.
+
+5. A BIOS 8x8 font is now read in a more compatible way in order to avoid
+   printed "garbage" with some queer BIOS's.
+
+6. Cleaned up code. Modularity improved, although still far away from
+   being perfect.
+
+7. The size of the package has been reduced.
+
+8. Slightly decreased loading times of WinDOS and its utilities.
+
+9. HTEDIT.EXE now supports the 50 line text mode.
+
+
+
+     ษอออออออออออออออออออออป
+     บ     Version 265     บ
+     ศอออออออออออออออออออออผ
+
+1.  The most powerful extension registration system ever! Now supports
+    multiline script blocks (batch style and unlimited size) for every
+    program entry. Wildcard '?' is allowed to be used in the description of
+    any extension. Registration of directories is also now available, which
+    is ideal to be used with antivirus programs. Plus many other new features.
+
+2.  Added an option to run programs using COMMAND.COM (to solve some
+    memory allocation and program location problems).
+
+3.  Added an option to flush DOS buffers before program execution to
+    prevent SMARTDRIVE from crashing and corrupting WinDos configuration in
+    some cases (due to bugs in this Microsoft product).
+
+4.  Created a utility to set a 50-line text mode (50LINES.COM). Very useful
+    for use in the new extension registration system.
+
+5.  Created a utility to restore the standard 25-line text mode
+    (25LINES.COM).
+
+6.  RUNNER.COM module was optimized. Disktop now takes up 4608 bytes of
+    conventional or high memory.
+
+7.  All internal WinDos utilities are now executed without graphics mode
+    switching, which was slow and annoying.
+
+8.  WinDos utilities are run differently to be fully compatible with
+    PTS-DOS and DrDOS.
+
+9.  Disktop now scans for every drive from A to Z to support "floating
+    drives". For example, for disks A: C: D: E: F: Z:, earlier versions of
+    Disktop would have missed Z:.
+
+10. A colour in Disktop's HiTech skin was corrected.
+
+11. Disktop now pauses after "Help - On Selected Program" is selected.
+
+12. Properties displays drive information correctly on versions of DOS
+    without FAT32 support or without appropriate drivers.
+
+13. Code optimizations made to PRINT.EXE module.
+
+14. Added the ability for PRINT.EXE module to display the number of lines in
+    a document.
+
+15. PRINT.EXE now sends a page feed instruction to the printer when necessary
+    to avoid line-skipping on some printers (including Canon BJC-210 series).
+
+16. Updated the screen savers to work on all systems without exiting at
+    startup.
+
+17. OPTIONS.EXE module was updated. Automatic extension editor was removed
+    as it was much more difficult to use and was incompatible with the
+    new extension registration system.
+
+18. BUG FIXED - the preview button in OPTIONS-ScreenSavers didn't always work.
+
+19. BUG FIXED - the compression tools returned an error when very long
+                paths were used.
+
+20. BUG FIXED - the compression tools became disabled if files were copied
+                from ZIP using Disktop's internal ZIP.
+
+21. BUG FIXED - if a ZIP file was zipped and placed at the end of an
+                archive, Disktop's internal ZIP displayed empty
+                contents of the parent ZIP when viewed.
+
+22. BUG FIXED - ZIP files smaller than 512 bytes were not viewed correctly
+                by Disktop's internal ZIP.
+
+23. BUG FIXED - Disktop reported an error during copy if a directory name
+                contained a dot and was cut and pasted onto another drive.
+
+24. BUG FIXED - If COMSPEC environment variable followed variables that were
+                less than 8 characters (name and data), RUNNER.COM
+                reported an error.
+
+25. BUG FIXED - Properties memory information was corrected.
+
+26. Updated documentation.
+
+27. Other minor changes.
+
+
+
+     ษอออออออออออออออออออออป
+     บ     Version 250     บ
+     ศอออออออออออออออออออออผ
+
+1.  Added capability of loading into upper memory, thus freeing ALL of
+    conventional memory pool. If UMBs are not available, WinDos loads
+    into conventional memory and takes up under 5 Kb of space
+    Comparison with other popular shells:
+    Norton Commander 5.0              13 Kb
+    Volkov Commander 4.01             19 Kb
+
+2.  Added ability to run TSR programs correctly.
+
+3.  Faster program execution.
+
+4.  New Disktop File Manager interface.
+
+5.  New compression interface, optimized code.
+
+6.  New properties interface, optimized code.
+
+7.  Extended system, disk and file attributes information (properties).
+    Disk information is now correct for drives > 2 GB.
+
+8.  New print utility interface, optimized code.
+
+9.  Colour schemes, or skins, can now be used with Disktop and its utilities.
+
+10. <LIST:file.lst> flag for list file generation (extension editor).
+
+11. <CURDRIVE> flag (extension editor).
+
+12. Command line, passed to programs, is no longer capitalized.
+
+13. Cut, Copy and MEM light indicators (Disktop).
+
+14. Improved InputBox control (Disktop).
+
+15. Commonly used keys (ENTER and ESC) are now functional in all information
+    and input boxes (Disktop).
+
+16. Faster execution of WinDos utilities.
+
+17. BUG FIXED: In v220 the only resolution available in Desktop was 640x480.
+
+18. BUG FIXED: If somefile.key didn't exist and a program containing
+    <KEYS:somefile.key> as part of its command line in extension list was
+    called, then Disktop would have exited with an error.
+
+19. BUG FIXED: If changing icons was attempted (using SELICON.EXE) in
+    resolutions other than 640x480, a visual bug occurred.
+
+20. BACKSPACE - moves up directory.
+
+21. Improved highlighting method in Disktop.
+
+22. Other minor changes.
+
+23. Updated documentation.
+
+
+
+     ษอออออออออออออออออออออป
+     บ     Version 220     บ
+     ศอออออออออออออออออออออผ
+
+1.  A very fast internal ZIP support in Disktop module. Now you can
+    browse through ZIP files as through folders, perform various
+    operations on files inside ZIP including cut, copy and paste.
+    However, PKZIP and PKUNZIP are still required for some features to
+    work.
+
+2.  File associations are now functional inside ZIP files.
+
+3.  "Create Empty File" option was added to the File menu.
+
+4.  More hotkeys were introduced.
+
+5.  Minor bug fixes in Disktop (theoretical bugs, the chances of them
+    actually occurring are very small).
+
+6.  Bug fixed: Incorrect directory as part of program path, recorded in
+    Quick Menu, forced RUNNER.EXE to exit to DOS with an error.
+
+7.  Bug fixed: If QUICK method was used to launch a program with a
+    command line, the command tail remained in memory after execution,
+    which resulted in incorrect execution of other programs after the
+    event.
+
+8.  Bug fixed: In some situations the command line passed to the
+    double-clicked programs was not always a null string.
+
+9.  ScreenSaver "Magic Squares".
+
+10. ScreenSaver "Hyperbola".
+
+11. ScreenSaver "Acid Rain".
+
+12. Improved "XOR" ScreenSaver.
+
+13. Improved "HiTech" ScreenSaver.
+
+14. Source code released for all ScreenSavers.
+
+15. A stupid limitation was fixed. BAT files can now be selected in
+    OPTIONS in the screen saver list.
+
+16. PRINT.EXE did not print in version 215 (sorry). Now it is fixed.
+
+17. Minor bug fix in the compression tools.
+

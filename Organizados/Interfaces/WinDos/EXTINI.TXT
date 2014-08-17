@@ -1,0 +1,636 @@
+;****************************************************************************
+
+;This is an example of an extension file that I use which clearly outlines
+;all of WinDos's advanced and unique features.
+
+;****************************************************************************
+
+;=============================================================================
+;                             ->  TEXT STUFF  <-                                 
+;=============================================================================
+
+[DOC=
+
+  (Smooth Editor 2.12)
+  {+C:\TEXT\EDITORS\SMED\SE.EXE <FILE.EXT> }
+
+  (MS Edit 2.0)
+  {C:\UTILS\MSDOS71\EDIT.COM <FILE.EXT> }
+
+  (HiTech Editor 1.0)
+  {+C:\PROGRAM\PROJECTS\WINDOS\HTEDIT.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR> }
+
+  (FTE 0.49)
+  {+C:\TEXT\EDITORS\FTE\FTE.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR> }
+
+  (Aurora 3.0c)
+  {+C:\TEXT\EDITORS\AURORA\A.EXE <FILE.EXT> }
+
+  (GDSpell 2.3a)
+  { @echo off
+    c:
+    cd \TEXT\SPELL\GDSPELL
+    spell.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+  (JSpell 2.11)
+  { @echo off
+    c:
+    cd \TEXT\SPELL\JSPELL
+    jspell.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+  (DiaKor)
+  { @echo off
+    c:
+    cd \TEXT\SPELL\DIACOR
+    runme.exe <DRIVE>:<DIR\><FILE.EXT>
+  }  
+
+  (CP1251   => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM CP1251.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (CyrTTF   => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM CYRTTF.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (TransCyr => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM TRANSCYR.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (KOI7     => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM KOI7.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (KOI8     => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM KOI8.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => CP1251)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO CP1251.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => CyrTTF)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO CYRTTF.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => TransCyr)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO TRANSCYR.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => KOI7)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO KOI7.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => KOI8)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO KOI8.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Rus      => Pyc)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    translit.bat <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+]
+
+;**********************
+
+[TXT=
+
+  (Smooth Editor 2.12)
+  {+C:\TEXT\EDITORS\SMED\SE.EXE <FILE.EXT> }
+
+  (MS Edit 2.0)
+  {C:\UTILS\MSDOS71\EDIT.COM <FILE.EXT> }
+
+  (HiTech Editor 1.0)
+  {+C:\PROGRAM\PROJECTS\WINDOS\HTEDIT.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR> }
+
+  (FTE 0.49)
+  {+C:\TEXT\EDITORS\FTE\FTE.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR> }
+
+  (Aurora 3.0c)
+  {+C:\TEXT\EDITORS\AURORA\A.EXE <FILE.EXT> }
+
+  (GDSpell 2.3a)
+  { @echo off
+    c:
+    cd \TEXT\SPELL\GDSPELL
+    spell.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+  (JSpell 2.11)
+  { @echo off
+    c:
+    cd \TEXT\SPELL\JSPELL
+    jspell.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+  (DiaKor)
+  { @echo off
+    c:
+    cd \TEXT\SPELL\DIACOR
+    runme.exe <DRIVE>:<DIR\><FILE.EXT>
+  }  
+
+  (CP1251   => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM CP1251.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (CyrTTF   => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM CYRTTF.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (TransCyr => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM TRANSCYR.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (KOI7     => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM KOI7.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (KOI8     => Alt)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat FROM KOI8.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => CP1251)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO CP1251.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => CyrTTF)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO CYRTTF.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => TransCyr)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO TRANSCYR.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => KOI7)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO KOI7.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Alt      => KOI8)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    convert.bat TO KOI8.COD <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+  (Rus      => Pyc)
+  { c:
+    cd \TEXT\CONVERT\CONVERT
+    translit.bat <DRIVE>:<DIR\><FILE.EXT>}
+  }
+
+]
+
+;**********************
+
+[HTM=
+
+  (Arachne 1.70)
+  {+C:\INTERNET\ARACHNE\ARACHNE.BAT <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR>}
+
+  (FTE 0.49)
+  {+C:\TEXT\EDITORS\FTE\FTE.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR>}
+
+]
+
+;**********************
+
+[XLS=
+
+  (Arachne 1.70)
+  {+C:\MATHS\CONVERT\XLHTML\XLHTML.BAT <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR>}
+  
+]  
+
+;=============================================================================
+;                            ->  PROGRAMMING  <-                                 
+;=============================================================================
+
+[BAS=
+
+  (PDS 7.1, qbx.qlb)
+  {+C:\PROGRAM\QB71\QBX.EXE <FILE.EXT> /l}
+
+  (PDS 7.1)
+  {+C:\PROGRAM\QB71\QBX.EXE <FILE.EXT>}
+
+  (VBDOS 1.0, vbdos.qlb)
+  {+C:\PROGRAM\VBDOS\VBDOS.EXE <FILE.EXT> /l}
+
+  (VBDOS 1.0)
+  {+C:\PROGRAM\VBDOS\VBDOS.EXE <FILE.EXT>}
+
+  (QB 4.5, qb.qlb)
+  {+C:\PROGRAM\QB45\QB.EXE <FILE.EXT> /l}
+
+  (QB 4.5)
+  {+C:\PROGRAM\QB45\QB.EXE <FILE.EXT>}
+
+  (PB 3.5)
+  {+C:\PROGRAM\PB35\PB.EXE <FILE.EXT><KEYS:PB.KEY>}
+
+  (FTE 0.49)
+  { @echo off
+    c:
+    cd \TEXT\EDITORS\FTE
+    50lines.com
+    fte.exe -mASM <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+  (Compile with BASM)
+  {C:\PROGRAM\BASM65\BASM.EXE <FILE.EXT>}
+
+]
+
+;**********************
+
+[MAK=
+
+  (VBDOS 1.0, vbdos.qlb)
+  {C:\PROGRAM\VBDOS\VBDOS.EXE <FILE.EXT> /l}
+  
+  (VBDOS 1.0)
+  {C:\PROGRAM\VBDOS\VBDOS.EXE <FILE.EXT>}
+  
+]  
+
+;**********************
+
+[ASM=
+
+  (FTE 0.49)
+  { @echo off
+    c:
+    cd \TEXT\EDITORS\FTE
+    50lines.com
+    fte.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+  (Aurora 3.0c)
+  {+C:\TEXT\EDITORS\AURORA\A.EXE <FILE.EXT>}
+
+  (Compile to OBJ)
+  {+C:\PROGRAM\MASM51\MOE.BAT <FILE> C:\PROGRAM\MASM51\ <PAUSE>}
+
+  (Compile to COM)
+  {+C:\PROGRAM\MASM51\MCE.BAT <FILE> C:\PROGRAM\MASM51\ <PAUSE>}
+
+  (Compile to EXE)
+  {+C:\PROGRAM\MASM51\MEE.BAT <FILE> C:\PROGRAM\MASM51\ <PAUSE>}
+
+  (Compile to COM *CV*)
+  {+C:\PROGRAM\MASM51\MCE_CV.BAT <FILE> C:\PROGRAM\MASM51\ <PAUSE>}
+
+  (Compile to EXE *CV*)
+  {+C:\PROGRAM\MASM51\MEE_CV.BAT <FILE> C:\PROGRAM\MASM51\ <PAUSE>}
+
+]
+
+;**********************
+
+[C=
+
+  (FTE 0.49)
+  { @echo off
+    c:
+    cd \TEXT\EDITORS\FTE
+    50lines.com
+    fte.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+]  
+
+;**********************
+
+[COM=
+
+  (CodeView 3.10)
+  {+C:\PROGRAM\QB71\CV.EXE <FILE.EXT>}
+
+  (BIEW 5.31)
+  {+C:\PROGRAM\BIEW531\BIEW.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR>}
+
+  (QView 2.80)
+  {+C:\PROGRAM\QVIEW280\QVIEW.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR>}
+
+]
+
+;**********************
+
+[EXE=
+
+  (CodeView 3.10)
+  {+C:\PROGRAM\QB71\CV.EXE <FILE.EXT>}
+
+  (BIEW 5.31)
+  {+C:\PROGRAM\BIEW531\BIEW.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR>}
+
+  (QView 2.80)
+  {+C:\PROGRAM\QVIEW280\QVIEW.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR>}
+
+]
+
+;=============================================================================
+;                            ->  MULTIMEDIA  <-                                 
+;=============================================================================
+
+[MP3=
+
+  (DSS 3.0)
+  { @echo off
+    C:\AUDIO\PLAYERS\DSS\DSS.EXE !<LIST:E:\MP3.M3U> /m5 /L-
+  }  
+
+  (Cubic Player 2.60)
+  { @echo off
+    c:
+    cd \AUDIO\PLAYERS\CP
+    cp.exe <LIST:E:\MP3.M3U>
+  }
+
+  (=> WAV in Mycop)
+  { @echo off
+    C:\AUDIO\PLAYERS\DSS\DSS.EXE <FILE.EXT> C:\MYCOP\<FILE>.WAV /t
+  }
+
+]
+
+;**********************
+
+[MP?=
+
+  (QuickView 2.50)
+  { @echo off
+    c:
+    cd \GRAPHICS\VIEWERS\QV
+    qv.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+  
+]  
+
+;**********************
+
+[WAV=
+
+  (DSS 3.0)
+  { @echo off
+    C:\AUDIO\PLAYERS\DSS\DSS.EXE !<LIST:E:\MP3.M3U> /m5 /L-
+  }  
+
+  (Cubic Player 2.60)
+  { @echo off
+    c:
+    cd \AUDIO\PLAYERS\CP
+    cp.exe <LIST:E:\MP3.M3U>
+  }
+
+  (=> EXE)
+  {+C:\AUDIO\CONVERT\WAV2EXE\WAVTOEXE.EXE <FILE.EXT>}
+
+  (=> MP3 at 96  kbs)
+  {+C:\AUDIO\CONVERT\LAME\LAME.EXE -h -b 96 <FILE.EXT> <FILE>.MP3}
+  
+  (=> MP3 at 128 kbs)
+  {+C:\AUDIO\CONVERT\LAME\LAME.EXE -h -b 128 <FILE.EXT> <FILE>.MP3}
+
+  (=> MP3 at 160 kbs)
+  {+C:\AUDIO\CONVERT\LAME\LAME.EXE -h -b 160 <FILE.EXT> <FILE>.MP3}
+  
+  (=> MP3 at  96 kbs VBR)
+  {+C:\AUDIO\CONVERT\LAME\LAME.EXE --abr 96 -v -b 48 -V 0 <FILE.EXT> <FILE>.MP3}
+
+  (=> MP3 at 128 kbs VBR)
+  {+C:\AUDIO\CONVERT\LAME\LAME.EXE --abr 128 -v -b 48 -V 0 <FILE.EXT> <FILE>.MP3}
+
+  (=> MP3 at 160 kbs VBR)
+  {+C:\AUDIO\CONVERT\LAME\LAME.EXE --abr 160 -v -b 48 -V 0 <FILE.EXT> <FILE>.MP3}
+  
+  (=> MP3 at 96 kbs mono)
+  {+C:\AUDIO\CONVERT\LAME\LAME.EXE -m m -b 96 <FILE.EXT> <FILE>.MP3}
+  
+]  
+
+;**********************
+
+[MID=
+
+  (Midier 1.5)
+  {+C:\AUDIO\PLAYERS\MIDIER\MIDIER.COM <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR>}
+
+]  
+
+;**********************
+
+[XM =
+  
+  (Fast Tracker 2.09)
+  { @echo off
+    c:
+    cd \AUDIO\TRACKERS\FT2
+    ft2.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+  
+  (Cubic Player 2.60)
+  { @echo off
+    c:
+    cd \AUDIO\PLAYERS\CP
+    cp.exe <LIST:E:\MP3.M3U>
+  }
+
+]
+
+;**********************
+
+[IT=
+
+  (Cubic Player 2.60)
+  { @echo off
+    c:
+    cd \AUDIO\PLAYERS\CP
+    cp.exe <LIST:E:\MP3.M3U>
+  }
+
+]
+
+;**********************
+
+[AVI=
+
+  (QuickView 2.50)
+  { @echo off
+    c:
+    cd \GRAPHICS\VIEWERS\QV
+    qv.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+  (Sea 1.3)
+  { @echo off
+    c:
+    cd \GRAPHICS\VIEWERS\SEA
+    sea.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+  
+]
+
+;=============================================================================
+;                             ->  GRAPHICS  <-                                 
+;=============================================================================
+
+[JPG=
+
+  (ShowJPG 2.80)
+  {+C:\GRAPHICS\VIEWERS\SHOWJPG\SHOWJPG.EXE <FILE.EXT>}
+  
+  (Sea 1.3)
+  { @echo off
+    c:
+    cd \GRAPHICS\VIEWERS\SEA
+    sea.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+]
+
+;**********************
+
+[GIF=
+
+  (Ombra 7.22)
+  {+C:\GRAPHICS\VIEWERS\OMBRA\OMBRA.EXE <FILE.EXT>}
+  
+  (Sea 1.3)
+  { @echo off
+    c:
+    cd \GRAPHICS\VIEWERS\SEA
+    sea.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+]
+
+;**********************
+
+[PCX=
+
+  (Ombra 7.22)
+  {+C:\GRAPHICS\VIEWERS\OMBRA\OMBRA.EXE <FILE.EXT>}
+  
+  (Sea 1.3)
+  { @echo off
+    c:
+    cd \GRAPHICS\VIEWERS\SEA
+    sea.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+]
+
+;**********************
+
+[BMP=
+
+  (Ombra 7.22)
+  {+C:\GRAPHICS\VIEWERS\OMBRA\OMBRA.EXE <FILE.EXT>}
+  
+  (Sea 1.3)
+  { @echo off
+    c:
+    cd \GRAPHICS\VIEWERS\SEA
+    sea.exe <DRIVE>:<DIR\><FILE.EXT>
+  }
+
+  (NeoPaint 3.2d)
+  {+C:\GRAPHICS\EDITORS\NEOPAINT\NEOPAINT.EXE <DRIVE>:<DIR\><FILE.EXT><SWITCH_TO_DIR>}
+
+]
+
+;**********************
+
+[VTF=
+  
+  (VTF View 0.07)
+  {+C:\GRAPHICS\CAPTURE\VTHIEF\VTFVIEW.COM <FILE.EXT>}
+  
+  (=> .BMP)
+  {+C:\GRAPHICS\CAPTURE\VTHIEF\VTFVIEW.COM <FILE.EXT><KEYS:VTFVIEW.KEY>}
+  
+]
+
+;=============================================================================
+;                             ->  ARCHIVES <-                                 
+;=============================================================================
+
+[R??=
+
+  (Run RAR.EXE)
+  {+C:\ARCHIVES\RAR.EXE}
+
+]
+
+;=============================================================================
+;                               ->  OTHER  <-                                 
+;=============================================================================
+
+[\\\=
+
+   (F-Prot)
+   {
+     @echo off
+     c:
+     cd \VIRUS\FP
+     F-PROT.EXE <DRIVE>:<DIR\><FILE>
+   }
+
+]
+
+;**********************
+
+[???=
+
+  ()
+  {}
+
+  (MS Edit 2.0)
+  {@C:\UTILS\MSDOS71\EDIT.COM <FILE.EXT>}
+
+]
+

@@ -1,0 +1,379 @@
+
+                             README FILE 1.00 for
+
+                   BITMAP EDITOR VERSION 2.00B ENHANCED
+
+                       Programmed by YAP CHING FATT
+
+       Tel no. : 03-626-8172            Address : 5109, Jln Padang
+       E-Mail  : Chingfat@tm.net.my               Jinjang Utara,
+                                                  52000 Kuala Lumpur.
+                                                  (Malaysia, Earth.)
+
+------------------------------------------------------------------------------
+0. SYMPATHY NOTE(!)
+        
+        I don't know why I started programming at the first place, maybe it's
+  a challenging way to test my logic skills. But somehow after creating this
+  program, I know I must somehow show it to the world. I'm not coming from
+  a rich family. I've to work hard to buy all these computer equipments to
+  get started. It took me 2 months of work to earn myself enough $$$ to buy a
+  56K Motorola modem and register INTERNET recently. You out there are free
+  to copy and use this program at no cost at all (Ok! Ok! Not exactly no cost
+  but your cost of downloading this application). If any of you that really
+  appreciate my hard work, you may send a Cheque or Money Order to the
+  address stated above (RM5/RM10 or US$5/US$10 would be OK* for me) .
+
+        I'll be starting a new programming project soon on a fighting game
+  using QB entitled ULTIMATE DRAGON BALL Z. Graphics resources I'll draw
+  entirely using this BITMAP EDITOR. For DBZ fans, Characters available
+  to be played includes SUPER GOKOU 4, GOGETA, The purple guy from the
+  fusion movie, BABY and more..... (around 15 fighters if I got the time
+  to draw all the character graphics AND if available memory permits)
+
+                * OK means 2/3 days of breakfast at the mamak** stall!
+                ** for non-Malaysia users. In Malaysia, the cheapest place
+                   to have a bite or two is in this so-called mamak stall
+
+------------------------------------------------------------------------------
+1. HOW THIS PROGRAM (AND THIS README FILE) CAME INTO EXISTENCE
+
+        OK. Let me get started. I didn't know how important it was to create
+  a README file for my programs until I started to surf the NET for some QB
+  add-ons and utilities. Some programs I downloaded really have some great
+  documentation! So since I've got this special contribution to fellow QB
+  programmers (especially new and novice ones).
+        Last time, I was having problem trying to create programs with
+  great and stunning graphics. So, there was time when I started to think:
+
+                         "It's now or never!"
+
+        This program is a bitmap editor that will help you create a 70 x 70
+  pixel graphic for use in QB programs and I've been using it to help me draw some pretty nifty images for my own programs. This program was created
+  back in 1996 (I was 17 years old then). But now (6/10/97), I've decided to 
+  type this README file on how to use this program (It contains A LOT of hot
+  keys!). 
+        I was a novice QB programmer also. As you can see, I never use a Quick
+  library to help me in programming this application (cause I never learnt how
+  make use of these so-called libs). If you checked the source codes for this
+  program, you can see how simple (and lengthy) my program are. Don't attempt
+  to compile this program into an EXE file coz it'll never work!
+
+------------------------------------------------------------------------------
+2. HOW THIS PROGRAM WORKS
+
+        This program enables use to create and edit images for use in various
+  QB programs. Images can be saved into 3 formats. They are
+
+  .YCF format - (he! He! That's my initial!). This is a standard ASCII file
+                which converts the color in each pixel into ASCII code. All
+                images saved into this format have an equal size (5189 bytes)
+  .ASC format - This format is the most useless one coz the ASCII file gene-
+                rated to store the image consist of 1 line per pixel!(That's
+                4900 lines in all!).If you TYPE this file is DOS prompt, It
+                will take quite a while before they are finished displayed.
+  .TXT format - In this type of file, image are saved into 70 lines of codes.
+                The codes saved are actually DRAW statement which can be
+                displayed by QB easily. Size of file varies based on image
+                complexity. This is the fastest method of all three in both
+                loading and saving. (Recommended save method! ***** star)
+
+------------------------------------------------------------------------------
+3. RUNNING THIS PROGRAM
+
+        Load this BMP2.BAS file from QB. Press the F5 key to run it. You'll
+  be shown a screen (Quite nice, wouldn't you say so?). You are now in edi-
+  ting mode where you can move around inside the edit box. The screen shows:
+        
+  1) The menus - File, Edit and Help respectively
+  2) The default filename of new image on the upper right corner. Note that
+     the default file type is YCF. This can be changed in SAVE AS menu item.
+  3) A view box on the upper left corner showing the ACTUAL image resolution.
+  4) The color palette below the view box that contains 256 colors to be
+     picked. The two folder sticking out above the box shows the selected
+     color (left) and selected background color (right) with their QB color
+     code on both their left sides.
+  5) The edit box which the editing of the image took place. There are 2
+     cursors. The primary cursor is the one which can be moved by using the
+     arrow keys. The secondary cursor can also be moved via the X key. Above
+     this box, the LOC shows the X,Y location of the primary cursor. The
+     folder sticking out from this box shows the current color and it's code
+     which the primary cursor is standing on.
+
+------------------------------------------------------------------------------
+4. EDITING MODE
+
+        Since this is not a mouse driven program, you have to rely on the
+  keyboard shortcuts to edit the images. Below are the shortcuts listing:
+
+  F,E,H - Opens the File, Edit and Help menus respectively (Note: It's just
+          the key itself and NOT Alt-F, Alt-E or Alt-H!)
+  Arrow - Navigate the promary cursor. If you go over the edit box, you will
+   keys   be returned to the beginning of the cursor.
+  Space - Draws a pixel on the cursor location using the selected color.
+          This will also relocate the secondary cursor to the primary cursor
+          position. Another alternative - Press Q if your space key is broken
+    X   - Same as above BUT a pixel will not be drawn on the current
+          cursor position.(Used to relocate the secondary cursor)
+    B   - Draws a box starting from the point location of secondary cursor
+          to the primary cursor using the current selected color
+    U   - Same as above but a FILLED BOX will be drawn
+    L   - Same as above but a LINE will be drawn
+    K   - Same as above AND the secondary cursor will be relocated to the
+          position of primary cursor (hence-[K]onnect).
+    Z   - Copy a boxed region from the starting point of secondary cursor
+          to the primary cursor into the clipboard.
+          Note: The secondary cursor position must be at the upper left
+                corner THAN the primary cursor position.
+    C   - Paste the clipboard contents starting at the primary cursor position
+    S   - Scan the color on the current primary cursor position and set that
+          color as the selected color to be used in editing.
+    P   - Paints the area bordered by background color with the selected
+          color. If a outlined area is not entirely in background color,
+          the painting will flood the whole image! So save often coz there's
+          no UNDO in this program.
+    @   - Activates the screen capture utility (built-in)
+          Note: refer to SCREEN CAPTURE section
+   Tab  - Switch to the color palette box to change colors
+          Note: refer to COLOR PALETTE section
+    O   - Draws a circle. Both cursor in the edit box will be gone and a
+          small circle will be drawn on the view box. Here, Use the arrow
+          keys to resize the circle. Press ENTER to draw the circle on
+          image or ESC to cancel drawing the circle and return to editing
+          mode.
+    I   - Inverse the image. (Avoid this at all cost. It's not all that
+          reliable with some colors!)
+    A   - Toggle AUTODRAW ON/OFF. When autodraw is on, the word AUTO will
+          be displayed above the edit box and as you move the primary cursor,
+          a pixel will be drawn on the cursor position.
+ 1 to 4 - Perform real-time flipping and 90 degrees rotation on the images.
+          Experiment them yourself using the demo images given!
+
+-----------------------------------------------------------------------------
+5. COLOR PALETTE
+
+        Here, you can define the color to be used for editing. Use the
+  arrow keys to navigate inside this box. These keys can be pressed
+
+  Space - Select the color on the current cursor position. Another
+          alternative : Press 1 if your space key is corrupted!
+    2   - Select the background color on the current color position
+   Esc  - Returns to editing mode after you are done with color selection.
+          Here, press TAB if your ESC key is broken!
+------------------------------------------------------------------------------
+6. MENU - FILE
+
+        I think I can give the menuitems NEW, SAVE FILE and EXIT a miss
+  'coz they're understandable by most user.
+
+  LOAD         - Please refer to LOADING IMAGE section
+  SAVE FILE AS - Give a name for the file and in which format the file
+                 to be saved as. Press tab to toggle format while typing
+                 the filename. After that Press ENTER to start saving or
+                 ESC to cancel this save operation.
+  RELOAD       - Re-load the last saved copy of the file in case you've
+                 misdrawn you image horribly. A poor relative to the UNDO
+                 feature, but at least it's better than nothing, right?
+  MAKE TXT FILE- Since I recommend you all to use the TXT format, so I've
+                 added a feature in the file menu to make a copy of it from
+                 the YCF and ASC format. Quite handy actually for fast
+                 saving.
+
+------------------------------------------------------------------------------
+6. MENU - EDIT
+
+  COLOR EFFECT  - Performs color changing and swapping. Refer to COLOR
+                  EFFECT section for details.
+  VIEW CLIPBOARD- View the block of images copied into the clipboard. The
+                  dimension of the clipboard is also shown. Here, you can
+                  press any key to return back to editing.
+  INVERSE       - Select from this menu if you've forgotten about the
+                  hotkey while editing! 
+  SHRINK IMAGE  - Shrink the image (what else!). refer to SHRINK IMAGE
+                  section.
+  FREE ROTATION - Rotate the image freely. refer to FREE ROTATION section
+  CAPTURE       - refer to SCREEN CAPTURE section
+
+------------------------------------------------------------------------------
+6. MENU - HELP
+
+        Opps! Sorry to tell you that the first 3 items in the menu here are
+  dysfunctionable! You can't press on them (Err... I mean that you can press
+  them but nothing will comes out/or happens!). WHY? At this point of coding,
+  my program shows a little bit of unstableness when I ran it on QBASIC. What
+  if it HANGS when I add in some `help' routines?! Somehow, the last item
+  works and when pressed, it will show a BOX with my name in it! The graphic
+  shown is a TXT file named BMTITLE.TXT. If you delete the file, the program
+  will crash when you tried to view this ABOUT BOX.
+
+------------------------------------------------------------------------------
+7. SCREEN CAPTURE
+
+        When invoked, a red box will appear allowing to move it to any
+  postion on the screen. Press ENTER to capture the graphic enclosed in the
+  red box into the clipboard. Press ESC to return to the editing mode.
+
+------------------------------------------------------------------------------
+8. LOADING IMAGE
+
+        To load an image, press L from the File menu. A box will appear
+  showing a listing of YCF files that can be loaded. Use the arrow keys
+  to scroll through the listing of different file format.
+        Press V to preview the selected file before loading. While pre-
+  viewing a certain image, you can press TAB to preview the next image on
+  the list or any other key to return to the file listing.
+         When the intended image is selected, press ENTER to start loading
+  the image and edit it. To cancel loading of the image, just press ESC
+
+  WARNING:The program will crash if.....
+
+      - You try to preview on a blank listing( That means no files
+        of that format is located/listed in the current directory)
+      - You try to preview or load from a file which has a different
+        header and format even though the extension is correct and listed
+        on the file listing. Don't put a normal TXT file on the same
+        directory as this program to avoid it being listed.
+
+------------------------------------------------------------------------------
+9. COLOR EFFECT
+
+        Here, color swapping and changing can be performed on the image.
+  Use the arrow keys to navigate through the color palette. Keys that can
+  be pressed are listed below:
+
+    1   - Select the first color
+    2   - Select the second color
+   Tab  - Toggle between color swapping/changing mode
+    V   - Preview the swapping/changing effect before applying. The effect
+         will be shown on the left side of the box.
+  ENTER - Start applying the effect onto the image and returns to editing.
+   ESC  - Cancel the color effect operation
+
+------------------------------------------------------------------------------
+10. SHRINK IMAGE
+
+        To shrink the image, it's very simple. Just use the arrow keys to
+  resize the image to suit your preferences. When you reached the intended
+  size, press ENTER to copy the shrunken image into the clipboard. Press
+  ESC to cancel the operation ( The current clipboard image will be retained)
+
+------------------------------------------------------------------------------
+11. FREE ROTATION
+
+        When invoked, use the arrow keys to rotate the image. When you are
+  satisfied, press TAB to switch to the rotated-image box. Here Select the
+  part in which you want the final image to be with the arrow keys. Press
+  ENTER to select that particular area to be the new image. Press ESC to
+  cancel rotation and return to editing. If you want to rotate the image
+  again, press TAB again and the arrow keys will function as the rotator
+  (just like when it was first invoked).
+
+  NOTE: I must admit that the algorithm I use in this rotation routine may
+        be the worst in the whole history of QB programming. But somehow,
+        it may come in handy someday!
+
+------------------------------------------------------------------------------
+12. WARNING! WARNING! AND TIPS!
+
+  - Due to the simplicity of this program, no warning will be given if 
+    you tried to overwrite an existing file when saving OR when you tried
+    to exit this program without saving the graphics file.
+  - It is normal when things slows down when flipping and 90 degree rotating
+    the image.
+  - When this program was ran for the first time in QB, do not BREAK from
+    it and resume back into the program 'coz after that, you may notice
+    some changes in screen color (QB bug. Not my program bug, OK?)
+  - When saving in YCF format, make sure the image does not contains the
+    color coded 154 and above 'coz when it was saved, pixel colored(pc) 0
+    will be converted into ASCII character(ac) 100, pc 1 will be ac 101
+    and so on. When a pixel colored >154 is encountered, it will go
+    crash.. boom.. bang..! (Thank god it's not crash boom HANG!)
+  - When pasting, to avoid a particular color in that clipboard to be
+    pasted, just set that color as the background color. The default
+    background color is black(0).
+  - To run smoothly, DON'T load any QuickLibraries to free as much
+    memory as possible.
+  - This program will only list and loads the image files which is
+    located in the same directory as this program does. To load and save
+    from another directory without this program present at that directory,
+    Follow the instruction below:
+      After loading this program into QB, shell to DOS and use the CD
+      command to move to the intended directory before running the program.
+
+
+------------------------------------------------------------------------------
+12. HOW DO LOAD THE IMAGE THAT I'VE DRAWN TO BE USED IN MY PROGRAM?
+
+        I know this will be the question that many and most people will
+  be asking me. So here's the answer (only for the TXT file format!)
+
+  1) First, create the Subroutine below:
+          
+  DECLARE SUB loadpic
+  DIM SHARED filename$, SX, SY, num, drawbuf$
+  SUB loadpic
+  OPEN "I",#1,filename$               ' Open the file
+       INPUT #1, DUMMY$                    ' Ignore the dummy header!
+       PSET (SX, SY)                       ' Set the starting point
+       FOR num = 1 TO 70                   ' Loops 70 times
+           INPUT #1, drawbuf$              ' load a line from the file
+           DRAW drawbuf$                   ' draw the image code
+       NEXT
+       CLOSE #1                            ' Close the file
+  END SUB
+
+  Description: filename$ = Image filename to be loaded (with TXT extension)
+               num       = A FOR loop counter
+               drawbuf$  = A string to store the DRAW code that was loaded
+               SX, SY    = Variables storing the starting point of drawing
+                           the image in X and Y location
+
+  2) Second, initialise the filename$, sx and sy. See the example below
+     assuming that the SAMPLE.TXT is a valid image TXT file and loadpic
+     subroutine above has been created and typed.
+
+       SCREEN 13
+       filename$ = "SAMPLE.TXT"
+       SX = 125
+       SY = 65
+       CALL loadpic
+               
+  Description: Before loading, of course you need to set the screen mode.
+               Screen 13 is the most ideal. The codes above will load the
+               image SAMPLE.TXT onto the center of the screen. Now It's up
+               to you to GET the image into the memory and PUT them out
+               for animation!
+
+------------------------------------------------------------------------------
+13. BYE BYE NOTES!
+
+        Whew! Finished at last! If you have any question you can contact me
+  through the address/e-mail at the top of this document. Opps! I've forgot-
+  ten that there are some charitable and lazy people out there who are too
+  lazy to scroll up to the top of this document! Never mind. Here it is:
+
+       Tel no. : 03-626-8172            Address : 5109, Jln Padang
+       E-Mail  : Chingfat@tm.net.my               Jinjang Utara,
+                                                  52000 Kuala Lumpur.
+                                                  (Malaysia, Earth.)
+
+
+  Before I go, I would like to plead for $$$ contributions from you all out
+  there. Any last words, you might ask. Well, here it is!(see below)
+
+
+                " LONG LIVE QB AND QB PROGRAMMERS,
+                  YOUNG AND OLD,
+                  NOVICES AND EXPERTS,
+                  HUMANS AND ALIENS! "
+
+
+
+                                        07/10/97 16:37:22.00 Malaysian time
+                                        
+S
+
+
+
+             
+

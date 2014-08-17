@@ -1,0 +1,54 @@
+***********************************************************************
+                                 TiledX 
+                             Dimension SOFT
+			    August 13, 1998
+
+Programmed by: Chris Rennie
+Quality Assurance by: Jay McCarthy
+***********************************************************************
+
+     First of all thanks for trying out Dimension SOFT's first released 
+product. A lot of research as far as what people want in a Tile Editor
+have been implemented to quite an extent into this program. As time 
+passes more updates will become available which expand upon this pro-
+grams primary focus - user friendliness and versatility.
+     Dimension SOFT is proud to bring new idees to programming. Aside
+from making everything we program more like windows we have expanded
+upon that idea immensely. One of which is small to the eye but is 
+inherently new is the way our programs handle input. Most programmers
+have a limit on how many characters they can input. We however have
+done away with that in it's entirety. The more you type the more the 
+filename will scroll to the left. Then there is Converge and the 
+transparent color. I can't think of a single prorgammer that has done 
+that as well. It's as original as original can get.
+     TiledX, a fairly decent Tile Editor roughly 3 months worth of 
+coding finally deserves to be released. Jay has spent numerous hours 
+testing, retesting, and testing again to make sure that no fatal bugs 
+occur or that a function properly runs. He has been an invaluable 
+amount of help with this program and congrats go out to him. 
+     With the option of using either a mouse or a keyboard TiledX
+goes the distance with versatitly, pleasing all. There are only a few 
+drawing modes but several ways to alter the graphics. Ranging from 
+Paint background to Rotate Right and let's not forget Converge. With an
+extensive help section that goes into grave detail what else could you
+ask for - printing capabilities. For those of you who need the source 
+code to display the tiles drawn, here you go.
+
+DIM TILE(1600)
+CLS
+SCREEN 12
+
+DEF SEG = VARSEG(TILE(0))
+BLOAD FILENAME$, 0
+DEF SEG
+
+PUT (X,Y), TILE
+
+     Last minute additions: If you leave the mouse on an icon it now 
+will tell you what that icon is. Also if you right click on the icon
+it will display the help for that icon. In the near future we hope to
+continue on delivering excellence in Qbasic programs. Until next 
+time - later....
+
+							- Chris Rennie
+							Dimension SOFT	

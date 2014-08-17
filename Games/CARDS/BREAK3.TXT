@@ -1,0 +1,136 @@
+     Hello there, and thank you for reading the documentation of
+BREAK'N OUT 3: HOME WORLD.  I will divide this document into three pieces:
+Introduction, Instructions and then the Generic message I put with all my
+games.
+
+     The Break'n Out series is the first group of programs I have made
+for computers.  I wanted to sell Break'n Out 1, but realized I was being a
+jerk by asking for money.  So they're all free.  I have released the full
+version of Break'n Out one, with all forty levels and the level editor.
+     The story for the series is quite simple.  The next step in human
+evolution is taking place.  Thousands of children around the world are
+being born genetically superior to their ancestors.  When these advanced
+Beings, named Duroids, look at the rest of the human race, they are
+disturbed by our ignorance.  Angry at our faults, they decide to test our
+intellects by selecting one human and putting him in a life sized maze.
+If the man can pass through 40 levels of traps and puzzles in the amount
+of time given, humans world wide will be treated as equals.  Fail, and
+all of mankind will be eliminated. (I later realized this plot sounds like
+what the NAZIs said, but don't worry, I don't feel this way at all, its
+just a game.)  They choose you.  You passed through the levels and saved
+the world.
+     That was Break'n Out 1.  One year later, though, aliens came
+to Earth in the spirit of hostility.  The 'advanced humans' had the mental
+ability to defeat these invaders, but lacked the experience.  So they
+choose you because of the special skills you acquired from your testing.
+You single handedly broke into each of the three alien space ships and
+destroyed their core.  You had saved the world again.  Thus ended Break'n
+Out 2.
+     Unfortunately, You were collected onto a large cargo ship along
+with the defeated aliens.  Trapped and carried back to the alien home
+world unbeknownst to your captors, the world once again called upon you
+for salvation.  You must break through a cargo ship and two factories,
+destroying everything you see on this strange planet.  This time, there
+will be people trying to stop you.  Finally a little action!
+
+     Now you must avoid aliens, fatal traps and oxygen deprivation while
+trying to solve the same kind of problems present in the preceding games.
+Another difference is the view point.  The other two games were looked at
+from a birds eye view.  This game is viewed from the side, allowing for
+vertical motion.  Gravity is now a factor.
+     Their are ladders in this game, and obviously they are 
+used to climb up and down.  You can also fall off edges, but don't worry,
+you can fall as far as you want to without getting hurt.  In Break'n Out
+2, there were pipes to move you from place to place quickly.  In this
+game, there are teleporters.  They beam you from place to place instantly.
+When you are beamed to a receiver, you will fall out from under it.
+However, when you step onto a receiver, its electromagnetic field holds
+you up, allowing you to walk across.  There aren't any wacky doors like in
+the first games, but you still have keys and doors.  Only this time, when
+you use a key, you loose the key.  The keycards will open any door of the
+same color.  Of corse, this game also has bombs.  Fortunately, in this
+game the bombs don't hurt you.  They also only detonate in one direction.
+When you press <ENTER> and you have a bomb, the bomb window will appear.
+A picture of a bomb with three arrows will be displayed.  Use the arrow
+keys to select a direction then press <ENTER> again.  If you accidentally
+hit <ENTER> before you get to the correct location, simply don't specify
+a direction in the bomb window.  Pipes in this game are different from
+those in Break'n Out 2.  In this game, you don't fit into the pipes, you
+just hand walk across them.  You can also press the down button to let go.
+In the first two games, your goal was to exit through the door.  In this
+game, it's not that easy.  You don't know where the door is.  First, you
+must collect all the energy crystals in the room, and the door will appear.
+then, you must exit through it.  You also must collect Oxygen pellets.  If
+your oxygen reaches zero for any reason, your game is over.
+     That brings us to the issue of death.  Dying is not permanent in
+this game, however oxygen deprivation is.  Getting captured by the aliens
+or taking a suicide pill only restarts the level.  However, all the oxygen
+pellets collected before you died are NOT placed back onto the board.  But
+the same goes for the crystals.  You do not forfeit your crystals when you
+die, unless you collected them all.  If you have collected all the
+crystals, then die, the last crystal collected will be lost and put back
+onto the board, and the door re-closed.
+     You can die one of two ways: you can take a suicide pill or get
+captured by the aliens.  Suicide pills are easy to use.  Just collect one,
+then press 'S' if you feel you are stuck.  Sometimes you may get stuck
+without a pill, in which case you simply wait there until you run out of 
+Oxygen or get captured.  Getting captured is quite simple as well.  In
+each level, there are two aliens which will try to hunt you down.  The
+aliens, however, are very un-intelligent and weak.  They do not move quite
+as fast as you, and if they ever stop moving, they die in a matter of
+seconds.  If one alien dies, another instantly appears somewhere else on
+the board.  The aliens are also restricted by movement.  They cannot let
+go of pipes where you can, and will NEVER pass through teleporters.  They
+only try to move directly towards you.  They appear red on the screen, and
+you will appear green.
+     ***Cheat Codes***   There are cheat codes that I made to help me
+test my game, and I have left them in the code for two reasons: 1) I'm a
+nice guy and 2) I'm far to lazy to try and remove them all.  All together
+there are eight such codes.  To allow cheat functions, you must first type
+the letter 'C'.  Then Function keys 1-8 can be used to your advantage.  For
+instance, press 'C' then press 'F1' and you become impervious to aliens.
+Just press 'F1' again to turn invincibility off.
+	Other Keys: Q..........Quit
+                    S..........Suicide pill
+                    <ENTER>....Set and detonate bombs
+                    <SPACE>....Fire weapon (not available in this version)
+                    C..........Activate cheat codes
+
+     Hello there fellow Qbasic Programmers!  I'm Eric Davidson, Creator of
+KEDJIKEEN.  I'm not much of a typist, so this blurb is attached to each
+file. If you've already read it, there's nothing new from here on.
+     Well, each programmer has his or her own little rules to make sure
+they get credit for their work, but I think mine are a little more relaxed
+than most others.  I do NOT want you to pay me for what I did, enjoy it,
+have fun but don't dislike my software because there is a price attached.
+However, it would be nice to send me an E-mail telling me you like my game
+(assuming you do).  That way, I know people care about what I write, so
+I'll write more.  Just an E-mail when you find the time, not too steep
+huh? Now about copying my code, two words: go ahead!  You don't even have
+to give me credit for them in your program OR ask my permission.  It again
+would be nice to know you are doing it, so just write in your message that
+you may copy some code here or there.  About altering my programs, go
+ahead, just leave my name, please.  If you make some cool changes, give
+yourself some credit, just leave my name their too.  If you want to give
+my programs away, even if you've made some changes, I would love that.  In
+fact, don't worry to much about having all these text files included, I
+just want people to enjoy my stuff.  I'm starting to write in C++ too, and
+maybe you'll see some Kedjikeen games on the net of that nature.  I have
+had a lot of fun writing the three Break'n Out games, but I'm sad to say,
+there will not be a fourth.  (at least not in Qbasic).
+     I like writing these games, and I hope you like to play them or hack
+them to bits, which ever, I don't know.  I also like having people know my
+name. When you all grow up and become the software production leaders of
+the world (Most Qbasic programmers do) you just might remember me when I
+ask to get a job in your company. I have to admit, however, that I didn't
+choose such a good name to accomplish this goal.  Kedjikeen?  It has no
+common meaning, it's hard to spell and most people couldn't pronounce it
+even with the oration skills of Mark Antony.  I just like the sound of it.
+Have fun with my program, I hope to hear from you soon.
+     Business mans note:  If you are interested in my line of products,
+and want all the other games I've made, just let me know.  I'll E-mail you
+a zip file with all my programs and a small, easy to use installation
+program.  Also, let me know if you want the programs compiled to .exe
+format or not.
+				Hope you like my code,
+						Eric Davidson & Kedjikeen.     

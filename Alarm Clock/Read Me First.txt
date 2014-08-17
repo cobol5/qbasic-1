@@ -1,0 +1,30 @@
+      
+**************************** Computer Alarm Clock ***************************
+                                    V 1.0
+                               By Bobby Jarrard
+                            bobbyjarrard2@msn.com
+
+
+  This program is Freeware. You may use or distribute it any way you like as 
+ long as no fee is charged. I wrote this program on a pretty old computer
+ so the graphic may run to fast on fast machines. If I write another verson
+ I will program a speed setting into it. 
+     
+  The code is not as neat as it should be, but when I wrote this I tried to
+ use as many different QBasic commands and functions as  I could. It 
+ demonstrates the use of Time Conversion, Subs, Switches, Graphics, Play,
+ Sound, Timer and other stuff. Also it works well. (Wakes me up every morning)
+
+                               
+
+     This program will not harm your computer in any way but if you think it has I
+ except no responsibilty.            
+
+   Thanks to Dave Shea for his creation of Elvis.
+
+
+
+  Well, Hope you enjoy it.
+ 
+                    Bobby Jarrard
+     

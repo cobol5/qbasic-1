@@ -1,0 +1,6 @@
+'Programm: DOS-Interpreter
+CLS
+INPUT Bitte Befehl eingeben:
+SHELL string$
+PRINT Fertig !
+END

@@ -1,0 +1,1352 @@
+If you want to play KABOOM without to read this: type "game" in MS-DOS-Prompt. 
+          For an ENGLISH Version goto the 2nd Part of this Document.
+
+      mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+      ³\                                                              /³
+      ³//\   ²²   ²²²  ²²²²   ²²²²²²   ²²²²²²²  ²²²²²²²  ²²    ²²   /  ³
+      ³////\ ²²  ²²   ²²  ²²  ²²   ²²  ²²   ²²  ²²   ²²  ²²²²²²²² /    ³
+      ³/////-²²²²²----²²²²²²--²²²²²²---²²---²²--²²---²²--²²-²²-²²-     ³
+      ³///// ²²  ²²   ²²  ²²  ²²   ²²  ²²   ²²  ²²   ²²  ²²    ²² \    ³
+      ³///   ²²   ²²² ²²  ²²  ²²²²²²²  ²²²²²²²  ²²²²²²²  ²²    ²²   \  ³
+      ³/                                                              \³
+      mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+                                                    
+
+                KABOOM 3D-Engine fr QBasic mit BC45-Compiler
+                mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+                         (C)2000 von Dieter Marfurt
+                         mmmmmmmmmmmmmmmmmmmmmmmmmm
+
+          For an ENGLISH Version goto the 2nd Part of this Document.
+
+
+
+                          Inhalt:
+                          _______
+
+
+                          Kurz-Info
+
+                          Dateien
+
+                          Features
+
+                          Ben”tigte Hardware
+
+                          Das Spiel
+
+                          Einschr„nkungen
+
+                          Erstellung eigener Levels
+
+                          Erstellung von Spielen mit mehreren Levels
+
+                          Hinweise zum Quellcode
+
+                          Bugs
+
+                          Geschichte
+
+                          Optionen fr die Zukunft
+
+                          Kontakt
+                            
+
+
+  ----------------------------------------------------------------
+
+
+
+
+  Kurz Info:
+  mmmmmmmmmm
+  KABOOM ist eine Spiele-Entwicklungsumgebung speziell, aber
+  nicht nur, fr QBasic-ProgrammiererInnen. Es beinh„lt eine
+  spielbare 3-Level Demo, den Quelltext und einige weitere Tools.
+  KABOOM benutzt eine einfache 3D- Engine, auch Ego-Shooter
+  genannt. KABOOM besteht, ausser der Mausroutine, zu 100% aus Basic.
+
+  Das Programm l„uft nicht mit dem Interpreter, da dieser
+  zu wenig Speicher bereitstellt. Wenn Sie es ab„ndern wollen,
+  brauchen sie einen Compiler. Sie k”nnen aber auch ohne Compiler
+  neue Levels und Grafiken erstellen.
+
+
+
+  ----------------------------------------------------------------
+                                     
+
+  Dateien:
+  mmmmmmmm
+
+  KABOOM.EXE       Die Engine
+  KABOOM.BAS       Der Quellcode
+ 
+  BOOBONUS.DAT     Datei mit Informationen ber Bonus-Einblendungen
+  BOOBON2.GIF      Beispiel einer Bonus-Einblendung
+  BONUS.EXE        Beispiel eines Bonus-Event Programmes (wird in dieser
+                   Version wegen Speicherknappheit nicht gestartet.)
+
+  INTRO.EXE        Beispiel eines sehr einfachen Intros
+  INTRO.GIF        Ein Bild fr dieses Intro
+
+  BOOSTD.GIF       Texturen etc. Hiervon wird die Palette verwendet
+  BOOM2.GIF        Weitere Texturen
+  BOOM3.GIF        Weitere Texturen
+  DISPLAY2.GIF     Rahmen bzw. Display
+  
+  KABED.EXE        Simpler Map-Editor (Map = Level)
+  KABED.BAS        Der Quellcode dazu
+  KABED.TXT        Bitte lesen Sie das, wenn Sie KABED benutzen wollen!
+  BOO1.MAP         Beispiel Map 1 
+  BOO2.MAP         Beispiel Map 2
+  BOO3.MAP         Beispiel Map 3
+ 
+  BOORESLT.DAT     Datei zum Zwischenspeichern der Punkte + Gesundheit
+
+  GAME.BAT         Beispiel eines Spiels mit mehreren Levels
+  FINISH.EXE       Beispiel einer Schluss-Sequenz
+  FINISH.BAS       Der Quellcode dazu
+
+  SHOT1.WAV        Baller-Sample
+  SHOT2.WAV        Ditto mit Schrei
+
+  BOOSTICK.EXE     Simples Joystick-Kalibrierprogramm
+  BOOSTICK.BAS     Quellcode davon
+  BOOSTICK.DAT     KABOOM Joystick-Konfiguratiosdatei
+                          
+  BRUN45.EXE       Die QuickBasic Runtime-Library
+  KABOOM.TXT       Dieser Text
+
+
+  ausserdem werden zur Laufzeit folgende Dateien angelegt:
+
+  SCREEN.TMP       64006 Bytes
+  BOOALIVE.DAT     0 Bytes
+
+
+  ----------------------------------------------------------------
+
+
+
+  Features:
+  mmmmmmmmm
+
+  3D-Raycasting Engine 100% in QB geschrieben.
+  Texture-Mapping mit Gif-Support.
+  Pro Level maximal 30 Texturen, wovon 1 hochaufl”send und 8 maskierbar.
+  Rekursive Raycasting-Routine.
+  Unendlich viele Levels m”glich.
+  Jedem Bonus k”nnen externe EXEs oder GIFs zugeordnet werden.
+  Quellcode zur Weiterbearbeitung mit dabei.
+  Soundblaster-Support.
+
+
+
+  ----------------------------------------------------------------
+
+
+  Ben”tigte Hardware:
+  mmmmmmmmmmmmmmmmmmm
+
+  Das Spiel l„uft zwar auf allen PC's mit VGA-Bildschirm,
+  eine Maus und ca. 300MHz CPU-Speed oder mehr werden 
+  aber empfohlen. Die Soundroutinen werden nur von Soundblaster-
+  Karten untersttzt (Die DOS-Umgebungsvariable BLASTER wird verwendet).
+
+
+  ----------------------------------------------------------------
+
+
+  Das Spiel:
+  mmmmmmmmmm
+
+  Achtung: Wenn Probleme mit der Joysticksteuerung auftreten,
+  dann starten Sie bitte BOOSTICK.EXE oder BOOSTICK.BAS!
+  rem: Maussteuerung ist jetzt Voreinstellung. Joystick nervt.
+  KABOOM ben”tigt einen aktiven Maustreiber.
+
+  In dieser Version mssen Sie im Spiel die Spinnen unter
+  Beschuss nehmen und Truhen mit der Space-Taste oder der
+  rechten Maustaste ”ffnen.
+  In jeder Truhe kann sich ein Bild oder ein Sub-Game befinden.
+  Auch Tren und schliesslich der Level-Ausgang lassen sich
+  mit der Space-Taste aktivieren. Stehen Sie dabei genug 
+  nah am betreffenden Objekt.
+  Die Spinnen mssen Sie etwa 10mal treffen, ehe sie das
+  Zeitliche segnen, um anderso zu neuem Leben zu erwachen.
+  Wenn Sie K”rperkontakt mit einer Spinne haben, so leidet
+  dabei Ihre Gesundheit. Bei -25% Gesundheit sterben Sie.
+  Folgende Tasten haben zudem eine Funktion:
+
+  "0" bis "5":    Lautst„rke der Soundblaster, falls
+                  vorhanden, einstellen.
+
+  "H":            zurck zum Startpunkt.
+
+  "E" oder Esc:   Spiel sofort beenden.
+
+  Enter:          Feuer
+
+  Cursortasten:   Bewegung vor/zurck/Rotation
+
+  " ":            Tren ”ffnen, Bonus nehmen, Ausgang aktivieren
+
+  "K":            Toggle Joystick-Control OFF/ON (Joystick bremst!)
+
+  "B":            Toggle Slow down to 18f/s  OFF/ON
+
+  Beachten Sie: Grossbuchstaben!
+
+  ----------------------------------------------------------------
+
+
+
+  Einschr„nkungen:
+  mmmmmmmmmmmmmmmm
+
+  Wie schon erw„hnt, ist dieses Spiel komplett in QBasic 
+  geschrieben. Dies bringt einige Einschr„nkungen mit
+  sich. So ist der direkt verwendbare Speicher beschr„nkt
+  und auch die Geschwindigkeit des kompilierten Programmes
+  ist nicht optimal. Folgendem sollten Sie Beachtung schenken:
+
+  Die Summe der Gegner, Tren, Einrichtungsgegenst„nde und
+  Bonusse (Bonae?), die HINTEREINANDER sichtbar 
+  werden k”nnen, darf _50_ nicht bersteigen.
+  (Wegen maximaler 50facher Rekursionstiefe)
+
+  Es darf maximal 50 Gegner (hier Spinnen) geben.
+
+  Es darf maximal 50 Tren geben.
+
+  Es darf maximal 50 Bonus-Kisten geben.
+
+  Tren ”ffnen sich immer alle miteinander
+  (Achten Sie wenn n”tig darauf, dass sich nicht 2
+  Tren im Sichtfeld befinden.)
+
+
+  Dies bezieht sich jeweils auf EIN Level.
+  ----------------------------------------------------------------
+
+
+
+
+  Erstellung eigener Levels:
+  mmmmmmmmmmmmmmmmmmmmmmmmmm
+
+
+  Der Map-Editor
+  """"""""""""""
+
+  Mit dem Programm KABED.EXE k”nnen Sie ganz leicht
+  eigene Levels erstellen. Experimentieren Sie ruhig ein 
+  wenig mit den M”glichkeiten. Achten Sie aber darauf, 
+  dass der „usserste Rand der Map immer mit W„nden _RUNDHERUM_
+  geschlossen ist, da der Raycaster sonst einen digitalen Nirwana-
+  feldindex betritt und Ihr Compi schlimmstenfalls abschmiert.
+  Wenn n”tig k”nnen Sie hinterher noch mit einem Text-Editor
+  wie Edit in der eben abgespeicherten Level-Datei die 
+  anf„ngliche Blickrichtung bestimmen („ndern Sie dazu
+  die _unterste_ Zahl in einen Wert von 0 bis 1799, wobei
+  450 beispielsweise 90 Grad entsprechen).
+  Beachten Sie auch die oben erw„hnten Einschr„nkungen.
+  Testen Sie ihr Level im Dos mit: KABOOM IHRLEVEL.MAP
+  wobei IHRLEVEL.MAP der Dateinahme ist, den Sie w„hlten.
+ 
+  PS: KABED.EXE ben”tigt einen Maustreiber.
+      Zudem ben”tigt der Editor fast alle Dateien die auch
+      die Engine verwendet.
+
+
+
+                      
+
+
+  Die Bonus-Events
+  """"""""""""""""
+
+  In der Datei BOOBONUS.DAT k”nnen Sie nun mit einem
+  Texteditor jeder Truhe ihres Levels ein eigenes
+  Gif-Bild oder ein aufzurufendes EXE-Programm zuordnen. 
+  Dieses muss folgende Kriterien erfllen:
+
+  Wenn es ein Bild ist:
+
+  320 mal 200 Pixel gross
+  256 Farben
+  Gif87a (Nicht zu verwechseln mit Gif89 ! )
+
+  Wenn es eine EXE-Datei ist:
+
+  Das Programm muss mit dem verbleibenden konventionellen Ram zufrieden
+  sein. Bei der jetzigen Version sind das leider nur ca. 120 kB.
+
+    QB-Programmierer:
+    Wollen Sie ein zweites mit brun45.exe laufendes QB-Programm einbinden,
+    mssen Sie zus„tzlich min. etwa 80kB freimachen. Das erreichen Sie
+    am einfachsten, indem Sie etwa 10 Texturen weniger nutzen. Deaktivieren
+    Sie bei DIM tx1%... die Texturen tx15%() bis tx24%() und verhindern
+    Sie ein Einlesen dieser Felder beim Label "texture:". Ev. „ndern Sie
+    noch die Vektoren bezgl. Maskieren (Beide Male: IF k% >= 6 and k% <= 15)
+
+  Wollen Sie einer Bonus-Truhe kein Bild oder Programm zuordnen,
+  dann belassen Sie den Index auf "nothing".
+  Vor und hinter einem Eintrag drfen keine Leerzeichen stehen!
+  Diese Datei muss mindestens soviele Eintr„ge bzw. 
+  Zeilen wie Truhen im Level haben. Die Eintr„ge 
+  entsprechen folgender Reihenfolge:
+
+  XxxxxxxxxxxxxxxX 
+  X  1      2    X
+  X      3       X
+  X           4  X
+  X  5 6         X
+        usw.               
+  ...also einem Einlesen der Map von oben links nach 
+  unten rechts.
+      
+
+
+
+                        
+
+  Eigene Grafiken
+  """""""""""""""
+
+  Wenn Sie eigene  Texturen verwenden wollen,
+  dann ver„ndern Sie die bestehenden Dateien mit einem
+  geeigneten Bildbearbeitungsprogramm in folgender Weise,
+  nachdem Sie eine Kopie davon gesichert haben:
+
+
+  Diese Dateien enthalten die Texturen:
+  BOOSTD.GIF
+  BOOM2.GIF
+
+  Diese Datei enth„lt den Rahmen:
+  DISPLAY2.GIF
+
+  Von der Datei BOOSTD.GIF wird die Palette verwendet.
+  Alle folgenden Bilder verwenden diese Palette (ausser
+  die Bonus-Truhen-Einblendungen) d.h. die Texturen von
+  BOOM2.GIF und BOOM3.GIF werden mit den passendsten
+  Farben der ersten Palette bernommen (best match). 
+  Genauso wird das Bild DISPLAY2.GIF, das den blauen Rahmen
+  darstellt, der Palette von BOOSTD.GIF angeglichen.
+ 
+  Achten Sie deshalb 
+  darauf, das im Bild BOOSTD.GIF eine gengend breite
+  Auswahl von Farben zur Verfgung steht, um auch die 
+  anderen Bilder darstellen zu k”nnen.
+
+  Maskierte Texturen mssen alle die _gleiche_ 
+  Maskenfarbe haben! Die Engine liest die Farbe der Maske
+  im Bild BOOSTD.GIF an folgenden, enorm wichtigen
+  Koordinaten (!!!):
+
+  0 , 190     (maske% = POINT(0, 190))
+
+  Das ist in der Originalversion irgendwo links neben der 
+  Kanone im grnen Bereich. Sollte dieser Pixel nicht mehr
+  die Maskier-Farbe repr„sentieren, wird es bei der 
+  Darstellung der Texturen zu Fehlern kommen. (Wollen Sie 
+  diesen Referenz-Punkt „ndern, mssen Sie im Quellcode
+  nach der Zeile "maske% = " suchen, die Koordinaten „ndern
+  und das Programm neu kompilieren).
+
+
+
+  Wenn Sie an den Texturen oder dem Display irgend etwas „ndern,
+  achten Sie wiederum darauf, dass die neuen Bilder folgende
+  Kriterien erfllen:
+
+  320 mal 200 Pixel gross
+  256 Farben
+  Gif87a (Nicht zu verwechseln mit Gif89 ! )
+
+
+
+
+  Die Kommandozeile                         
+  """""""""""""""""
+
+  Starten Sie nun KaBOOM mit ihrem Level als Kommando-
+  zeilenparameter an der "MS-DOS-Eingabeaufforderung", 
+  also z.B.
+
+  "kaboom mylevel.map (enter)"
+
+  Wenn Sie nur "kaboom" ohne Levelnamen eingeben, erwartet
+  die Engine das Vorhandensein der Level-Datei "boo1.map" 
+  und l„dt diese.
+
+
+
+
+                        *
+
+
+  (Ich empfehle, das Spiel in reinem Dos laufen zu lassen,
+  sofern dieses die Maus untersttzt. Windows bremst das
+  Spiel.)
+
+
+
+
+  ----------------------------------------------------------------
+
+
+
+  Erstellung von Spielen mit mehreren Leveln:
+  mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+
+  In der Datei GAME.BAT sehen Sie, wie ein Multilevel-Spiel
+  realisiert werden kann. Erreicht der Spieler den Ausgang des
+  aktuellen Levels, wird eine Datei BOOALIVE.DAT angelegt, was
+  der Bat signalisiert, KABOOM mit dem n„chsten Level zu starten.
+  Wurde das Level jedoch durch Tod beendet, liegt die Datei 
+  BOOALIVE.DAT _nicht_ vor und die Bat verzweigt zum Ende.
+
+
+
+  Wenn Sie in den verschiedenen Leveln veschiedene Texturen
+  und Grafiken verwenden wollen, so ist dies durchaus m”glich.
+  Benutzen Sie dazu einfach in der GAME.BAT die Dos-Befehle 
+  "COPY" und "DEL". Dazu ein Beispiel einer m”glichen GAME.BAT
+  (arbeiten Sie immer nur mit Kopien Ihrer Dateien!):
+
+
+
+  @echo off
+  rem level 1-----------------------------------
+  copy l1_p1.gif boostd.gif
+  copy l1_p2.gif boom2.gif
+  copy l1_p3.gif boom3.gif
+  copy l1_p4.gif display2.gif
+  kaboom boo1.map
+  del boostd.gi
+  del boom2.gif
+  del boom3.gif
+  del display2.gif
+  if not exist booalive.dat goto dead
+
+  rem level 2-----------------------------------
+  copy l2_p1.gif boostd.gif
+  copy l2_p2.gif boom2.gif
+  copy l2_p3.gif boom3.gif
+  copy l2_p4.gif display2.gif
+  kaboom boo2.map
+  del boostd.gif 
+  del boom2.gif 
+  del boom3.gif
+  del display2.gif 
+  if not exist booalive.dat goto dead
+  
+  rem level 3-----------------------------------
+  copy l3_p1.gif boostd.gif
+  copy l3_p2.gif boom2.gif
+  copy l3_p3.gif boom3.gif
+  copy l3_p4.gif display2.gif
+  kaboom boo3.map
+  del boostd.gif 
+  del boom2.gif 
+  del boom3.gif
+  del display2.gif
+ 
+  rem Ende glorreich erreicht-------------------
+  Finish
+
+ :dead
+
+
+                         *
+
+
+  Elegant w„re hierbei auch die Verwendung einer Ramdisk,
+  welche eine weitere Batch-Datei einrichtet, alle Dateien
+  hinkopiert und dann die besprochene Game.bat startet.
+
+  Wenn Sie Probleme mit der Erstellung einer Batch-Datei
+  haben, dann bitte ich Sie, geeignete Literatur zu 
+  konsultieren.
+
+
+
+
+  ----------------------------------------------------------------
+
+
+
+
+  Hinweise zum Quellcode:
+  mmmmmmmmmmmmmmmmmmmmmmm
+
+  Ich bitte Sie, Verst„ndnis dafr aufzubringen, dass dieser
+  Quelltext nicht perfekt gegliedert und dokumentiert ist.
+  Bedenken Sie, dass ich die Engine als Freeware ver”ffentliche
+  und mir diese Arbeit niemand bezahlt.
+
+  Der Raycaster
+  """""""""""""
+
+  Diese Engine funktioniert nach dem simplen Prinzip des
+  Raycasting. Da dies ein zeitraubender Prozess ist, wurde
+  einmal mehr ein Kompromiss in Bezug auf korrekte
+  Darstellung zugunsten der Geschwindigkeit eingegangen:
+
+  Eine doppelte Scout-Routine tastet den Weg des Raycasters
+  im Voraus in grossen Schritten ab um dem Raycaster zu
+  signalisieren, wo er nach W„nden suchen soll. Dies hat
+  den Nachteil, dass freistehende Ecken manchmal, vor allem im
+  Zusammenhang mit sich bewegenden Objekten, nicht
+  richtig gerendert werden. Sie k”nnen diese Scout-Routinen
+  (im Source-Code als Outguard 1 und 2  bezeichnet)
+  entfernen wenn Sie Wert auf korrekte Darstellung legen
+  und wenn Sie denken, Ihr Rechner ist schnell genug.
+  Das Programm wird dadurch etwa 5 mal langsamer.
+  rem: Scoutfehler korrigiert.
+
+  Bei Erreichung von 15 Frames/Sekunde wird das Programm
+  allerdings sowieso gedrosselt um spielbar zu bleiben.
+  rem: momentan abschaltbar mit "B"...
+  Fr eine flssige Darstellung ohne Scouts ben”tigen Sie
+  ca. 300 MHz (das ist nun mal kein Assembler-Proggi!)
+
+  Die Routine Computeview: ist der Prim„re Caster und
+  zust„ndig fr das Rendern von Texturen,
+  die nicht _hinter_ anderen maskierten Texturen sichtbar
+  sind, sowie fr das Initieren und Setzen der Masken-Flags
+  "Pixelcolumn%(n)". Dieser Caster ist nicht rekursiv.
+
+  Die Routine cast2: ist der sekund„re Caster und wird
+  nur aufgerufen, wenn maskierte Texturen (z.B. Gegner)
+  sichtbar sind. Er castet hinter diesen Masken weiter.
+  Trifft er da wieder auf eine maskierte Textur, ruft er
+  _sich selber_ auf, um auch dahinter (rekursiv)
+  weiterzucasten usw.
+
+  Die Engine verwendet ausschliesslich Integerzahlen.
+  Die Sinus-Cosinus-Tabellen des Casters wurden in den
+  16-Bit Integerbereich geshiftet, was den Speed enorm
+  verbesserte (dies ist allerdings eine permanente Grat-
+  wanderung zwischen Rundungsfehlern und Overflows).
+
+  Das Programm l„uft nicht mit dem Interpreter, da dieser
+  zu wenig Speicher bereitstellt. Wenn Sie es ab„ndern wollen,
+  brauchen sie einen Compiler. 
+
+  Die Soundblaster-Routinen stammen von Mike Huff (Danke!).
+
+  Jegliche Texturen und Personen sind frei erfunden.
+  Jede hnlichkeit mit echt existierenden Texturen oder
+  Personen ist rein zuf„llig.
+
+  Diese Software ist (C)2000 by Dieter Marfurt. Sie k”nnen Sie
+  entweder in unver„nderter Form weiterverbreiten, oder aber
+  Ihr eigenes Spiel ver”ffentlichen und das Programm beliebig
+  weiterbearbeiten. Die Voraussetzung dazu ist jedoch, dass Sie
+  das Spiel massiv ab„ndern, soweit, dass es nicht mehr auf
+  den ersten Blick als KABOOM-Entwicklungs-Kit erkannt wird.
+
+
+  ----------------------------------------------------------------
+
+
+
+
+  Bugs:
+  mmmmm
+
+  Kompiliering mit -D Option (auto-dim off) schl„gt fehl, keine Ahnung
+  wieso.
+  1 mal unerkl„rbarer Adresserror beobachtet. grummel...
+
+
+  ----------------------------------------------------------------
+
+
+
+  Geschichte:
+  mmmmmmmmmmm
+
+  Ich habe im Lauf der letzten Jahre viele 3D-Engines aus
+  dem Internet runtergeladen und getestet. Leider waren alle
+  entweder nicht gratis, nicht Grafikkartenunabh„ngig, nicht
+  ernst zu nehmen oder nicht erweiterbar. Schliesslich habe
+  ich das bekannte QB-Progr„mmchen "DOOM.BAS -Raycaster-Demo"
+  zerpflckt und vollst„ndig neu aufgebaut. In der Folge
+  arbeitete ich etwa 10 Tage von Ende Februar bis Anfangs
+  M„rz am Projekt KABOOM.
+
+  Die Etappen der Enwicklung waren Folgende:
+  """"""""""""""""""""""""""""""""""""""""""
+
+  -Erweiterung des horizontalen Caster-Rasters von 64 auf 320
+   Einheiten.
+
+  -Optimierung des Speed durch Shiften aller Float-Werte in den
+   16-Bit Integerbereich.
+
+  -Optimierung des Speed durch Scout-Routinen.
+
+  -Joystick-Support.
+
+  -Texture-Mapping hinzugefgt.
+
+  -Maskiertes Texture-Mapping mit rekursiver Raycasting-
+   Routine hinzugefgt.
+
+  -Bewegung der Gegner, Kanone, Kommandozeilenoption.
+
+  -Multi-Level-F„higkeit, Bonus-Optionen.
+
+  -Soundblaster-Support.
+
+  -Scoutfehler behoben. (etwas Speed verloren)
+
+  -Maus
+
+  -Boden Mapping
+
+  -Fllen des Ram mit weiteren Texturen.
+
+
+  ----------------------------------------------------------------
+
+
+
+
+  Optionen fr die Zukunft:
+  mmmmmmmmmmmmmmmmmmmmmmmmm
+
+  -Optimierung des Speed.
+
+  -Mehr Texturen, besseres Memory-Management.
+
+  -Mapping fr Boden.OK!
+
+  -Mapeditor fr Boden und Decke tauglich machen.OK!
+
+  -Verwendung grunds„tzlich anderer Technik zur
+   Entfernungsmessung (momentan: Raycasting).
+
+  -Portierung auf Systeme mit schnellen 32-Bit Basic-Compilern.
+   Uebrigens: Wieso gibt es eigentlich keinen Protected Mode
+   Basic Compiler fr Dos ?!? Auf dem guten, alten Atari ST war
+   es durchaus m”glich zu schreiben: dim a%(300000). Und das war
+   1984! Wenn ich eine Tabelle mit 240000 Indexes anlegen k”nnte,
+   dann wrde dieses Programm FLIEGEN (wozu hab ich denn das Ram?).
+
+  -Umsetzung in Assembler
+
+  
+
+                        
+  ----------------------------------------------------------------
+
+
+
+
+  Kontakt:
+  mmmmmmmm
+
+  Ich suche immer Jobs im Spiele-Bereich, als Musiker, Grafiker
+  und Programmierer. Die Musik ist dabei mein Hauptgebiet.
+  W„r super, wenn irgendein Team noch jemanden sucht.
+
+  Schreibt an:
+
+  Dieter Marfurt
+  Nidelbadstr.30
+  8038 Zuerich
+  Schweiz
+
+  Oder:
+
+  dietermarfurt@angelfire.com
+
+  (Adressen gltig am 1.3.2000, aber wie lange noch?)
+
+
+
+
+
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+²×³:::ùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùù:::::::::::³³³ØØØØ××
+ÎØ³::::::ùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùù::::::::::³³³³ØØØØØ×
+ÎØ³³³³³³::::::::ùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùù::::::::::::³³³³³³³ØØØØ××
+×ØØØØØØØØØØ³³:::::::ùùùùù:::ùùùùùùùùùùùùùùùùùùùùùùù:::::::::³³³³³³³³³³ØØØØØØ××××
+××ØØØ³³ØØ×××ØØØ³³³³³::::::::::::::::::::::::::::::::::³³³³ØØØØØ×ØØØØØØØ××××××ÎÎÎ
+×ØØ³³::::³³ØØ××××××ØØØ³³³³:::::::::::::::::::³³³³³³ØØØØ××ÎÎÎÎÎ×××ØØØØ×××ÎÎÎÎÎÎÎ²
+×ØØ³³::³³³:³::³Ø×ÎÎÎÎÎ××ØØØ³³³:::::::::³³³³ØØØ××××ÎÎÎÎ²²²²ÎÎ×ØØ³³³³³ØØØ×××ÎÎ²²²²
+××ØØØØØØØØØØØØØØØØ×ÎÎÎÎÎÎÎ×Ø³³³:::::::³³³ØØ××ÎÎÎ²²²²²²²²²ÎÎ×ØØØØØØØØØØ×××ÎÎÎ²²²²
+Î×××××ØØØØØ×Î×³³×Î××××ÎÎÎÎÎ×Ø³::::::::³³³Ø×ÎÎÎ²²²²²²²²²²²Î×××××Î²²ÎÎÎÎÎ²²²²²²²²²
+×Ø××××ÎÎØ³³ØÎÎÎ²²²ÎÎ×Ø××××××Ø³::ùùùùù:::³³Ø×Î²²²²²²²²ÎÎ×Ø³³×Î×ÎÛÛ²Û²²ÎÎÎÎ²²Û²²²²
+Ø³ØØØ××Ø³:::Ø×ÎÎÎÎ×Ø³³³³³³³³³::ùùùùùùùù::³³×ÎÎ²²ÎÎ×Î××³::ù:³×ÎÎ²²²²²ÎÎ²²²²²²²²²²
+³³³³³ØØ³::::::³ØØ³³:::³³³::::::ùùùùùùùù::³³Ø×××Ø³³ØØØ³::ùùùù:Ø××Î××ØØØØ×Î²²²ÎÎÎÎ
+:::³³³³³³³³::::::::::::::::::::ùùùùùùù::::³³ØØØ³:::::::::::ùù::³³³³³³³Ø×ÎÎÎÎÎÎ×Ø
+::::³³³³³³³³³³³³³³³³³³³:::::::ùùùùùùùù::::³³³ØØ³³:::::³³³³³³³³³³³ØØØØ××××××ØØØ××
+:::::::³³³³³³³³³³³³³³:::::::::ùùùùùùù::::³³³³³³³³³::::³³³³³³³³³³³³³ØØØ××ØØØ³³³³³
+::::::::::::::::::::::::::::::ùùùùùùù:::³³³³³³³³³³³::::::³³³³³³³³³³³ØØØ³³³::::::
+::::ùùùùù:::::::::::::::::::::ùùùùùù::::³³³³³ØØØØ³³³:::³::::::::::::::::::::::::
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+
+      mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+      ³\                                                              /³
+      ³//\   ²²   ²²²  ²²²²   ²²²²²²   ²²²²²²²  ²²²²²²²  ²²    ²²   /  ³
+      ³////\ ²²  ²²   ²²  ²²  ²²   ²²  ²²   ²²  ²²   ²²  ²²²²²²²²      ³
+      ³///// ²²²²²    ²²²²²²  ²²²²²²   ²²   ²²  ²²   ²²  ²² ²² ²²      ³
+      ³///// ²²  ²²   ²²  ²²  ²²   ²²  ²²   ²²  ²²   ²²  ²²    ²²      ³
+      ³///   ²²   ²²² ²²  ²²  ²²²²²²²  ²²²²²²²  ²²²²²²²  ²²    ²²   \  ³
+      ³/                                                              \³
+      mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+                                      ³
+                                      ³
+
+               KABOOM 3D-Engine for QBasic width BC45-Compiler
+               mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+                          (C)2000 by Dieter Marfurt
+                          mmmmmmmmmmmmmmmmmmmmmmmmm
+
+ 
+
+
+                          Index:
+                          _______
+
+
+                          Quick-Info
+
+                          Files
+
+                          Features
+
+                          Hardware-Requirements
+
+                          The Game
+
+                          Limits
+
+                          Producing your Levels
+
+                          Producing Games with multiple Levels
+
+                          Notes about the Sourcecode
+
+                          History
+
+                          Future-Options
+
+                          Contact
+                            
+
+
+  ----------------------------------------------------------------
+
+
+
+
+  Quick Info:
+  mmmmmmmmmmm
+  KABOOM is a Game-Development-Enviroment for, but not only for
+  Qbasic-Programmers. It includes a playable 3-Level-Demo,
+  the Soucecode and some Tools. KABOOM uses a simple 3D-Engine,
+  also known as "Ego-Shooter". KABOOM is written in 100% pure
+  Basic.
+
+  The game doesnt run in the Interpreter because of there is
+  not enough Ram. If you want to edit the Programm, you have
+  to compile it. If you have no Compiler, you still can
+  alter the Levels and the Grafics.
+
+
+  ----------------------------------------------------------------
+                                     
+
+  Files:
+  mmmmmm
+
+  KABOOM.EXE       The Engine
+  KABOOM.BAS       The Soucecode
+                                           
+  BOOBONUS.DAT     File with Informationen from Bonus-fade-ins
+  BOOBON2.GIF      Example of a Bonus-Picture-Fade-in
+  BONUS.EXE        Example of a Bonus-EXE-Event (In this Version ignored
+                   because of not enough Memory free, Details see below.)
+
+  INTRO.EXE        Very simple Example of an Intro
+  INTRO.GIF        A picture for this Intro
+                                           
+  BOOSTD.GIF       Textures etc. Palette from this one will be used.
+  BOOM2.GIF        More Textures
+  BOOM3.GIF        More Textures
+  DISPLAY2.GIF     Frame or Display
+  
+  KABED.EXE        Simple Map-Editor
+  KABED.BAS        Sourcecode
+  KABED.TXT        Please read this Text if you want to use KABED!
+  BOO1.MAP         Example Map 1
+  BOO2.MAP         Example Map 2
+  BOO3.MAP         Example Map 3
+ 
+  BOORESLT.DAT     File to buffer Score + Health
+
+  GAME.BAT         Example of a Game with multiple Levels
+  FINISH.EXE       Example of an End-Sequenz
+  FINISH.BAS       Sourcecode
+
+  SHOT1.WAV        Gun-Sample
+  SHOT2.WAV        The same with a cry
+
+  BOOSTICK.EXE     Simple Joystick-Adjustmentprogram
+  BOOSTICK.BAS     Sourcecode
+  BOOSTICK.DAT     KABOOM Joystick-Configurationfile
+                             
+  BRUN45.EXE       QuickBasic Runtime-Library
+  KABOOM.TXT       This Text
+
+
+  furthermore 2 files will be generated while running:
+ 
+  SCREEN.TMP       64006 Bytes
+  BOOALIVE.DAT     0 Bytes
+
+
+  ----------------------------------------------------------------
+
+
+
+  Features:
+  mmmmmmmmm
+
+  3D-Raycasting Engine, written 100% in QB.
+  Texture-Mapping with Gif-Support.
+  Each Level max. 30 Texturen, whereby 1 highresolute and 8 maskable.
+  Recursive Raycasting-Procedure.
+  Unlimited Number of Levels possible.
+  Assign external GIF or EXE to each bonus.
+  Sourcecode included.
+  Soundblaster-Support.
+
+
+
+  ----------------------------------------------------------------
+
+
+  Hardware-Requirements:
+  mmmmmmmmmmmmmmmmmmmmmm
+
+  The Game runs on all PCs with VGA, but a Mouse and 300MHz
+  or more are recommended. There is only Sound-Support for
+  Soundblastercards.(Enviroment-Variable BLASTER must be present).
+
+
+  ----------------------------------------------------------------
+
+
+  The Game:
+  mmmmmmmmm
+
+  Note: If any Problems with the Joystick occur then run
+  BOOSTICK.EXE or BOOSTICK.BAS!
+  rem: Mousecontrol is now default. Slow Joystick sucks.
+
+  In this  Version of the Game you have to fight against Spiders
+  and to open Boxes with Space or right Mousebutton.
+  In every Box could be a Picture or another Sub-Game.
+  Also Doors and the Level-Exit must be activated with
+  the Space-Key. Be sure to stand close to the object you
+  want to activate.
+
+  The Spiders must be shot about 10 times until they
+  die - just to rebirth at another location. If you have
+  Body-Contact with a Spider, your Health sinks rapidely.
+  If your health is below -25% then you will die.
+
+  The following Keys have a special meaning:
+
+
+  "0" bis "5":    Mastervolume of Soundblaster, if
+                  present.
+
+  "H":            Back to initial Startpoint.
+
+  "E" oder Esc:   End game immediately.
+
+  Enter:          Fire
+
+  Cursorkeys:     Movement fowar,back, Rotation (bug - use mouse)
+
+  " ":            Pen doors, take Bonus, activate Exit
+
+  "K":            Toggle Joystick-Control OFF/ON
+
+  "B":            Toggle Slow down to 18f/s  OFF/ON
+
+  "s":            Project Headcam Snapshot to Wall 3.
+
+  Note: upper keys! K,E,B and H
+
+
+  ----------------------------------------------------------------
+
+
+
+  Limits:
+  mmmmmmm
+
+  This Game is written completely in QBasic. This brings up
+  some Limits: There is not so much accessible Ram
+  and the Speed of the compiled Program is not very fast.
+  Please note the following Limits:
+
+  The Sum of Enemies, Doors, Enterieur-Objects and Bonusses
+  wich can become visible _BEHIND EACHOTHER_ cannot be higher
+  than _50_ (Because of a 50-times-Recursion Limit)
+
+  Maximum 50 Enemies (here Spiders).
+
+  Maximum 50 Doors.
+
+  Maximum 50 Bonus-Boxes.
+
+  Doors will only open all together at the same time
+  (just be shure that there ain't 2 Doors in the
+  Viewport)
+
+ 
+  (per Level)
+  ----------------------------------------------------------------
+
+
+
+
+  Producing your Levels:
+  mmmmmmmmmmmmmmmmmmmmmm
+
+
+  The Map-Editor
+  """"""""""""""
+
+  With the Programm KABED.EXE you can edit your personal
+  Levels easily. Just be shure to close the wall around the Map.
+
+  You can alter the initial direction of view: Edit in the
+  Level-File the value in the _last_ line with a Texteditor.
+  Values from 0 to 1799 are possible, representing Angles
+  from 0 to 359 Degrees. For more Information read KABED.TXT.
+
+  PS: KABED.EXE requires a Mousedriver.
+
+
+
+                      
+
+
+  The Bonus-Events
+  """"""""""""""""
+                                   
+  In the File BOOBONUS.DAT you can assign a Gif-Picture or an EXE
+  to ech Bonus-Box of your Level. The Pictures must
+  fullfill the following criteria:
+
+  320 mal 200 Pixel Size
+  256 Colors
+  Gif87a (Not Gif89 ! )
+
+  ...while an EXE must fit in the free conventional Memory.
+  in this Version of the game these are only 120 kB.
+
+  QB-Programmers:
+  If you want to run another QB-Program with BRUN45.EXE then
+  you first have to make about 80 kB Ram free. This is possible
+  if 10 or maybe 11 Textures less will be used. The usage of this
+  Textures must be disabled (DIM tx15%() to tx24%() and also the
+  usage of it at the Label "texture:").
+
+  If you want to assign no Picture and no EXE to a specific
+  Box, just let the index be "nothing". There may NOT be Spaces
+  before or after an entry! The file must
+  have the same or more numbers of indexes as your Level has
+  Boxes. The Indexes are representing the boxes in the
+  following manner.
+
+  XxxxxxxxxxxxxxxX 
+  X  1      2    X
+  X      3       X
+  X           4  X
+  X  5 6         X
+        a.s.o.
+  ... so we could say, the Map is read from the upper
+  left corner to the lower right corner.
+                                         
+
+
+
+                        
+
+  Your own Grafics
+  """""""""""""""""
+
+  If you want to use your own Grafics, then back-up
+  the originals and simply edit the Pictures with
+  a Graficseditor of your choice in the following
+  manner:
+
+
+  These Files contain the Textures:
+  BOOSTD.GIF
+  BOOM2.GIF
+  BOOM3.GIF
+
+  This File contains the Frame:
+  DISPLAY2.GIF
+
+  The Palette of BOOSTD.GIF will be used. The Pictures BOOM2.GIF, BOOM3.GIF
+  and DISPLAY2.GIF will use this Palette. Make shure
+  that BOOSTD.GIF contains enough Colors to convert the
+  other Pictures in a bearable measure.
+
+  Masked Textures must have all the _same_ Mask-Color (!)
+  The Engine reads the Mask-Color in the Picture BOOSTD.GIF
+  at the following, enormous important coordinates (!!!):
+
+  0 , 190     (maske% = POINT(0, 190))
+
+  In the Originalversion this is somewhere on the left
+  side of the gun, in the green region. If this Pixel
+  doesn't represent the Mask-Color anymore, the Rendering
+  of the Textures might be faulty.
+  If you want to alter this Point, then search for "maske% ="
+  in the Sourcecode, alter as you want and recompile the
+  Programm.
+
+
+
+  If you chanche anything in any Grafics, make shure the
+  new Pictures fullfill the following criteria:
+
+
+
+  320 mal 200 Pixel Size
+  256 Colors
+  Gif87a (Not Gif89 ! )
+ 
+ 
+
+  The Command-Line                         
+  """"""""""""""""
+
+
+  Start KABOOM with  your Level at the DOS-Prompt this way:
+
+  "kaboom mylevel.map (enter)"
+
+  If you omit a Levelname, KABOOM will try to load
+  a Level named BOO1.MAP
+
+
+
+
+                        *
+
+
+  (I recommend, to pay the Game in Dos, because of
+  Windows will slow down the Game.)
+
+
+
+  ----------------------------------------------------------------
+
+
+
+  Producing Games with multiple Levels:
+  mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+
+  In the File GAME.BAT you can see, how Multilevel-Games
+  can be realized with KABOOM. If a Level is ended with the
+  Level-EXIT, then a File called BOOALIVE.DAT will be generated.
+  This tells the Batch to run KABOOM with the next Level.
+  If the Level was ended by death or the Escape-key then
+  the File BOOALIVE.DAT will _not_ be present and the Batch
+  will branch to the End of the GAME.BAT  
+
+
+  If you want to use diffrent Textures in diffrent Levels,
+  so this is possible. Just use some "COPY" and "DEL" in the
+  GAME.BAT. Example (allways use copies of the Original!)
+  of a possible GAME.BAT:
+
+
+
+
+  @echo off
+  rem level 1-----------------------------------
+  copy l1_p1.gif boostd.gif
+  copy l1_p2.gif boom2.gif
+  copy l1_p3.gif boom3.gif
+  copy l1_p4.gif display2.gif
+  kaboom boo1.map
+  del boostd.gi
+  del boom2.gif
+  del boom3.gif
+  del display2.gif
+  if not exist booalive.dat goto dead
+
+  rem level 2-----------------------------------
+  copy l2_p1.gif boostd.gif
+  copy l2_p2.gif boom2.gif
+  copy l2_p3.gif boom3.gif
+  copy l2_p4.gif display2.gif
+  kaboom boo2.map
+  del boostd.gif 
+  del boom2.gif 
+  del boom3.gif
+  del display2.gif 
+  if not exist booalive.dat goto dead
+  
+  rem level 3-----------------------------------
+  copy l3_p1.gif boostd.gif
+  copy l3_p2.gif boom2.gif
+  copy l3_p3.gif boom3.gif
+  copy l3_p4.gif display2.gif
+  kaboom boo3.map
+  del boostd.gif 
+  del boom2.gif 
+  del boom3.gif
+  del display2.gif
+ 
+  rem reached end alive-------------------
+  Finish
+
+ :dead
+
+
+                         *
+                          *
+
+  Would be nice to use a selfinstalling Ramdisk and do
+  all the Jobs from there.
+
+  If you got probs with DOS-Batch-Files, please refer to your
+  MS-DOS Documentation (Please don't ask, what MS-DOS is;-)).
+
+
+                     
+
+
+  ----------------------------------------------------------------
+
+
+
+
+  Notes about the Sourcecode:
+  mmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+  Please understand, that I dont have the time to structure
+  und comment the sourcecode perfectly. I do this work
+  for you: absolutely for free.
+
+
+
+  The Raycaster
+  """""""""""""
+                                    
+  This Engine uses a simple Raycaster. Because this is a
+  time-critical Process, once more I made some Promesises:
+
+  A Double-Scout-Routine checks out the way of the
+  Raycaster in big steps to tell the Caster, where it has to
+  look for walls. This is about 5 times faster, but the corners
+  will be rendered incorrectly sometimes. rem: fixed (lost some speed)
+
+  You can alter this in the Sourcecode. Study "Outguard 1"
+  and "Outguard 2".
+
+  If reaching 15 Frames per Sec. the Programm wont run
+  faster anymore, just to stay playable.
+  rem: deactivated at the moment  : toggle: K
+
+  The GOSUB-Routine castboden: paints the floor.
+                                         
+  The Routine Computeview: is the primer Caster and
+  will do the Rendering of Textures wich are not behind
+  someting else. It also initializes and sets the Maskflags
+  in Pixelcolumn%(n). This is not recursiv.
+                                           
+  The Routine cast2: is der secundary Caster is only called
+  if masked Textures are visible. It goes on casting behind
+  this Masks. If it finds another masked Texture there, it
+  will call itself to go on cast also behind this masked Texture
+  and so on. This is what I call recursiv.
+
+  The Engine only uses 16-Bit Integers. The Sin/Cos Float-tables
+  were shifted to this values, wich was increasing the speed
+  significantly. But it is always a small way between
+  Rounding-Errors and Overflows.
+
+  The Program doesnt run in the Interpreter because there is
+  less Memory than in the Compiler.
+                       
+  The Soundblaster-Sources are from Mike Huff (Thanks!).
+
+ 
+  This Software is (C)2000 by Dieter Marfurt.
+  You can either  copy and spread this package in its unmodified
+  form or you can produce your very own Game and release it.
+  If you do so, then make shure, that your Version is
+  completely(!) diffrent to the Original-Package, in a way,
+  that none would identify it as KABOOM-Kit on the very first
+  look.
+
+                                              
+
+  ----------------------------------------------------------------
+  
+
+
+  Bugs:
+  mmmmm
+
+  Compilation width -D Option (auto-dim off) fails, no idea why.
+  1 unrecognized Adresserror reported. 
+
+
+
+  ----------------------------------------------------------------
+
+
+
+  History:
+  mmmmmmmm
+
+  In the last years I tested many 3D-Engines from the
+  Internet. Sadly the most of them have been either not for
+  free, not Graficcardindependent, not modular enough or
+  simply just a joke. Finally I took the well known
+  tiny Program "DOOM.BAS-Raycaster-Demo" and completely
+  "remixed" it. In the following 10 days I worked from the
+  end of february to beginning of march 2000 on the KABOOM
+  Project.
+
+  The Steps of this work were the following:
+  """"""""""""""""""""""""""""""""""""""""""
+
+                                                       
+  -Improve horizontal Caster-Raster from 64 to 320
+   Columns.
+
+  -Optimizing Speed by Shifting of all Float-Tables up to
+   16-Bit Integers.
+
+  -Optimizing Speed by Scout-Routines.
+
+  -Joystick-Support.
+
+  -Adding Texture-Mapping.
+
+  -Adding masked Texture-Mapping with recursiv Raycasting-
+   Routine.
+
+  -Moving Enemies, Gun, Commandline.
+
+  -Multi-Level-Ability, Bonus-Options
+
+  -Soundblaster-Support.
+
+  -Fix Scout-Bugs
+
+  -Added Mouse (thinkin about to remove joysticksupport).
+
+  -Added Floor Mapping.
+
+  -Filling Memory with more Textures.
+
+                        
+  ----------------------------------------------------------------
+
+
+
+
+  Future-Options:
+  mmmmmmmmmmmmmmm
+
+  -Optimize Speed.
+
+  -More Textures, better Memory-Management.
+
+  -Mapping for Floor. DONE.
+
+  -Make Map-Editor able to edit Grid,Floor and Sky at one time.DONE.
+
+  -Use completely diffrent Technic to check out distances
+   (now: Raycasting).
+
+  -Porting to Systems with fast 32-Bit Basic-Compilers.
+   By the way: Is it really so difficult to develop a Protected Mode
+   Basic? On the good old Atari ST it was possible to write:
+   DIM a(300000). And that, dear Coders, was in 1984! (nice Motorola
+   Stile)
+
+  -Translate to Assembler, Optimizing on this Language-Level.
+
+  
+
+                        
+  ----------------------------------------------------------------
+
+
+
+
+  Contact:
+  mmmmmmmm
+
+  I allways look for Jobs in the Games-Sector, as musicien,
+  Grafics-Artist or Programmer. Mainly I am a musicien.
+  Would be cool, if anyone Group is looking for a new member...
+
+  Write to:                                                  
+
+  Dieter Marfurt
+  Nidelbadstr.30
+  8038 Zuerich
+  Schweiz
+
+  Or:
+
+  dietermarfurt@angelfire.com
+
+  (Adressen valid:  1.3.2000, but how long?)
+  Here is a Picture of my eyes, go very far away, then watch the
+  following text ;)
+
+
+
+
+
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+²×³:::ùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùù:::::::::::³³³ØØØØ××
+ÎØ³::::::ùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùù::::::::::³³³³ØØØØØ×
+ÎØ³³³³³³::::::::ùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùùù::::::::::::³³³³³³³ØØØØ××
+×ØØØØØØØØØØ³³:::::::ùùùùù:::ùùùùùùùùùùùùùùùùùùùùùùù:::::::::³³³³³³³³³³ØØØØØØ××××
+××ØØØ³³ØØ×××ØØØ³³³³³::::::::::::::::::::::::::::::::::³³³³ØØØØØ×ØØØØØØØ××××××ÎÎÎ
+×ØØ³³::::³³ØØ××××××ØØØ³³³³:::::::::::::::::::³³³³³³ØØØØ××ÎÎÎÎÎ×××ØØØØ×××ÎÎÎÎÎÎÎ²
+×ØØ³³::³³³:³::³Ø×ÎÎÎÎÎ××ØØØ³³³:::::::::³³³³ØØØ××××ÎÎÎÎ²²²²ÎÎ×ØØ³³³³³ØØØ×××ÎÎ²²²²
+××ØØØØØØØØØØØØØØØØ×ÎÎÎÎÎÎÎ×Ø³³³:::::::³³³ØØ××ÎÎÎ²²²²²²²²²ÎÎ×ØØØØØØØØØØ×××ÎÎÎ²²²²
+Î×××××ØØØØØ×Î×³³×Î××××ÎÎÎÎÎ×Ø³::::::::³³³Ø×ÎÎÎ²²²²²²²²²²²Î×××××Î²²ÎÎÎÎÎ²²²²²²²²²
+×Ø××××ÎÎØ³³ØÎÎÎ²²²ÎÎ×Ø××××××Ø³::ùùùùù:::³³Ø×Î²²²²²²²²ÎÎ×Ø³³×Î×ÎÛÛ²Û²²ÎÎÎÎ²²Û²²²²
+Ø³ØØØ××Ø³:::Ø×ÎÎÎÎ×Ø³³³³³³³³³::ùùùùùùùù::³³×ÎÎ²²ÎÎ×Î××³::ù:³×ÎÎ²²²²²ÎÎ²²²²²²²²²²
+³³³³³ØØ³::::::³ØØ³³:::³³³::::::ùùùùùùùù::³³Ø×××Ø³³ØØØ³::ùùùù:Ø××Î××ØØØØ×Î²²²ÎÎÎÎ
+:::³³³³³³³³::::::::::::::::::::ùùùùùùù::::³³ØØØ³:::::::::::ùù::³³³³³³³Ø×ÎÎÎÎÎÎ×Ø
+::::³³³³³³³³³³³³³³³³³³³:::::::ùùùùùùùù::::³³³ØØ³³:::::³³³³³³³³³³³ØØØØ××××××ØØØ××
+:::::::³³³³³³³³³³³³³³:::::::::ùùùùùùù::::³³³³³³³³³::::³³³³³³³³³³³³³ØØØ××ØØØ³³³³³
+::::::::::::::::::::::::::::::ùùùùùùù:::³³³³³³³³³³³::::::³³³³³³³³³³³ØØØ³³³::::::
+::::ùùùùù:::::::::::::::::::::ùùùùùù::::³³³³³ØØØØ³³³:::³::::::::::::::::::::::::
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm

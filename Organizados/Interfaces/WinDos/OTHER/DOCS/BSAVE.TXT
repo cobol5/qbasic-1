@@ -1,0 +1,14 @@
++--------------+
+| BSAVE FORMAT |
++--------------+
+
+Offset in file | Description
+---------------+-----------------
+0              | Always = FD
+1              | Seg low bits
+2              | Seg high bits
+3              | Offset low bits
+4              | Offset high bits
+5              | Length low bits
+6              | Length high bits
+....           | Data

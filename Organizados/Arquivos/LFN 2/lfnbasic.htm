@@ -1,0 +1,1061 @@
+<html>
+
+<head>
+<title>Explain LFN QBasic</title>
+</head>
+
+<body bgcolor="#C0C0C0">
+
+<h1 align="center">LFN-QBasic</h1>
+
+<p>This is the explainations to LFNBASIC.BAS, the subroutines are 7,212 bytes is size
+WITHOUT the DECLARE's or including any REM's in the file, so rather than make it bigger, I
+created this file for those who wish the read about how the nitty gritty details of the
+programming is done. To those who like to have spaces indenting subsections of code for
+clairity, even that is missing, them there spaces added several kilos to the result, and
+some of you may have tight packages already. You can reduce the package size further,
+matter of fact I did that, the result is much smaller, but harder to read. I do recommend
+that you leave the major function names alone unless you're really good at reading
+codified names.. You may want to refine my reduction further, I use LFNxx's as the
+replacements, and remove all subfunctions not used in the final product.</p>
+
+<table border="0" cellpadding="0" cellspacing="0" width="985">
+  <tr>
+    <td width="492" valign="top">For examples:</td>
+    <td width="493" valign="top"></td>
+  </tr>
+  <tr>
+    <td width="492" valign="top">No need of&nbsp; RANDOM or APPEND?</td>
+    <td width="493" valign="top">Edit LFNOPEN and remove the subroutines called by the
+    function.</td>
+  </tr>
+  <tr>
+    <td width="492" valign="top">All work done in current directory?</td>
+    <td width="493" valign="top">No need to have LFNDOSPATH and it related sub functions
+    taking up space.</td>
+  </tr>
+  <tr>
+    <td width="492" valign="top">Never change directories?</td>
+    <td width="493" valign="top">Remove LFNCHDIR</td>
+  </tr>
+  <tr>
+    <td width="492" valign="top">Never create new files?</td>
+    <td width="493" valign="top">Remove LFNNAMENEW and edit all the opens which call upon it.</td>
+  </tr>
+  <tr>
+    <td width="492" valign="top">Never use long filenames?</td>
+    <td width="493" valign="top">Why have this package?</td>
+  </tr>
+</table>
+
+<p>Bear in mind that some routines are shared by other parts of the package, for example
+LFNEXIST is used frequently as a check to prevent error messages about files which don't
+exist. While you could rely on QBasic to do this job, I prefered to catch this possibility
+before it happened. You can also save some space by collapsing certain parts of the code
+because in several places I use a subroutine to contain code which may only be used by
+that routine for ease of reading. And in other places I use a subroutine for code which
+can be done 'inline', like QUOTE$.</p>
+
+<table border="1" cellpadding="5" cellspacing="5" width="100%">
+  <tr>
+    <th width="50%" align="center">The Code</th>
+    <th width="50%" align="center">The Reason</th>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">TYPE dos<br>
+    full AS STRING * 128<br>
+    real AS STRING * 95<br>
+    used AS STRING * 1<br>
+    END TYPE</td>
+    <td width="50%" valign="top">The subroutines rely on a structure to hold the filenames. I
+    could've used separate arrays for the system, but it is actuallly easier this way, though
+    it does tend to be a little memory intensive. DOS.FULL is for the Long FileName, DOS.REAL
+    is for the DOS8.3 name, and DOS.USED is an indicator that the entry is in use. LFNOPEN set
+    this flag, and LFNCLOSE clears it. Should the program be called upon to open a file
+    already in use, LFNERROR(155) is called.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">DIM SHARED lfn(1 TO 3) AS dos<br>
+    COMMON SHARED errnum, lfnmax, true, false<br>
+    ON ERROR GOTO errhand<br>
+    true = -1: false = 0: lfnmax = 3<br>
+    FOR i = 1 TO lfnmax: lfn(i).used = &quot; &quot;: NEXT i</td>
+    <td width="50%" valign="top">The array is called LFN, for most applications three entries
+    is enough, I have one program which does a recursive directory search which uses as many
+    as eight. ERRNUM, TRUE, FALSE are carry-overs, you DON'T need to COMMON them for the
+    subroutines to work, but ERRNUM is usefull because you can use it in the ERRHAND to be set
+    to the ERR and find out what happened to cause the error. LFNMAX does need to be GLOBAL
+    because otherwise the subrroutine will generate a SUBSCRIPT OUT OF RANGE error if you use
+    LFNOPENS a fourth time. Also, the code about going to the ERROR handling routine needs to
+    be here. The only other piece of initialization is that LFN(x).USED needs to be set to
+    CHR$(32). This is primarily for checking the used status of the entry. This is detailed in
+    LFNOPEN.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">testlfn</td>
+    <td width="50%" valign="top">Main Entry Point for demo. (Or another way of putting this,
+    YOUR CODE HERE.) The actuall code follows ERRHAND, and most of the code detailed in the
+    file does NOT follow the manner in which QBasic stores code. Rather it's detailed in a
+    logical progression.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">errhand:<br>
+    FOR i = 1 TO lfnmax: lfnclose (i): NEXT i<br>
+    PRINT ERR: BEEP: STOP<br>
+    RESUME NEXT</td>
+    <td width="50%" valign="top">The error handling is needed because of one small minor
+    detail which is explained further in LFNNAMENEW, all the LFNFILES should be closed if you
+    don't need to do any other error processing functions. The RESUME is needed by QBasic,
+    else you get an error for excluding it, and it's also handy to step back to the point
+    where the error happened. That way you can find the offending statement.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">SUB testlfn</td>
+        <td width="50%" valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="5">functions called</td>
+        <td width="50%" valign="top">LFNCHDIR</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNOPEN</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNOPENS</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNCLOSE</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNCLOSEALL</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">lfnchdir (&quot;C:\Program Files\123 Free Solitaire&quot;)<br>
+        file1 = lfnopen(&quot;another readme.txt&quot;, &quot;OUTPUT&quot;, 1, 0)<br>
+        PRINT #1, &quot;Fresh Text &quot; + TIME$ + &quot; &quot; + DATE$<br>
+        lfnclose (1)<br>
+        file2 = lfnopen(&quot;D:\Program Files\Buttonz &amp; Tilez\readme.txt&quot;,
+        &quot;INPUT&quot;, 2, 0)<br>
+        file1 = lfnopens(&quot;another readme.txt&quot;, &quot;INPUT&quot;)<br>
+        INPUT #file2, a$<br>
+        PRINT a$<br>
+        INPUT #file1, a$<br>
+        PRINT a$<br>
+        lfncloseall<br>
+        SYSTEM<p>END SUB</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">These are some very simple examples because once you get
+    through all the nitty-gritty details of the sub-routines, you don't have to really know
+    more than this:<p>file=LFNOPEN(&quot;[path\]filename.ext&quot;,&quot;mode&quot;,which,size)<br>
+    file=LFNOPENS(&quot;[path\]filename.ext&quot;,&quot;mode&quot;)<br>
+    LFNCLOSE(file)</p>
+    <p>And</p>
+    <p>LFNCHDIR(&quot;path&quot;)</p>
+    <p>Beyond this, it gets complex as you wade through all the code which is used to make
+    this seem like such a simple task to access Long File Names under QBasic.</p>
+    <p>The only other routine you may want to use is
+    LFNEXIST(&quot;[path\]filename.ext&quot;), this will return TRUE if it find the file, or
+    FALSE if the file doesn't exist.</p>
+    <p>The only other requirement of the code is that [C:\TEMP] exists, if you want to know
+    more about these subroutines, read on, and if you have any questions <a
+    href="mailto:cwg01@gnofn.org">WRITE</a> me.</p>
+    <p>BTW: I realize that someone having the exact same setup as me is astronomical, so if
+    you want to use the examples, be sure to find some places it can work with.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">SUB lfnchdir</td>
+        <td width="50%" valign="top">(where AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="2">functions called</td>
+        <td width="50%" valign="top">QUOTE$</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" valign="top" colspan="2"><p align="left">a$ = stripr$(where)<br>
+        SHELL &quot;dir &quot; + quote$(stripr$((a$)))<br>
+        + &quot; &gt;c:\temp\readit.txt&quot;<br>
+        file = FREEFILE<br>
+        OPEN &quot;c:\temp\readit.txt&quot; FOR INPUT AS file<br>
+        FOR i = 1 TO 4: LINE INPUT #file, b$: NEXT i<br>
+        CLOSE file<br>
+        KILL &quot;c:\temp\readit.txt&quot;<br>
+        IF INSTR(b$, a$) = 0 THEN lfnerror (176)<br>
+        IF MID$(a$, 2, 1) = &quot;:&quot; THEN<br>
+        SHELL LEFT$(a$, 2)<br>
+        SHELL &quot;chdir &quot; + quote$(stripr$MID$(a$, 3)))<br>
+        ELSE<br>
+        SHELL &quot;chdir &quot; + quote$(stripr$(a$, 3))<br>
+        END IF</p>
+        <p>END SUB</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">First off, all the subroutines use your [C:\TEMP] directory
+    to create a file READIT.TXT for the purposes of verifing the presense of the intended
+    function, if you don't have a [C:\TEMP] then be sure to change this to a valid directory.
+    Not that it's serious, but I've found it handy to see what ended up in the file just to
+    see what the heck happened at times. Elsewhere in the subroutines we use the SHELLing to
+    find a file, here we take a different twist. We're looking for the fourth line of a
+    STANDARD directory listing which contains the line: Directory of ...., and ensuring our a$
+    equal it. If not, LFNERROR(176), Path not found. If the line is there, then we do a check
+    for a drive letter by seeing if a ':' is in the second position and doing a separate SHELL
+    to swap drives before changing directories. You'll see the function's QUOTE$ (and STRIPR$)
+    pop up fairly often within these routines, it's a darn sight easier on the eyes to read
+    what you're doing rather than CHR$(34)+a$+CHR$(34).</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" rowspan="4" valign="top">FUNCTION lfnopen%</td>
+        <td width="50%" valign="top">(file AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, mode AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, which AS INTEGER</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, size AS INTEGER)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="5">functions called</td>
+        <td width="50%" valign="top">LFNERROR</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNIOAPPEND</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNIOINPUT</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNIOOUTPUT</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNIORANDOM</td>
+      </tr>
+      <tr>
+        <td width="100%" valign="top" colspan="2">IF which = 0 THEN which = FREEFILE<br>
+        IF lfn(which).used &lt;&gt; &quot; &quot; THEN lfnerror (155)<br>
+        SELECT CASE (mode)<br>
+        CASE (&quot;INPUT&quot;)<br>
+        a = lfnioinput(file, which)<br>
+        CASE (&quot;OUTPUT&quot;)<br>
+        a = lfniooutput(file, which)<br>
+        CASE (&quot;APPEND&quot;)<br>
+        a = lfnioappend(file, which)<br>
+        CASE (&quot;RANDOM&quot;)<br>
+        a = lfniorandom(file, which, size)<br>
+        CASE ELSE<br>
+        lfnerror (154)<br>
+        END SELECT<br>
+        lfnopen = which<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">Here's the Beef! This is the core of the LFN functions, what
+    you call on to access those LFN's without having to do any fancy yourself to get at the
+    DOS8.3 name. All you need to do is replace all your normal:<br>
+    OPEN &quot;filename.ext&quot; FOR mode AS which<br>
+    with:<br>
+    LFNOPEN(&quot;Long Filename.extlong&quot;,&quot;mode&quot;,which,size)<br>
+    and not worry about a Bad Filename Crash. One of the handier sides of this function is
+    that should you decide to use it, it provides a 'C' type of ability and if it's passed a 0
+    as the WHICH, if loads WHICH with FREEFILE, and because is passes WHICH back to the
+    caller, you can ignore the file number and rely on the stacking nature to keep overlapping
+    filenumbers from happening. If you do need to have a definate file open for some reason,
+    open it first via the subroutine or using the OPEN yourself. My apologies, I didn't
+    provide a BINARY mode, I've never used it myself, but it's easy to add once you see the
+    subroutines. I also don't provide for the ACCESS or LOCK statements because:<br>
+    A: I haven't done any programming in need of it, therefore I've never used it myself.<br>
+    B: All my programs run under windows which implicately LOCKS any file opened by a DOS
+    window. If you don't know about this one, open a file with QBasic, open the same file with
+    NotePad, modify with notepad, and try to save. If filelocking is working correctly on your
+    machine, you'll get an error.<br>
+    In any case, that's easy to add should your programming need it, it'll make the subroutine
+    call bigger.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" rowspan="2" valign="top">FUNCTION lfnopens%</td>
+        <td width="50%" valign="top">(file AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, mode AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">LFNOPEN</td>
+      </tr>
+      <tr>
+        <td width="100%" valign="top" colspan="2">lfnopens = lfnopen(file, mode, 0, 0)<p>END
+        FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">Which is why I have a shorter call LFNOPENS, all you need to
+    provide it is a MODE and (of course) the filename. It calls LFNOPEN and provide Zero's for
+    WHICH and SIZE, while SIZE is only needed for RANDOM, LFNOPEN was designed to accomadate
+    it as well. LFNOPENS returns WHICH to the caller as well.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">SUB lfnclose</td>
+        <td width="50%" valign="top">(which AS INTEGER)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">LFNRENAME</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">IF lfn(which).used = &quot; &quot; THEN EXIT SUB<br>
+        CLOSE which<br>
+        IF lfn(which).used = &quot;*&quot;<br>
+        THEN a = lfnrename (lfn(which).real, lfn(which).full)<br>
+        lfn(which).used = &quot; &quot;<p>END SUB</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">LFNCLOSE is needed for two reasons:<br>
+    A: the LFN().USED flag needs to be cleared.<br>
+    B: New filenames need to be converted to their LFN's<br>
+    The New Filenames are explained further in the function LFNRENAME. While it's provided as
+    separate function, is short so if you want to, the function call can be replaced with the
+    lines from the subroutine. Unless you need to do any LFN renaming.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%">SUB lfncloseall</td>
+        <td width="50%" valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">LFNCLOSE</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">FOR i = 1 TO lfnmax: lfnclose (i): NEXT i<p>END SUB</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">This is primarily for quickly closing all your LFN's, it
+    doesn't even check if there's any open.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top" rowspan="2">FUNCTION lfnrename</td>
+        <td width="50%" valign="top">(oldname AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, newname AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="2">functions called</td>
+        <td width="50%" valign="top">QUOTE$</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">a$ = stripr$(newname)<br>
+        IF INSTR(a$, &quot;\&quot;) THEN<br>
+        DO<br>
+        ix = INSTR(a$, &quot;\&quot;)<br>
+        IF ix = 0 THEN EXIT DO<br>
+        a$ = MID$(a$, ix + 1)<br>
+        LOOP<br>
+        END IF<br>
+        SHELL &quot;rename &quot; + quote$(stripr$(oldname)) + &quot; &quot;<br>
+        + quote$(stripr$(a$))<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">This is faily straightforward, we're just calling upon DOS to
+    do our renaming. The flaw is that QBasic pads it's structure().strings with righthand
+    spaces, so the function STRIPR$ is needed to remove them before wrapping the quotes around
+    the filename. And while I have not run into any errors wrapping the DOS8.3 names in
+    quotes, I may not have used the function under all possible filenames. One thing that must
+    be done is the stripping of any possible path from the NEWNAME otherwise <em>rename </em>thinks
+    you're trying to rename across directories and/or drives.<p>What I call the FATAL FLAW
+    needs to be explained: LFN-QBasic generates unique filenames for any NEW files you open.
+    Should the program abort in any means which does not allow it to properly convert these
+    names to their LFN equivalents, you'll end up with 'Mystery Files'.<br>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" rowspan="2" valign="top">FUNCTION lfnioappend%</td>
+        <td width="50%" valign="top">(file AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, which AS INTEGER)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="4">functions called</td>
+        <td width="50%" valign="top">LFNEXIST</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNNAMENEW</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNNAMEOLD</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">IF lfnexist(file) THEN<br>
+        a = lfnnameold(file, which)<br>
+        ELSE<br>
+        a = lfnnamenew(file, which)<br>
+        END IF<br>
+        OPEN stripr$(lfn(which).real)<br>
+        FOR APPEND AS which<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">Of these next four subroutines, three are almost exactly
+    alike. Matter of fact, even the fourth looks like those three except it doesn't have the
+    check on whether it should call upon LFNNAMENEW, that one is LFNIOINPUT because, of
+    course, the file must exist for reading. APPEND and OUTPUT, as well as RANDOM, create the
+    file if is doesn't exist, and only RANDOM nees the SIZE parameter. If you want, you can
+    directly call these and bypass LFNOPEN routine, I built that primarily to have a central
+    access to these without having to type in a different routine name for each open. The
+    LFNNAME---'s are detailed following this section. This, (of course), is APPEND, opens a
+    file for appending to. Otherwise it's like LFNIOOUTPUT.<br>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" rowspan="2" valign="top">FUNCTION lfnioinput%</td>
+        <td width="50%" valign="top">(file AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, which AS INTEGER)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="3">functions called</td>
+        <td width="50%" valign="top">LFNEXIST</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNNAMEOLD</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">IF NOT lfnexist(file) THEN lfnerror (164)<br>
+        a = lfnnameold(file, which)<br>
+        OPEN stripr$(lfn(which).real)<br>
+        FOR INPUT AS which<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">Only one which will generate an LFNERROR(164) should the file
+    not exist, all the LFNERROR's are mostly the standard QBasic codes+100. So 164 means Bad
+    File Name, Punish it! ;)</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" rowspan="2" valign="top">FUNCTION lfniooutput%</td>
+        <td width="50%" valign="top">(file AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, which AS INTEGER)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="4">functions called</td>
+        <td width="50%" valign="top">LFNEXIST</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNNAMENEW</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNNAMEOLD</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">IF lfnexist(file) THEN<br>
+        a = lfnnameold(file, which)<br>
+        ELSE<br>
+        a = lfnnamenew(file, which)<br>
+        END IF<br>
+        OPEN stripr$(lfn(which).real)<br>
+        FOR OUTPUT AS which<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">I suppose I could've written a more complex LFNOPEN setup and
+    done away with these subs, but they actually expand the system. You can add you own unique
+    LFNOPEN's by expanding the basic SELECT CASE.<p>All the file functions check to see if the
+    files exists so the routine can determine whether to call upon the subroutine which
+    retrieves the DOS8.3 name, or call upon the newname generator.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top" rowspan="3">FUNCTION lfniorandom%</td>
+        <td width="50%" valign="top">(file AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, which AS INTEGER</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, size AS INTEGER)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="4">functions called</td>
+        <td width="50%" valign="top">LFNEXIST</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNNAMENEW</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNNAMEOLD</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">IF lfnexist(file) THEN<br>
+        a = lfnnameold(file, which)<br>
+        ELSE<br>
+        a = lfnnamenew(file, which)<br>
+        END IF<br>
+        OPEN stripr$(lfn(which).real)<br>
+        FOR RANDOM AS which LEN = size<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">The RANDOM OPEN is the only one which uses the SIZE parameter
+    of LFNOPEN, like I said, I've never used the BINARY mode because generally when I access a
+    file for direct byte access, I use RANDOM and get at big chunks, check out my GIFSIZE
+    program. This is the only function with which you can't call LFNOPENS because then you'll
+    end up with a size of ZERO!</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top" rowspan="2">FUNCTION lfnnameold%</td>
+        <td width="50%" valign="top">(file AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, which AS INTEGER)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">LFNDOS$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">lfn(which).full = file<br>
+        lfn(which).real = lfndos$(file)<br>
+        lfn(which).used = &quot;!&quot;<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">This is primarily an assigner routine, it calls upon LFNDOS
+    to retrieve the DOS8.3 filename. I suppose LFNDOS could've been included here, but I had
+    my reasons for making it a separate routine for debugging this system and haven't really
+    determined if I should tie them together.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top" rowspan="2">FUNCTION lfnnamenew%</td>
+        <td width="50%" valign="top">(file AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, which AS INTEGER)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="2">functions called</td>
+        <td width="50%" valign="top">LFNDOSPATH$</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">STATIC old$<br>
+        IF INSTR(file, &quot;\&quot;) THEN p$ = lfndospath$(file)<br>
+        lfn(which).full = stripr$(file)<br>
+        lfn(which).used = &quot;*&quot;<br>
+        DO<br>
+        a$ = &quot;tt&quot; + LEFT$(TIME$, 2) + MID$(TIME$, 4, 2)<br>
+        + RIGHT$(TIME$, 2) + &quot;.&quot;<br>
+        + CHR$(which + 65) + &quot;lf&quot;<br>
+        IF a$ &lt;&gt; old$ THEN EXIT DO<br>
+        LOOP<br>
+        old$ = a$<br>
+        lfn(which).real = p$ + a$<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">I use a unique means for generating a filename for new files,
+    I use the current TIME$ to create a filename which is different for each instance. All the
+    filenames start with 'TT', use the hours, minutes, and seconds, and have the extension of
+    the filenumber+65 to generate an letter. This does have a limit, you can only generate ONE
+    filename for each filenumber every second, and without making the code more complex, it
+    doesn't check different extensions, though that shouldn't happen because you MUST close
+    the filenumber before using it again. The only other exception is if you include a PATH to
+    the file in question, then the subroutine calls upon another subroutine to get the DOS8.3
+    pathname, that that get's a little crazy, you'll see why in a minute because while
+    LFNNAMEOLD doesn't do that, it calls upon LFNDOS, which does.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">FUNCTION lfndos$</td>
+        <td width="50%" valign="top">(item AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="2">functions called</td>
+        <td width="50%" valign="top">LFNDOSPATH$</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">a$ = item<br>
+        IF INSTR(a$, &quot;\&quot;) THEN p$ = lfndospath$(a$)<br>
+        a$ = lfndosname$(a$)<br>
+        lfndos$ = p$ + a$<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">While this is only called upon by LFNNAMEOLD, and like I
+    said, could be included there, when I was debugging this system, I found it handier to
+    make it separate. Like LFNNAMENEW, it checks for the presence of a path by the simple fact
+    that paths have a '\' in them. I don't know if you can do an OPEN
+    &quot;d:filename.ext&quot;, I don't program like that, I always include the backslash.
+    Otherwise the routine calls LFNDOSNAME to retrieve the DOS8.3 name to be returned to the
+    caller, and returns the PATH$ (if any) plus the returned name.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">FUNCTION lfndosname$</td>
+        <td width="50%" valign="top">(item AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="2">functions called</td>
+        <td width="50%" valign="top">QUOTE$</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">a$ = item<br>
+        SHELL &quot;dir &quot; + quote$(stripr$(item))<br>
+        + &quot; &gt;c:\temp\readit.txt&quot;<br>
+        file = FREEFILE<br>
+        OPEN &quot;c:\temp\readit.txt&quot; FOR INPUT AS file<br>
+        FOR i = 1 TO 5: LINE INPUT #file, a$: NEXT i<br>
+        LINE INPUT #file, a$<br>
+        CLOSE file<br>
+        KILL &quot;c:\temp\readit.txt&quot;<br>
+        a$ = stripr$(LEFT$(a$, INSTR(a$, &quot; &quot;) - 1) + &quot;.&quot;<br>
+        + MID$(a$, 10, 3))<br>
+        lfndosname$ = a$<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">If you've ever taken time to examine the directory listings
+    produced under Win95DOS, they all have something in common, (at least mine does, I'm not
+    sure this holds true for EVERY Win95 installation), five lines of header information,
+    followed by the listing itself. This does a simple SHELL directory call providing the
+    stripped and quoted filename to the call, piping the result into READIT.TXT. This is
+    opened using the FREEFILE function to avoid filenumber conflicts, the first five lines are
+    bypassed, then the filename line is read. We then close the file, kill it, and decypher
+    the line we just read. There is two possible errors which I haven't run across because I
+    never call this directly.<br>
+    A: File Not Found - It was passed a non-existant file.<br>
+    B: &lt;DIR&gt; - it was passed a filename which happens to be a directory name.<br>
+    In both cases it will return a string which does not reflect what you wanted, and cause a
+    crash.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">FUNCTION lfndospath$</td>
+        <td width="50%" valign="top">(item AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="4">functions called</td>
+        <td width="50%" valign="top">LFNDOSHUNT$</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNDOSTEST</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNDOSSEARCH$</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">LFNERROR</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">undone$ = lfndoshunt$(item)<br>
+        IF lfndostest(item) THEN<br>
+        ix = INSTR(undone$, &quot;\&quot;)<br>
+        done$ = LEFT$(undone$, ix - 1)<br>
+        hunt$ = done$<br>
+        undone$ = MID$(undone$, ix)<br>
+        path$ = lfndossearch$(hunt$, &quot;&quot;)<br>
+        ELSE<br>
+        ix = INSTR(undone$, &quot;\&quot;)<br>
+        done$ = done$ + LEFT$(undone$, ix)<br>
+        undone$ = MID$(undone$, ix + 1)<br>
+        ix = INSTR(undone$, &quot;\&quot;)<br>
+        IF ix = 0 THEN lfnerror(187)<br>
+        hunt$ = LEFT$(undone$, ix - 1)<br>
+        path$ = done$ + path$<br>
+        + lfndossearch$(hunt$, done$) + &quot;\&quot;<br>
+        END IF<br>
+        DO<br>
+        ix = INSTR(undone$, &quot;\&quot;)<br>
+        IF ix = LEN(undone$) THEN EXIT DO<br>
+        done$ = done$ + LEFT$(undone$, ix)<br>
+        undone$ = MID$(undone$, ix + 1)<br>
+        ix = INSTR(undone$, &quot;\&quot;)<br>
+        IF ix = 0 THEN lfnerror(187)<br>
+        hunt$ = LEFT$(undone$, ix - 1)<br>
+        path$ = path$ + lfndossearch$(hunt$, path$) + &quot;\&quot;<br>
+        LOOP<br>
+        lfndospath$ = path$<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">Things get a little hectic when you pass a path\filename to
+    these functions, because the path needs to be converted to its DOS8.3 name as well, and
+    this can't be done directly. At least in every method I've tried. So the only method which
+    I've come up with which works every time is to do a DIR of the preceeding directory, and
+    scan for the LFN starting in column 45 to equal the subdirectory name I'm hunting for, and
+    get the DOS8.3 name out of the left-hand columns.<p>First thing done is: Strip The
+    FileName Off!. Because I pass the entire path\filename to the function.<br>
+    UNDONE$ is the keeper of the path to be scanned.<br>
+    DONE$ holds 'unconverted' path which has been done.<br>
+    HUNT$ is the directory we're looking for.<br>
+    PATH$ is the converted path.</p>
+    <p>One of the things which need to be checked is whether we're starting in the current
+    directory, or from elsewhere. If you take time to think about it, you can't use the same
+    starting sequence for both because of the way the path works. Starting from any other
+    directory other than the current directory involved having a '\', 'D:\', or '..\'
+    prefixing the path. Yes, I know, '..\' does start in the current directory, but not the
+    way the path works. This is Legal:</p>
+    <p>'D:\directory\subdirectory\..\otherdirectory\filename.ext'</p>
+    <p>So can be started in the same manner as we use in starting from the root, or drive:root
+    combination. But when we use a directory off the current, we need to scan the current
+    first to GET our starting point and it has to be scanned by not passing LFNDOSSEARCH the
+    'start path' parameter. On the other hand, we do need to pass LFNDOSSEARCH a 'start path'
+    to get the correct starting DOS8.3 filename in the other three cases, and the 'start path'
+    needs to be part of the resulting translation.</p>
+    <p>After getting started, it's a simple matter to scan from left to right until we run out
+    of UNDONE path, then passing the resulting translation back to the caller. The only
+    possible problem would be a bad path somehow gets here, resulting in a parsing problem,
+    LFNERROR(187) is one of two error especially for LFN's, called 'Path irregularity'.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">FUNCTION lfndoshunt$</td>
+        <td width="50%" valign="top">(item AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">none</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">a$ = item<br>
+        DO<br>
+        ix = INSTR(a$, &quot;\&quot;)<br>
+        IF ix = 0 THEN EXIT DO<br>
+        b$ = b$ + LEFT$(a$, ix)<br>
+        a$ = MID$(a$, ix + 1)<br>
+        LOOP<br>
+        lfndoshunt$ = b$<br>
+        END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">Simple to explain, scan until you run out of '\'s, and pass
+    everything from here left back.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top" rowspan="2">FUNCTION lfndossearch$</td>
+        <td width="50%" valign="top">(item AS STRING</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">, where AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">LFNERROR</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">item = UCASE$(item)<br>
+        SHELL &quot;dir &quot; + where + &quot;*. &gt;c:\temp\readit.txt&quot;<br>
+        file = FREEFILE<br>
+        OPEN &quot;c:\temp\readit.txt&quot; FOR INPUT AS file<br>
+        FOR i = 1 TO 5: LINE INPUT #file, a$: NEXT i<br>
+        DO<br>
+        LINE INPUT #file, a$<br>
+        IF ASC(a$) = 32 THEN lfnerror (186)<br>
+        IF UCASE$(MID$(a$, 45)) = item<br>
+        THEN EXIT DO<br>
+        LOOP<br>
+        CLOSE file<br>
+        KILL &quot;c:\temp\readit.txt&quot;<br>
+        b$ = LEFT$(a$, INSTR(a$, &quot; &quot;) - 1)<br>
+        IF ASC(MID$(a$, 10)) &lt;&gt; 32<br>
+        THEN b$ = b$ + &quot;.&quot; + stripr$(MID$(a$, 10, 3))<br>
+        lfndossearch$ = b$<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">This is the scanning routine and we do it by simply blasting
+    the contents of the previous directory into READIT.TXT and looking for our match. As far
+    as I've been able to determine, you can't have the same name twice, regardless of
+    capitalization, try it sometimes. So to avoid the possibliliy of passing up the name, all
+    comparisons are done in UCASE. Like most of the other SHELL dir call's, we bypass the
+    first five lines, and commence with looking for the LFN directory at line six. You will
+    note that when we called this routine, we passed it the current translated path, if any,
+    for it to work with. Namely because you put quotes around [*.], you get different results
+    than without. Try that sometime too. The only possible error from here is that it's a bad
+    directory name it's looking for, and rather than hitting a EOF error, we check for a space
+    as being the first character in the directory line, also part of a standard listing. We
+    find that, we produce LFNERROR(186), 'Couldn't resolve path'. Otherwise the found name is
+    extracted from the left-hand side just like the filename resolver, except if column 10
+    contains anything BUT a space. Then it adds the '.3' extension to the directory.<p>BTW, in
+    case you haven't figured it out from the previous use of the command, the dos directory
+    listing always has a space at column 9, but we want everything before the FIRST space in
+    the line.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">FUNCTION lfndostest%</td>
+        <td width="50%" valign="top">(item AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">none</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">IF LEFT$(item, 1) = &quot;\&quot; THEN EXIT FUNCTION<br>
+        IF LEFT$(item, 3) = &quot;..\&quot; THEN EXIT FUNCTION<br>
+        IF MID$(item, 2, 1) = &quot;:&quot; THEN EXIT FUNCTION<br>
+        lfndostest = true<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">This is just a minor routine used by LFNDOSPATH to determine
+    whether it's staring from the current directory or not. The easy way to describe this is:<p>IF
+    NOT (one of these three checks) RETURN FALSE</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">FUNCTION lfnexist%</td>
+        <td width="50%" valign="top">(which AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top" rowspan="2">functions called</td>
+        <td width="50%" valign="top">QUOTE$</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">STRIPR$</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">a$ = which<br>
+        errnum = false<br>
+        SHELL &quot;dir /b/v &quot; + quote$(stripr$(a$))<br>
+        + &quot; &gt;c:\temp\readit.txt&quot;<br>
+        file = FREEFILE<br>
+        OPEN &quot;c:\temp\readit.txt&quot; FOR INPUT AS file<br>
+        IF EOF(file) THEN errnum = true<br>
+        CLOSE file<br>
+        KILL &quot;c:\temp\readit.txt&quot;<br>
+        IF errnum THEN lfnexist% = false<br>
+        ELSE lfnexist% = true<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">I'm sure some of you have made some form of a EXIST function
+    before, but doing it under LFNQBasic has it's own problems. First off, you need the DOS8.3
+    name to execute a RENAME test, and SHELLing to DOS and asking for it to do a RENAME test
+    leads to the problem, How Do You Get The Error Message?!? Well, this does the job with the
+    SHELL dir action, using the '/B/V' switches for<br>
+    '/B' Uses bare format (no heading information or summary).<br>
+    '/V' Verbose mode.<br>
+    So that all we will end up with is either one of two results:<br>
+    A: file exists, there is a line in READIT.TXT<br>
+    B: file doesn't exists, READIT.TXT is empty.<br>
+    Rather that try to read the file and seeing if we generate an error, pop open the file and
+    see if the first thing we get is EOF(file) = TRUE and follow through with setting the
+    ERRNUM flag as needed. BTW, while this is the only place ERRNUM is used, I made it GLOBAL
+    for debugging reasons.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">SUB lfnerror</td>
+        <td width="50%" valign="top">(what AS INTEGER)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">LFNCLOSE</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">PRINT &quot;LFN Error: &quot;;<br>
+        SELECT CASE (what)<br>
+        CASE (154)<br>
+        PRINT &quot;Bad file mode&quot;<br>
+        CASE (155)<br>
+        PRINT &quot;File already open or name already used&quot;<br>
+        CASE (176)<br>
+        PRINT &quot;Path not found or path/file access error&quot;<br>
+        CASE (164)<br>
+        PRINT &quot;File not found&quot;<br>
+        CASE (178)<br>
+        PRINT &quot;General catchall error message&quot;<br>
+        CASE (186)<br>
+        PRINT &quot;Couldn't resolve path&quot;<br>
+        CASE (187)<br>
+        PRINT &quot;Path irregularity&quot;<br>
+        END SELECT<br>
+        PRINT &quot;Active files:&quot;<br>
+        FOR i = 1 TO lfnmax<br>
+        IF ASC(lfn(i).used) &lt;&gt; 32<br>
+        THEN PRINT i; lfn(i).full<br>
+        lfnclose (i)<br>
+        NEXT i<br>
+        BEEP<br>
+        STOP<p>END SUB</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">Here we do two things, print the LFN error message, and close
+    all the open files. Like the ERRHAND up top, if you want to do any sort of 'live' work,
+    you will need to adjust this so that it DOESN'T close the files, but do remember that if
+    you create any NEW files, they ahve that unique filename, and you may find yourself with a
+    directory full of TThhmmss.l's. I did when I first started working out the details of
+    these routines, more that 300 of them!<p>BTW: I could've called LFNCLOSEALL, but for
+    debugging reasons I wanted to include a system where it printed all open files at the same
+    time.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">FUNCTION quote$</td>
+        <td width="50%" valign="top">(item AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">none</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">IF ASC(item) &lt;&gt; 34<br>
+        THEN item = CHR$(34) + item + CHR$(34)<br>
+        quote$ = item<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">While this could've been elimated and code straight into the
+    routines, it does keep the codelines shorter so that it's easier to read. Besides which, I
+    use it in other programs.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">FUNCTION stripl$</td>
+        <td width="50%" valign="top">(item AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">none</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">DO<br>
+        IF item = &quot; &quot; THEN EXIT DO<br>
+        IF ASC(LEFT$(item, 1)) &lt;&gt; 32 THEN EXIT DO<br>
+        item = MID$(item, 2)<br>
+        LOOP<br>
+        stripl$ = item<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">This is extra, it's not needed.<p>It's included as a
+    compliment to STRIPR.</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top"><table border="1" cellpadding="1" cellspacing="1"
+    width="100%">
+      <tr>
+        <td width="50%" valign="top">FUNCTION stripr$</td>
+        <td width="50%" valign="top">(item AS STRING)</td>
+      </tr>
+      <tr>
+        <td width="50%" valign="top">functions called</td>
+        <td width="50%" valign="top">none</td>
+      </tr>
+      <tr>
+        <td width="100%" colspan="2">DO<br>
+        IF item = &quot; &quot; THEN EXIT DO<br>
+        IF ASC(RIGHT$(item, 1)) &lt;&gt; 32 THEN EXIT DO<br>
+        item = LEFT$(item, LEN(item) - 1)<br>
+        LOOP<br>
+        stripr$ = item<p>END FUNCTION</td>
+      </tr>
+    </table>
+    </td>
+    <td width="50%" valign="top">This is needed because QBasic pads it's TYPE strings with
+    spaces, and you can't just use the first space as a kill from here point because it may be
+    part of the filename. It was just as easier to do it like this as in a FOR:NEXT loop,
+    either one would work, and cause a crash when passed a ALL-SPACE string. Hence the check
+    for a single space left in the string before the test. It could be extended to return a
+    null string if that happens, 'snot hard to do.</td>
+  </tr>
+</table>
+</body>
+</html>

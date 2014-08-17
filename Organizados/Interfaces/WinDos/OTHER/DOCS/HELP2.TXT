@@ -1,0 +1,3 @@
+the fcb address can be -1 becos they are not used...
+
+http://www.csee.umbc.edu/courses/undergraduate/CMSC211/spring02/burt/lectures/Chap18/redirectingStderr.html

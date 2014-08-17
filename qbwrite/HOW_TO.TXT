@@ -1,0 +1,289 @@
+'
+'                       …ÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕª
+'                       ∫ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∫ﬁ
+'                       ∫ ∞∞ INFO-TEXT @ QB-WRITE ∞∞∞∫ﬁ
+'                       ∫ ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∫ﬁ
+'                       »ÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕºﬁ
+'                         ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+'       QBWrite is a simple text editing program that can create,  
+'       print, save, and import files. QBW uses it's own format
+'       for saving files, SO DO NOT OVERWRITE existing files with
+'       the quick save feature. See WARNING! below. (L# 220 P# 13).
+'    
+'       To setup QBW to use all of it's sample and data files,
+'       be sure to set up this program in it's own directory just
+'       off the <C> drive. ( C:\UWLABS\... )
+'
+'
+'                                                       more...         (1)
+'
+'       If this is not possible, open QBW in QBasic and <Search>
+'       the program for all the "OPEN" statements. When you find one,
+'       change any that DON'T contain variables to the appropriate
+'       path. You may need to check ahead of these statements in the
+'       program for path variables. These will listed as Path$,
+'       NPath$, etc. It really shouldn't be too difficult. If you have
+'       trouble, EMail me and I can send a corrected version, (one
+'       with all paths set to your requests), when you register.
+'
+'
+'
+'       INTERESTING FEATURES:
+'
+'       QBW has a few interesting features. It is timed to update
+'       the "StatusBar" every 15 seconds. This will keep the Time
+'       current and the "TimeOut" on the screen saver updated.
+'                                                       more...         (2)
+'
+'       Interesting Features (cont'd)
+'
+'       The StatusBar is also updated with each VALID keystroke
+'       during editing. During program action, the TIMER is OFF
+'       to prevent annoying cursor placement, or messing up the
+'       work area. SO, obviously if you leave the program sit
+'       while it is displaying a menu, the screen saver will not
+'       function. (By the way, the SSaver is pretty cheesy).
+'       The timeout on the SSaver can be changed by finding the
+'       section of code labeled "SSaver:" and changing the variable.
+'       There is an arrow pointing to the variable, so you can't miss
+'       it. Change the number to the number of seconds you wish the
+'       program to wait, (after a keystroke), before "sleeping".
+'       5 minutes=300, 10 min=600, etc. Right now it is set to
+'       5 minutes.
+'
+'                                                       more...         (3)
+'
+'       Interesting Features (cont'd)
+'
+'       QBWrite will allow you to change printer fonts on printers
+'       that accept IBM "ESCAPE" codes. These are codes designed
+'       to "program" IBM-type dot matrix printers. (Many other dot
+'       matrix printers also accept these codes). NOTE: don't worry
+'       about messing up the printer, these commands only remain in
+'       effect while the printer has been left on. If perchance some-
+'       thing obnoxious happens with your printer, just turn it off
+'       and it should reset.
+'     
+'       A demonstration of use for these commands is in "Tutorial"
+'       form using the sample files. Start with SAMP001.QBW and
+'       follow the short instructions. Please note screen text
+'       placement versus printer text placement, since the fonts
+'       are double high or double wide or both.
+'                                                       more...         (4)
+'
+'       Interesting Features (cont'd)
+'
+'       The display on QBWrite is 80 x 25 characters, with 21 lines
+'       used for the editting area. (A "page" is 21 lines for the
+'       editor). The print routines will select the number of line
+'       feeds based on the last printer setup, so if you turn off
+'       the printer, but don't restart the program, your line feeds
+'       will not match. Using [F7] to clear the printer also resets the
+'       PrintMode variable. You should hear 3 "BEEPS" when using this
+'       feature. Other setups will send 1 "BEEP". (Always clear first)
+'
+'       Since QBW displays 21 lines of text at a time, in double high
+'       print mode, the printed page will contain 1.5 screen pages, with
+'       one blank line before and after each 31 lines. In single high
+'       mode, Three screen pages are placed on the printed page.
+'
+'                                                       more...         (5)
+'
+'       Interesting Features (cont'd)
+'
+'       When printing in double wide mode, please remember only
+'       40 characters can be printed per line on the printed page
+'       so format your work to show on left half of the screen.
+'       On some old files previously saved by QBW, and reopened,
+'       The line "End" defaults to 80 characters. (Spaces were added
+'       to the end of the line when the file was stored). Printing these
+'       files unchanged will cause the program to pass a line feed
+'       anyway, at the same time "wrapping" the text to fit the
+'       printed page. In essence double spacing the print. This 
+'       version of QBW has been corrected to prevent this, and in
+'       doing so I have accidentally created and ANSI text editor.
+'       If you have word processing programs that will read ANSI
+'       files, then QBW files can be imported without a problem. You
+'       can then even convert them to ASCII if you like.
+'                                                       more...         (6)
+'
+'       Interesting Features (cont'd)
+'
+'       QuickSave, Save AS:
+'     
+'       When you create a new file with QBW, the TITLE file
+'       C:\UWLABS\UNTITLED.QBW is displayed. If the file has not
+'       been previously saved by this editting session, when you
+'       press [F5] for a "QuickSave", the "Save As..." PopUp will
+'       show. At this time you may choose any valid path and file
+'       name, the default path, or both the default path and default
+'       file. The next time you press [F5], the QuickSave feature
+'       will be active, YOU WILL NOT BE PROMPTED. the file is auto-
+'       matically saved to the current path and file name. That is
+'       why it is important to "Save As" first when you open an
+'       existing file that is not a "*.QBW".
+'
+'                                                       more...         (7)
+'
+'       QuickSave, Save AS (cont'd)
+'
+'       An interesting footnote to having this default file avail-
+'       able is that you can store recurrent documents in this file
+'       so you may reopen them, modify them, and save them quickly.
+'       This is handy for memos, form letters, notes, etc. You could
+'       even use it to store messages to other users of your computer.
+'       The default path not only is the default file to save, but also
+'       the default file to open too. (I created this feature so my
+'       children could save their latest literary creations, without
+'       cluttering up the computer will tons of little text files).
+'       You may find other uses to save editting steps too.
+'
+'       Kid note: Remind the little darlings to save things in the
+'       defaults, if you don't want the clutter too.
+'
+'                                                       more...         (8)
+'
+'       Opening Files:
+'
+'       Like I said previously, QBW will open ASCII text files without
+'       much incident, (Remember not to QuickSave), but file size is
+'       restricted to the available stack space alotted by the clear
+'       statement. If you open a file that is too large you will
+'       undoubtedly get a "Out Of String Space" error. If you really
+'       want to work on this file in QBW, first open it in an editor
+'       or word processor that can hold the large file, then break it
+'       down in to smaller files, then work on each individually. IT IS
+'       POSSIBLE TO CREATE QBW FILES THAT QBW CAN'T REOPEN. (When the
+'       file is reopened QBW will add a line or two at the end to format
+'       the pages and allot array space). If you keep your documents
+'       under 7 1/2 pages you should be Okay.
+'
+'
+'                                                       more...         (9) 
+'
+'       Opening Files (cont'd)
+'
+'       I tried to make QBW "smart" enough to trap improper file
+'       paths and names, but you can't expect me to figure out ALL
+'       the possible invalid inputs. Usually, the input line will
+'       reset if the entered path/file is recognized as invalid.
+'       If not, the error trapping routine will catch the error.
+'       NOTE: If you get to an input line that you decide that you
+'       don't want to use, (such as saving a file), and you are
+'       already at the > input prompt. You can purposely enter an
+'       invalid file name or path to cause an error and no save.
+'       That way you can exit the input prompt, without writing over
+'       a file or loosing the exsting one.
+'
+'
+'
+'                                                       more...         (10)
+'
+'       Your first task to attempt with QBW could be to print up
+'       the following key assignments:
+'              [Esc]           Exit Menu, Option, or Program
+'              [F1]            Highlight HelpBar
+'              [F2]            Activate Print Menu PopUp
+'              [F3]            Activate File Menu PopUp
+'              [F4]            Highlight More HelpBar
+'              [F5]            Erase and start new doc.
+'              [F6]            Printer Setup PopUp
+'              [F7]            Clear Printer to default setup
+'              [F8]            Print current doc.
+'              [F9]            Print registration form
+'              [F10]           Quick Save
+'              [F11]           Save As...
+'              [F12]           Open a file
+'              [Shift]+[F1]    About UWLabs PopUp
+'                                                       more...         (11)
+'
+'       The rest of the keys you should be familiar with, BUT there        
+'       are some minor differences.
+'
+'               [BackSpace]     Will only  backup to the top of the screen  
+'               [Delete]        Will only "pull" text from the same line
+'               [Home]          Only returns to column 1
+'               [End]           Will goto column 80 on opened QBW files
+'               [Enter]         Behaves only as a carriage return, and
+'                               will not "bump" text. Also, press [Enter]
+'                               to add a "page" to lengthen the doc.
+'               [PgUp]&[PgDwn]  Only work when there's a page to go to.
+'               [other]         Keystrokes not used will receive a tone
+'
+'       NOTE: if you don't want to retype all this information, I just
+'       created a "FreeBee" file for a template. Open FREEBEE1.QBW and
+'       print it in NLQ mode, you will then have a function key template.
+'                                                       more...         (12)
+'
+'        WARNING!!!  WARNING!!!  WARNING!!!  WARNING!!!  WARNING!!!
+'
+'       This program trys to behave much like a text editor, but be
+'       CAREFUL!!! The files it creates are not compatable with standard
+'       ASCII text files. (Every 81st  character is a <CrRtn>).
+'       IF YOU DECIDE TO OPEN AN ASCII TEXT FILE, PLEASE BE SURE NOT
+'       TO SAVE IT UNDER ITS OWN NAME. (Once a file is opened, the [F5]
+'       QuickSave feature is available). QBW won't destroy a text file,
+'       but the extra spaces and carriage returns will make it useless to
+'       to most other editors. The work envolved in repairing the file
+'       will be most tedious. (Except some ANSI type editors).
+'
+'    *** The above statement is for my protection as well as yours. ***
+'       This program carries no warranty expressed or implied. The user
+'       agrees to accept this condition upon use of this program.
+'
+'                                                       more...         (13)
+'    Limitations:
+'       QBWrite is a BASIC program, so its not going to be a full
+'       functioning word processor. It's more like an editor.
+'       I found QBW's limitations on my puny computer, (486sx25/8mg),
+'       to be around 13,500 characters; that's about 170 lines or
+'       7 and 1/2 screens. (@80 characters/line). That should be more
+'       than enough space to create a memo or two.
+'
+'    Requirements:
+'       Obviously, you need QBasic to run QBWrite, but you don't need
+'       EGA/VGA video support, or necessarily a color monitor.
+'       The text is displayed at 80x25, so most machines should be
+'       able to run this program. If you use a reverse monochrome display
+'       like some laptops do, remove or "rem" out the portion of code
+'       in the InitScreen section that has the PALETTE statments.
+'       It will then reverse black for white and dark gray for light.
+'                                                                   
+'                                                       more...         (14)
+'
+'       Requirements cont'd:
+'
+'       If you like, QBW also comes in an EGA/VGA version. It still
+'       uses screen 0, but works in 80x43 text mode with 64 colors.
+'       (actually about 8 of the 64). I've seen it on a 17 monitor
+'       and at that resolution it works good. (Not too small).
+'
+'       Although the comments in the code are sparse, I tried to use
+'       variable and line label names that would indicate some kind of
+'       purpose. Don't worry if looks like spaghetti, darn few basic
+'       programs that I've viewed looked all that much better.
+'          Go ahead, use it, parse it, dice it, slice it , whatever.
+'       Just register it. Also let me know if it crashes and how; we
+'       all must learn from our mistakes...
+'
+'                                              - LS alias STEELCHARM
+'                                                       more...         (15)
+'
+'    Post Script:
+'       I left the rem apostrophies on the left of this document so
+'       it could viewed by most anything, even QBasic itself. To make
+'       a copy of this document press [Alt],[F],[P]. Remember, in order
+'       for QBW to find or save to the default files, move all these
+'       files to "C:\UWLABS\", if not you will get "bad file or path
+'       name" errors.
+'
+'    P.P.S. A reminder to register (Yes again).
+'         Send $4 to:
+'                       UnderWARE Labs
+'                       c/o L. Schramm
+'                       Rte. 1 Box 6-A
+'                       Hiddenite, NC 28636
+'          Comments?    STEELCHARM@AOL.COM
+'
+' --------------------------[ End of text ]-----------------------------(16)-
+

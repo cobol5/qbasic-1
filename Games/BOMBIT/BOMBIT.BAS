@@ -1,0 +1,790 @@
+DECLARE SUB HELP ()
+DECLARE SUB EXPLODE (TX%, TY%, L%)
+DECLARE FUNCTION VALID% (X%, Y%)
+DECLARE SUB SHOW.LEVEL ()
+DECLARE SUB SHOW (A%, TX%, TY%)
+DECLARE SUB GET.LEVEL ()
+DECLARE SUB DRAWG (N%)
+DECLARE SUB MESSAGE (T AS STRING)
+DECLARE SUB MIDDLE (R%, T AS STRING)
+DECLARE SUB MILLIDELAY (msecs%)
+DEFINT A-Z
+OPTION BASE 1
+MILLIDELAY 0
+RANDOMIZE TIMER
+
+DIM SHARED PLAYER(4)
+PLAYER(1) = 1: PLAYER(2) = 2: PLAYER(3) = 2: PLAYER(4) = 2
+DIM SHARED PX(4), PY(4), PE(4), PL(4), BC(4), PB(4), BX(4, 1000), BY(4, 1000), PA(4)
+DIM SHARED KP AS STRING
+DIM SHARED PT(0 TO 2) AS STRING
+DIM SHARED LEVEL(0 TO 33, 0 TO 25)
+PT(0) = "None    "
+PT(1) = "Human   "
+PT(2) = "Computer"
+SCREEN 12: WIDTH 80, 60
+DIM SHARED P1(204): DRAWG 1: GET (0, 0)-(19, 19), P1
+DIM SHARED P2(204): DRAWG 2: GET (0, 0)-(19, 19), P2
+DIM SHARED P3(204): DRAWG 3: GET (0, 0)-(19, 19), P3
+DIM SHARED P4(204): DRAWG 4: GET (0, 0)-(19, 19), P4
+DIM SHARED P5(204): DRAWG 5: GET (0, 0)-(19, 19), P5
+DIM SHARED P6(204): DRAWG 6: GET (0, 0)-(19, 19), P6
+DIM SHARED P7(204): DRAWG 7: GET (0, 0)-(19, 19), P7
+DIM SHARED P8(204): DRAWG 8: GET (0, 0)-(19, 19), P8
+DIM SHARED P9(204): DRAWG 9: GET (0, 0)-(19, 19), P9
+DIM SHARED P10(204): DRAWG 10: GET (0, 0)-(19, 19), P10
+DIM SHARED P11(204): DRAWG 11: GET (0, 0)-(19, 19), P11
+DIM SHARED P12(204): DRAWG 12: GET (0, 0)-(19, 19), P12
+DIM SHARED P13(204): DRAWG 13: GET (0, 0)-(19, 19), P13
+DIM SHARED P14(204): DRAWG 14: GET (0, 0)-(19, 19), P14
+DIM SHARED P15(204): DRAWG 15: GET (0, 0)-(19, 19), P15
+DIM SHARED P16(204): DRAWG 16: GET (0, 0)-(19, 19), P16
+DIM SHARED P17(204): DRAWG 17: GET (0, 0)-(19, 19), P17
+DIM SHARED P18(204): DRAWG 18: GET (0, 0)-(19, 19), P18
+DIM SHARED P19(204): DRAWG 19: GET (0, 0)-(19, 19), P19
+DIM TSC(32, 8)
+CLS
+TITLE:
+DO
+FOR Y = 1 TO 8
+FOR X = 1 TO 32
+TSC(X, Y) = INT(RND * 5) + 11
+NEXT X
+NEXT Y
+FOR C = 1 TO 8
+RESTORE TS
+FOR Y = 1 TO 8
+FOR X = 1 TO 32
+READ A
+IF A THEN
+CIRCLE ((X * 10) - 5, (Y * 10) - 5), C, TSC(X, Y)
+END IF
+NEXT X
+NEXT Y
+MILLIDELAY 10
+KP = INKEY$: IF KP <> "" THEN EXIT DO
+NEXT C
+LOOP WHILE KP = ""
+MESSAGE "BOMB-IT! - By Andre' Dirk"
+MAIN.MENU:
+B = 0
+FOR A = 1 TO 4
+IF PLAYER(A) THEN B = B + 1
+NEXT A
+IF B = 1 THEN MESSAGE "You need one more player": GOTO OPTIONS
+IF B = 0 THEN MESSAGE "You need two more players": GOTO OPTIONS
+LINE (8, 98)-(312, 182), 8, BF
+LINE (9, 99)-(311, 181), 7, BF
+LINE (10, 100)-(310, 180), 12, BF
+LINE (18, 108)-(302, 172), 8, BF
+LINE (19, 109)-(301, 171), 7, BF
+LINE (20, 110)-(300, 170), 4, BF
+LINE (106, 106)-(214, 174), 8, BF
+LINE (108, 108)-(212, 172), 7, BF
+LINE (110, 110)-(210, 170), 0, BF
+LINE (20, 110)-(10, 100), 4
+LINE (300, 170)-(310, 180), 4
+LINE (20, 170)-(10, 180), 4
+LINE (300, 110)-(310, 100), 4
+A = 1
+DO
+IF A = 1 THEN COLOR 10 ELSE COLOR 15
+MIDDLE 15, "Start Game"
+IF A = 2 THEN COLOR 10 ELSE COLOR 15
+MIDDLE 17, "Options"
+IF A = 3 THEN COLOR 10 ELSE COLOR 15
+MIDDLE 19, "Help"
+IF A = 4 THEN COLOR 10 ELSE COLOR 15
+MIDDLE 21, "Exit"
+DO
+KP = UCASE$(INKEY$)
+LOOP WHILE KP = ""
+SELECT CASE KP
+CASE CHR$(27): MESSAGE "Bye! See you soon!": END
+CASE CHR$(0) + "H", CHR$(0) + "K": A = A - 1: IF A = 0 THEN A = 4
+CASE CHR$(0) + "P", CHR$(0) + "M": A = A + 1: IF A = 5 THEN A = 1
+CASE CHR$(13), " "
+SELECT CASE A
+CASE 1: GOTO PLAY.GAME
+CASE 2: GOTO OPTIONS
+CASE 3: HELP: GOTO TITLE
+CASE 4: MESSAGE "Bye! See you soon!": END
+END SELECT
+END SELECT
+LOOP
+OPTIONS:
+LINE (8, 98)-(312, 182), 8, BF
+LINE (9, 99)-(311, 181), 7, BF
+LINE (10, 100)-(310, 180), 12, BF
+LINE (18, 108)-(302, 172), 8, BF
+LINE (19, 109)-(301, 171), 7, BF
+LINE (20, 110)-(300, 170), 4, BF
+LINE (76, 106)-(244, 174), 8, BF
+LINE (78, 108)-(242, 172), 7, BF
+LINE (80, 110)-(240, 170), 0, BF
+LINE (20, 110)-(10, 100), 4
+LINE (300, 170)-(310, 180), 4
+LINE (20, 170)-(10, 180), 4
+LINE (300, 110)-(310, 100), 4
+A = 1
+DO
+IF A = 1 THEN COLOR 10 ELSE COLOR 15
+MIDDLE 16, "Player 1: " + PT(PLAYER(1))
+IF A = 2 THEN COLOR 10 ELSE COLOR 15
+MIDDLE 17, "Player 2: " + PT(PLAYER(2))
+IF A = 3 THEN COLOR 10 ELSE COLOR 15
+MIDDLE 18, "Player 3: " + PT(PLAYER(3))
+IF A = 4 THEN COLOR 10 ELSE COLOR 15
+MIDDLE 19, "Player 4: " + PT(PLAYER(4))
+IF A = 5 THEN COLOR 10 ELSE COLOR 15
+MIDDLE 20, "Main Menu"
+DO
+KP = UCASE$(INKEY$)
+LOOP WHILE KP = ""
+SELECT CASE KP
+CASE CHR$(27): GOTO MAIN.MENU
+CASE CHR$(0) + "H": A = A - 1: IF A = 0 THEN A = 5
+CASE CHR$(0) + "P": A = A + 1: IF A = 6 THEN A = 1
+CASE CHR$(0) + "K": IF A < 5 THEN PLAYER(A) = PLAYER(A) - 1: IF PLAYER(A) < 0 THEN PLAYER(A) = 2
+CASE CHR$(0) + "M": IF A < 5 THEN PLAYER(A) = PLAYER(A) + 1: IF PLAYER(A) > 2 THEN PLAYER(A) = 0
+CASE CHR$(13), " "
+SELECT CASE A
+CASE 1: MESSAGE "Arrow Keys - Move, Enter - Drop Bomb"
+CASE 2: MESSAGE "WASD - Move, C - Drop Bomb"
+CASE 3: MESSAGE "IJKL - Move, Space Bar - Drop Bomb"
+CASE 4: MESSAGE "8462 - Move, 5 - Drop Bomb"
+'CASE 5: IF RANB = 1 THEN RANB = 0
+CASE 5: GOTO MAIN.MENU
+END SELECT
+END SELECT
+LOOP
+
+PLAY.GAME:
+GET.LEVEL
+SHOW.LEVEL
+PX(1) = 1: PY(1) = 1
+PX(2) = 32: PY(2) = 1
+PX(3) = 1: PY(3) = 24
+PX(4) = 32: PY(4) = 24
+FOR A = 1 TO 4
+IF PLAYER(A) = 0 THEN PA(A) = 0 ELSE PA(A) = 1
+IF PLAYER(A) = 2 THEN PE(A) = 40 ELSE PE(A) = 20
+PB(A) = 0: PC(A) = 0
+PL(A) = 3
+NEXT A
+COUNTER = 0
+
+MESSAGE "Get Ready"
+DO
+DO
+C = 0
+W = 0
+FOR A = 1 TO 4
+IF PE(A) < 1 THEN
+PA(A) = 0: PE(A) = 0
+SHOW 6, PX(A), PY(A)
+END IF
+IF PA(A) THEN C = C + 1: W = A
+NEXT A
+IF C = 1 THEN MESSAGE "Player" + STR$(W) + " wins!": GOTO PLAY.GAME
+IF C = 0 THEN MESSAGE "GAME OVER - It's a draw!!": GOTO PLAY.GAME
+COUNTER = COUNTER + 1
+EXPIT = 0
+FOR A = 1 TO 4
+IF PA(A) THEN
+SHOW A, PX(A), PY(A)
+SELECT CASE LEVEL(PX(A), PY(A))
+CASE 13: LEVEL(PX(A), PY(A)) = 0: PL(A) = PL(A) + 1: PLAY "T255L64O5ABCDEFG"
+CASE 19
+DO
+X = INT(RND * 32) + 1: Y = INT(RND * 24) + 1
+LOOP UNTIL LEVEL(X, Y) = 0
+LEVEL(PX(A), PY(A)) = 0
+SHOW LEVEL(PX(A), PY(A)), PX(A), PY(A): PX(A) = X: PY(A) = Y
+PLAY "T255L64O5ABCDEFG"
+END SELECT
+IF BC(A) THEN BC(A) = BC(A) - 1
+IF BC(A) = 0 AND PB(A) THEN
+FOR B = 1 TO PB(A)
+EXPLODE BX(A, B), BY(A, B), PL(A): EXPIT = 1
+LEVEL(BX(A, B), BY(A, B)) = 0
+NEXT B
+PB(A) = 0
+END IF
+
+IF PLAYER(A) = 2 THEN
+IF COUNTER = 1 THEN
+D = INT(RND * 5) + 1
+SELECT CASE D
+CASE 1 TO 2
+DO
+E = INT(RND * 4) + 1
+IF PA(E) AND E <> A THEN EXIT DO
+LOOP
+IF PY(E) > PY(A) THEN D = 2 ELSE D = 1
+CASE 3 TO 4
+DO
+E = INT(RND * 4) + 1
+IF PA(E) AND E <> A THEN EXIT DO
+LOOP
+IF PX(E) > PX(A) THEN D = 4 ELSE D = 3
+CASE ELSE: IF INT(RND * 5) + 1 = 1 THEN D = 5 ELSE D = 0
+END SELECT
+
+SELECT CASE D
+CASE 1: GOSUB MOVE.UP
+CASE 2: GOSUB MOVE.DOWN
+CASE 3: GOSUB MOVE.LEFT
+CASE 4: GOSUB MOVE.RIGHT
+CASE 5: GOSUB DROP.BOMB
+END SELECT
+SHOW A, PX(A), PY(A)
+END IF
+END IF
+END IF
+NEXT A
+'IF EXPIT THEN SHOW.LEVEL
+MILLIDELAY 20
+KP = UCASE$(INKEY$)
+IF COUNTER > 10 THEN COUNTER = 0
+C = 0
+W = 0
+FOR A = 1 TO 4
+IF PE(A) < 1 THEN
+PA(A) = 0: PE(A) = 0
+SHOW 6, PX(A), PY(A)
+END IF
+IF PA(A) THEN C = C + 1: W = A
+NEXT A
+IF C = 1 THEN MESSAGE "Player" + STR$(W) + " wins!": GOTO PLAY.GAME
+IF C = 0 THEN MESSAGE "GAME OVER - It's a draw!!": GOTO PLAY.GAME
+LOOP WHILE KP = ""
+
+SELECT CASE KP
+CASE "P": MESSAGE "Game is Paused"
+CASE CHR$(0) + "H": IF PLAYER(1) = 1 THEN A = 1: GOSUB MOVE.UP
+CASE CHR$(0) + "P": IF PLAYER(1) = 1 THEN A = 1: GOSUB MOVE.DOWN
+CASE CHR$(0) + "K": IF PLAYER(1) = 1 THEN A = 1: GOSUB MOVE.LEFT
+CASE CHR$(0) + "M": IF PLAYER(1) = 1 THEN A = 1: GOSUB MOVE.RIGHT
+CASE CHR$(13): IF PLAYER(1) = 1 THEN A = 1: GOSUB DROP.BOMB
+CASE "W": A = 2: IF PLAYER(2) = 1 THEN GOSUB MOVE.UP
+CASE "S": A = 2: IF PLAYER(2) = 1 THEN GOSUB MOVE.DOWN
+CASE "A": A = 2: IF PLAYER(2) = 1 THEN GOSUB MOVE.LEFT
+CASE "D": A = 2: IF PLAYER(2) = 1 THEN GOSUB MOVE.RIGHT
+CASE "C": A = 2: IF PLAYER(2) = 1 THEN GOSUB DROP.BOMB
+CASE "I": A = 3: IF PLAYER(3) = 1 THEN GOSUB MOVE.UP
+CASE "K": A = 3: IF PLAYER(3) = 1 THEN GOSUB MOVE.DOWN
+CASE "J": A = 3: IF PLAYER(3) = 1 THEN GOSUB MOVE.LEFT
+CASE "L": A = 3: IF PLAYER(3) = 1 THEN GOSUB MOVE.RIGHT
+CASE " ": A = 3: IF PLAYER(3) = 1 THEN GOSUB DROP.BOMB
+CASE "8": A = 4: IF PLAYER(4) = 1 THEN GOSUB MOVE.UP
+CASE "2": A = 4: IF PLAYER(4) = 1 THEN GOSUB MOVE.DOWN
+CASE "4": A = 4: IF PLAYER(4) = 1 THEN GOSUB MOVE.LEFT
+CASE "6": A = 4: IF PLAYER(4) = 1 THEN GOSUB MOVE.RIGHT
+CASE "5": A = 4: IF PLAYER(4) = 1 THEN GOSUB DROP.BOMB
+CASE CHR$(27): MESSAGE "Bye - Come back soon!": GOTO TITLE
+END SELECT
+LOOP
+
+MOVE.UP:
+IF PA(A) THEN
+IF VALID(PX(A), PY(A) - 1) THEN
+SELECT CASE LEVEL(PX(A), PY(A) - 1)
+CASE 0, 6, 13, 19: SHOW LEVEL(PX(A), PY(A)), PX(A), PY(A): PY(A) = PY(A) - 1
+END SELECT
+END IF
+END IF
+RETURN
+
+MOVE.DOWN:
+IF PA(A) THEN
+IF VALID(PX(A), PY(A) + 1) THEN
+SELECT CASE LEVEL(PX(A), PY(A) + 1)
+CASE 0, 6, 13, 19: SHOW LEVEL(PX(A), PY(A)), PX(A), PY(A): PY(A) = PY(A) + 1
+END SELECT
+END IF
+END IF
+RETURN
+
+MOVE.LEFT:
+IF PA(A) THEN
+IF VALID(PX(A) - 1, PY(A)) THEN
+SELECT CASE LEVEL(PX(A) - 1, PY(A))
+CASE 0, 6, 13, 19: SHOW LEVEL(PX(A), PY(A)), PX(A), PY(A): PX(A) = PX(A) - 1
+END SELECT
+END IF
+END IF
+RETURN
+
+MOVE.RIGHT:
+IF PA(A) THEN
+IF VALID(PX(A) + 1, PY(A)) THEN
+SELECT CASE LEVEL(PX(A) + 1, PY(A))
+CASE 0, 6, 13, 19: SHOW LEVEL(PX(A), PY(A)), PX(A), PY(A): PX(A) = PX(A) + 1
+END SELECT
+END IF
+END IF
+RETURN
+
+DROP.BOMB:
+IF PA(A) AND PB(A) < 1000 AND (LEVEL(PX(A), PY(A)) = 0 OR LEVEL(PX(A), PY(A)) = 6) THEN
+PB(A) = PB(A) + 1: BC(A) = 75
+BX(A, PB(A)) = PX(A): BY(A, PB(A)) = PY(A): LEVEL(PX(A), PY(A)) = 5
+PLAY "T255L64O5A"
+END IF
+RETURN
+TS:
+DATA  , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,
+DATA  , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,
+DATA  ,1,1, , , ,1, , ,1,1, ,1,1, ,1,1, , , , , , ,1, ,1,1,1, ,1, ,
+DATA  ,1, ,1, ,1, ,1, ,1, ,1, ,1, ,1, ,1, , , , , ,1, , ,1, , ,1, ,
+DATA  ,1,1, , ,1, ,1, ,1, , , ,1, ,1,1, , ,1,1,1, ,1, , ,1, , ,1, ,
+DATA  ,1, ,1, ,1, ,1, ,1, , , ,1, ,1, ,1, , , , , ,1, , ,1, , , , ,
+DATA  ,1,1, , , ,1, , ,1, , , ,1, ,1,1, , , , , , ,1, , ,1, , ,1, ,
+DATA  , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,
+
+SUB DRAWG (N)
+LINE (0, 0)-(19, 19), 0, BF
+SELECT CASE N
+CASE 1
+COLOR 4
+LINE (4, 11)-(7, 19), , BF
+LINE (11, 11)-(14, 19), , BF
+LINE (0, 9)-(19, 12), , BF
+CIRCLE (9, 11), 5, 12
+PAINT (9, 14), 4, 12
+CIRCLE (9, 5), 5, 4
+PAINT (9, 5), 12, 4
+CIRCLE (7, 5), 1, 15
+CIRCLE (11, 5), 1, 15
+CASE 2
+COLOR 1
+LINE (4, 11)-(7, 19), , BF
+LINE (11, 11)-(14, 19), , BF
+LINE (0, 9)-(19, 12), , BF
+CIRCLE (9, 11), 5, 9
+PAINT (9, 14), 1, 9
+CIRCLE (9, 5), 5, 1
+PAINT (9, 5), 9, 1
+CIRCLE (7, 5), 1, 15
+CIRCLE (11, 5), 1, 15
+CASE 3
+COLOR 2
+LINE (4, 11)-(7, 19), , BF
+LINE (11, 11)-(14, 19), , BF
+LINE (0, 9)-(19, 12), , BF
+CIRCLE (9, 11), 5, 10
+PAINT (9, 14), 2, 10
+CIRCLE (9, 5), 5, 2
+PAINT (9, 5), 10, 2
+CIRCLE (7, 5), 1, 15
+CIRCLE (11, 5), 1, 15
+CASE 4
+COLOR 5
+LINE (4, 11)-(7, 19), , BF
+LINE (11, 11)-(14, 19), , BF
+LINE (0, 9)-(19, 12), , BF
+CIRCLE (9, 11), 5, 13
+PAINT (9, 14), 5, 13
+CIRCLE (9, 5), 5, 5
+PAINT (9, 5), 13, 5
+CIRCLE (7, 5), 1, 15
+CIRCLE (11, 5), 1, 15
+CASE 5 'Bomb
+LINE (9, 0)-(9, 6), 15
+LINE (7, 2)-(11, 6), 8, BF
+FOR A = 1 TO 8
+CIRCLE (9, 11), A, (INT(RND * 2) + 1) + 6
+NEXT A
+CASE 6 'Blood
+FOR A = 1 TO 40
+X = INT(RND * 10) + 5: Y = INT(RND * 10) + 5
+CIRCLE (X, Y), INT(RND * 5) + 1, 12
+PAINT (X, Y), 12, 12
+X = INT(RND * 10) + 5: Y = INT(RND * 10) + 5
+CIRCLE (X, Y), INT(RND * 5) + 1, 4
+PAINT (X, Y), 4, 4
+NEXT A
+CASE 7
+FOR A = 1 TO 20
+CIRCLE (9, 9), A, 15 + A
+NEXT A
+CASE 8
+LINE (0, 0)-(19, 19), 8, BF
+FOR A = 1 TO 100
+PSET (INT(RND * 20), INT(RND * 20)), 0
+NEXT A
+CASE 9
+LINE (0, 0)-(19, 19), 2, BF
+LINE (0, 0)-(19, 19), 12, B
+LINE (2, 2)-(3, 3), 13, BF
+LINE (2, 17)-(3, 16), 12, BF
+LINE (17, 2)-(16, 3), 13, BF
+LINE (17, 17)-(16, 16), 8, BF
+CASE 10
+LINE (0, 0)-(19, 19), 1, BF
+LINE (0, 0)-(19, 19), 8, B
+LINE (0, 0)-(19, 19), 12
+LINE (0, 19)-(19, 0), 13
+CASE 11
+FOR A = 1 TO 500
+PSET (INT(RND * 20), INT(RND * 20)), 6
+PSET (INT(RND * 20), INT(RND * 20)), 7
+NEXT A
+CASE 12
+LINE (6, 5)-(13, 19), 6, BF
+CIRCLE (9, 7), 8, 2
+PAINT (9, 7), 2, 2
+CASE 13
+LINE (0, 0)-(19, 19), 14, BF
+LINE (0, 0)-(19, 19), 12, B
+LINE (7, 2)-(11, 6), 8, BF
+FOR A = 1 TO 8
+CIRCLE (9, 11), A, (INT(RND * 2) + 1) + 6
+NEXT A
+CASE 14
+FOR A = 1 TO 40
+X = INT(RND * 10) + 5: Y = INT(RND * 10) + 5
+IF C = 12 THEN C = 4 ELSE C = 12
+CIRCLE (X, Y), INT(RND * 5) + 1, C
+PAINT (X, Y), C, C
+X = INT(RND * 10) + 5: Y = INT(RND * 10) + 5
+CIRCLE (X, Y), INT(RND * 5) + 1, 14
+PAINT (X, Y), 14, 14
+NEXT A
+CASE 15
+FOR Y = 0 TO 19
+LINE (0, Y)-(19, Y), INT(RND * 15)
+NEXT Y
+LINE (0, 0)-(19, 19), 8, B
+CASE 16
+FOR A = 1 TO 40
+X = INT(RND * 20): Y = INT(RND * 20)
+C = INT(RND * 6) + 1
+CIRCLE (X, Y), INT(RND * 5) + 1, C
+PAINT (X, Y), C, C
+NEXT A
+LINE (0, 0)-(19, 19), 8, B
+CASE 17
+FOR Y = 0 TO 19
+LINE (0, Y)-(Y, 19), INT(RND * 15) + 1
+NEXT Y
+FOR Y = 0 TO 19
+LINE (19, Y)-(Y, 0), INT(RND * 15) + 1
+NEXT Y
+FOR Y = 0 TO 19
+LINE (19, Y)-(Y, 19), INT(RND * 15) + 1
+NEXT Y
+FOR Y = 0 TO 19
+LINE (0, Y)-(Y, 0), INT(RND * 15) + 1
+NEXT Y
+CASE 18
+FOR Y = 0 TO 19
+LINE (0, Y)-(Y, 19), INT(RND * 15) + 1
+NEXT Y
+FOR Y = 0 TO 19
+LINE (19, Y)-(Y, 0), INT(RND * 15) + 1
+NEXT Y
+CASE 19
+C = 9
+FOR A = 1 TO 8
+IF C = 9 THEN C = 11 ELSE C = 9
+CIRCLE (9, 9), A, C
+NEXT A
+END SELECT
+END SUB
+
+SUB EXPLODE (TX, TY, L)
+X = TX: Y = TY
+SHOW 14, X, Y
+FOR A = 1 TO 4
+IF PLAYER(A) THEN
+IF X = PX(A) AND Y = PY(A) THEN PE(A) = PE(A) - 5
+END IF
+NEXT A
+LEVEL(X, Y) = 0
+Y = TY
+FOR X = TX + 1 TO TX + L
+IF VALID(X, Y) = 0 THEN EXIT FOR
+FOR A = 1 TO 4
+IF PLAYER(A) THEN
+IF X = PX(A) AND Y = PY(A) THEN PE(A) = PE(A) - 5
+END IF
+NEXT A
+SELECT CASE LEVEL(X, Y)
+CASE 8, 10, 12, 16, 18
+IF INT(RND * 10) + 1 = 1 THEN LEVEL(X, Y) = 19 ELSE LEVEL(X, Y) = 0
+IF INT(RND * 5) + 1 = 1 THEN LEVEL(X, Y) = 13
+CASE 7, 9, 11, 15, 17: EXIT FOR
+END SELECT
+SHOW 14, X, Y
+NEXT X
+FOR X = TX - 1 TO TX - L STEP -1
+IF VALID(X, Y) = 0 THEN EXIT FOR
+FOR A = 1 TO 4
+IF PLAYER(A) THEN
+IF X = PX(A) AND Y = PY(A) THEN PE(A) = PE(A) - 5
+END IF
+NEXT A
+SELECT CASE LEVEL(X, Y)
+CASE 8, 10, 12, 16, 18
+IF INT(RND * 10) + 1 = 1 THEN LEVEL(X, Y) = 19 ELSE LEVEL(X, Y) = 0
+IF INT(RND * 5) + 1 = 1 THEN LEVEL(X, Y) = 13
+CASE 7, 9, 11, 15, 17: EXIT FOR
+END SELECT
+SHOW 14, X, Y
+NEXT X
+X = TX
+FOR Y = TY - 1 TO TY - L STEP -1
+IF VALID(X, Y) = 0 THEN EXIT FOR
+FOR A = 1 TO 4
+IF PLAYER(A) THEN
+IF X = PX(A) AND Y = PY(A) THEN PE(A) = PE(A) - 5
+END IF
+NEXT A
+SELECT CASE LEVEL(X, Y)
+CASE 8, 10, 12, 16, 18
+IF INT(RND * 10) + 1 = 1 THEN LEVEL(X, Y) = 19 ELSE LEVEL(X, Y) = 0
+IF INT(RND * 5) + 1 = 1 THEN LEVEL(X, Y) = 13
+CASE 7, 9, 11, 15, 17: EXIT FOR
+END SELECT
+SHOW 14, X, Y
+NEXT Y
+FOR Y = TY + 1 TO TY + L
+IF VALID(X, Y) = 0 THEN EXIT FOR
+FOR A = 1 TO 4
+IF PLAYER(A) THEN
+IF X = PX(A) AND Y = PY(A) THEN PE(A) = PE(A) - 5
+END IF
+NEXT A
+SELECT CASE LEVEL(X, Y)
+CASE 8, 10, 12, 16, 18
+IF INT(RND * 10) + 1 = 1 THEN LEVEL(X, Y) = 19 ELSE LEVEL(X, Y) = 0
+IF INT(RND * 5) + 1 = 1 THEN LEVEL(X, Y) = 13
+CASE 7, 9, 11, 15, 17: EXIT FOR
+END SELECT
+SHOW 14, X, Y
+NEXT Y
+MILLIDELAY 50
+FOR X = TX - L TO TX + L
+IF VALID(X, TY) = 1 THEN SHOW LEVEL(X, TY), X, TY
+NEXT X
+FOR Y = TY - L TO TY + L
+IF VALID(TX, Y) = 1 THEN SHOW LEVEL(TX, Y), TX, Y
+NEXT Y
+END SUB
+
+SUB GET.LEVEL
+LT = INT(RND * 3) + 1
+T1 = INT(RND * 5) + 1
+SELECT CASE T1
+CASE 1: T1 = 7
+CASE 2: T1 = 9
+CASE 3: T1 = 11
+CASE 4: T1 = 15
+CASE 5: T1 = 17
+END SELECT
+
+FOR X = 1 TO 32
+FOR Y = 1 TO 24
+LEVEL(X, Y) = 0
+NEXT Y
+NEXT X
+
+SELECT CASE LT
+CASE 1
+FOR X = 1 TO 32 STEP 2
+FOR Y = 1 TO 24 STEP 2
+LEVEL(X, Y) = T1
+NEXT Y
+NEXT X
+FOR X = 2 TO 32 STEP 2
+FOR Y = 2 TO 24 STEP 2
+LEVEL(X, Y) = T1 + 1
+NEXT Y
+NEXT X
+LEVEL(1, 23) = 0
+LEVEL(31, 1) = 0
+CASE 2
+FOR X = 2 TO 31
+FOR Y = 2 TO 23
+LEVEL(X, Y) = T1 + 1
+NEXT Y
+NEXT X
+FOR X = 2 TO 31 STEP 2
+FOR Y = 2 TO 23 STEP 2
+IF INT(RND * 2) + 1 = 1 THEN LEVEL(X, Y) = T1
+NEXT Y
+NEXT X
+LEVEL(1, 9) = 0
+LEVEL(15, 1) = 0
+CASE 3
+FOR X = 1 TO 31 STEP 2
+FOR Y = 1 TO 23 STEP 2
+IF INT(RND * 2) + 1 = 1 THEN LEVEL(X, Y) = T1
+NEXT Y
+NEXT X
+FOR X = 2 TO 32 STEP 2
+FOR Y = 2 TO 24 STEP 2
+LEVEL(X, Y) = T1 + 1
+NEXT Y
+NEXT X
+LEVEL(1, 23) = 0
+LEVEL(31, 1) = 0
+Y = 5
+FOR X = 1 TO 15
+IF INT(RND * 2) + 1 = 1 THEN LEVEL(X, Y) = T1 ELSE LEVEL(X, Y) = T1 + 1
+NEXT X
+Y = 6
+FOR X = 18 TO 32
+IF INT(RND * 2) + 1 = 1 THEN LEVEL(X, Y) = T1 ELSE LEVEL(X, Y) = T1 + 1
+NEXT X
+X = 7
+FOR Y = 1 TO 11
+IF INT(RND * 2) + 1 = 1 THEN LEVEL(X, Y) = T1 ELSE LEVEL(X, Y) = T1 + 1
+NEXT Y
+X = 10
+FOR Y = 13 TO 24
+IF INT(RND * 2) + 1 = 1 THEN LEVEL(X, Y) = T1 ELSE LEVEL(X, Y) = T1 + 1
+NEXT Y
+END SELECT
+LEVEL(1, 1) = 0
+LEVEL(1, 24) = 0
+LEVEL(32, 1) = 0
+LEVEL(32, 24) = 0
+END SUB
+
+SUB HELP
+CLS
+COLOR 13: MIDDLE 1, "BOMB-IT! Help"
+COLOR 10
+PRINT
+MIDDLE 3, "BOMB-IT! is a game for up to four     "
+MIDDLE 4, "players. The object of the game is to "'
+MIDDLE 5, "destroy the other players by dropping "
+MIDDLE 6, "bombs. Human players can be hit by    "
+MIDDLE 7, "bombs 4 times and computer players can"
+MIDDLE 8, "be hit by bombs 8 times.              "
+COLOR 11
+MIDDLE 10, "BOMB-IT! enables players to drop up"
+MIDDLE 11, "to 1000 bombs at any one time, BUT "
+MIDDLE 12, "you shouldn't drop two many bombs, "
+MIDDLE 13, "because the bombs can hurt you too."
+COLOR 15
+LOCATE 15, 1
+PRINT "Player 1     - Arrow Keys  - Move"
+PRINT "               Enter       - Drop Bomb"
+PRINT "Player 2     - W, S, A & D - Move"
+PRINT "               C           - Drop Bomb"
+PRINT "Player 3     - I, K, J & L - Move"
+PRINT "               Space Bar   - Drop Bomb"
+PRINT "Player 4     - 8, 2, 4 & 6 - Move"
+PRINT "(Num Lock On)  5           - Drop Bomb"
+KP = INPUT$(1)
+CLS
+END SUB
+
+SUB MESSAGE (T AS STRING)
+L = LEN(T)
+DIM PIC(24 * (7 * L))
+DIM BAK(24 * (7 * L))
+GET (0, 0)-((L + 2) * 8, 24), BAK
+LINE (0, 0)-(((L + 2) * 8), 24), 8, BF
+LINE (2, 2)-(((L + 2) * 8) - 2, 22), 7, BF
+LINE (4, 4)-(((L + 2) * 8) - 4, 20), 0, BF
+LOCATE 2, 2: COLOR 15: PRINT T
+GET (0, 0)-((L + 2) * 8, 24), PIC
+PUT (0, 0), BAK, PSET
+
+L2 = (L + 2) * 8
+X1 = 160 - (L2 / 2)
+X2 = X1 + L2
+FOR Y1 = 1 TO 374 STEP 16
+Y2 = Y1 + 24
+GET (X1, Y1)-(X2, Y2), BAK
+PUT (X1, Y1), PIC, PSET
+IF Y1 > 170 AND Y1 < 186 THEN
+DO
+KP = INPUT$(1)
+LOOP UNTIL KP = CHR$(13) OR KP = " "
+END IF
+MILLIDELAY 40
+PUT (X1, Y1), BAK, PSET
+NEXT Y1
+END SUB
+
+SUB MIDDLE (R, T AS STRING)
+COLS = 40
+L = LEN(T)
+L = INT(L / 2)
+LOCATE R, ((COLS / 2) + 1) - L: PRINT T
+END SUB
+
+SUB MILLIDELAY (msecs) STATIC
+IF sysfact& THEN                   'Did we calc- system speed yet?
+        IF msecs THEN                  'have to want a delay
+            count& = (sysfact& * msecs) \ -54    'calc- # of loops needed
+            DO
+                count& = count& + 1         'negative - add to get to 0
+                IF count& = z THEN EXIT DO  'when its 0 we're done
+            LOOP UNTIL t2 = PEEK(&H6C)      'make it the same as loop below
+        END IF
+    ELSE                               'if sysfact& is 0, calc- system speed
+        DEF SEG = &H40                 'point to low memory
+        T1 = PEEK(&H6C)                'get tick count
+        DO
+            t2 = PEEK(&H6C)            'get tick count
+        LOOP UNTIL t2 <> T1            'wait 'til its a new tick
+        DO
+            sysfact& = sysfact& + 1         'count number of loops
+            IF sysfact& = z THEN EXIT DO    'make it the same as loop above
+        LOOP UNTIL t2 <> PEEK(&H6C)         'keep going 'til its a new tick
+        t2 = 256                            'prevent the above UNTIL
+    END IF
+END SUB
+
+SUB SHOW (A, TX, TY)
+X = (TX - 1) * 20: Y = (TY - 1) * 20
+SELECT CASE A
+CASE 0: LINE (X, Y)-(X + 19, Y + 19), 0, BF
+CASE 1: PUT (X, Y), P1, PSET
+CASE 2: PUT (X, Y), P2, PSET
+CASE 3: PUT (X, Y), P3, PSET
+CASE 4: PUT (X, Y), P4, PSET
+CASE 5: PUT (X, Y), P5, PSET
+CASE 6: PUT (X, Y), P6, PSET
+CASE 7: PUT (X, Y), P7, PSET
+CASE 8: PUT (X, Y), P8, PSET
+CASE 9: PUT (X, Y), P9, PSET
+CASE 10: PUT (X, Y), P10, PSET
+CASE 11: PUT (X, Y), P11, PSET
+CASE 12: PUT (X, Y), P12, PSET
+CASE 13: PUT (X, Y), P13, PSET
+CASE 14: PUT (X, Y), P14, PSET
+CASE 15: PUT (X, Y), P15, PSET
+CASE 16: PUT (X, Y), P16, PSET
+CASE 17: PUT (X, Y), P17, PSET
+CASE 18: PUT (X, Y), P18, PSET
+CASE 19: PUT (X, Y), P19, PSET
+'CASE 20: PUT (X, Y), P20, PSET
+END SELECT
+END SUB
+
+SUB SHOW.LEVEL
+
+FOR Y = 1 TO 24
+FOR X = 1 TO 32
+SHOW LEVEL(X, Y), X, Y
+NEXT X
+NEXT Y
+END SUB
+
+FUNCTION VALID (X, Y)
+V = 1
+IF X < 1 THEN V = 0
+IF Y < 1 THEN V = 0
+IF X > 32 THEN V = 0
+IF Y > 24 THEN V = 0
+VALID = V
+END FUNCTION
+
